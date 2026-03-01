@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V6</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V7</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 12px; background-color: #f0f4f8; color: #333; }
         h1 { font-size: 1.4rem; text-align: center; color: #1a365d; margin-bottom: 5px; }
@@ -25,7 +25,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V6（究極完全版）</p>
+    <p class="subtitle">神プロンプトメーカー V7（無限錬成版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップしてください..."></textarea>
 
@@ -49,6 +49,12 @@
                 <option value="A powerful witch">強力な魔女</option>
                 <option value="A mecha pilot">メカパイロット</option>
                 <option value="A magical girl">魔法少女</option>
+                <option value="A vampire noble">吸血鬼の貴族</option>
+                <option value="A holy knight">聖騎士（ナイト）</option>
+                <option value="A beautiful goddess">美しい女神</option>
+                <option value="A shrine maiden">巫女</option>
+                <option value="A ninja girl">くノ一（忍者）</option>
+                <option value="A pop idol">ポップアイドル</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-subject')">追加</button>
         </div>
@@ -63,6 +69,9 @@
                 <option value="petite">小柄 (petite)</option>
                 <option value="curvy">曲線美 (curvy)</option>
                 <option value="slender">スレンダー (slender)</option>
+                <option value="muscular">筋肉質 (muscular)</option>
+                <option value="athletic">スポーティな体型 (athletic)</option>
+                <option value="voluptuous">豊満な体型 (voluptuous)</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-body')">追加</button>
         </div>
@@ -85,6 +94,10 @@
                 <option value="green hair">緑髪</option>
                 <option value="two-tone hair">ツートーンカラー</option>
                 <option value="gradient hair">グラデーション</option>
+                <option value="platinum blonde hair">プラチナブロンド</option>
+                <option value="mint green hair">ミントグリーン髪</option>
+                <option value="ash gray hair">アッシュグレー髪</option>
+                <option value="rainbow hair">虹色の髪</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-hair-color')">追加</button>
         </div>
@@ -113,6 +126,11 @@
                 <option value="pigtails hair">三つ編みおさげ</option>
                 <option value="dreadlocks hair">ドレッドヘア</option>
                 <option value="cornrows hair">コーンロウ</option>
+                <option value="space buns">お団子ツイン (space buns)</option>
+                <option value="french braid">編み込み (french braid)</option>
+                <option value="half-up half-down">ハーフアップ</option>
+                <option value="curly hair">カーリーヘア</option>
+                <option value="twin drills">ツインドリル</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-hair-style')">追加</button>
         </div>
@@ -129,6 +147,12 @@
                 <option value="yandere pose">ヤンデレ</option>
                 <option value="sleepy">眠そう</option>
                 <option value="surprised">驚いている</option>
+                <option value="mischievous smile">いたずらな笑顔</option>
+                <option value="gentle gaze">優しい眼差し</option>
+                <option value="teary-eyed">涙目 (teary-eyed)</option>
+                <option value="pouting">ふくれっ面 (pouting)</option>
+                <option value="crazy smile">狂気的な笑顔</option>
+                <option value="looking disgusted">嫌悪した表情</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-expression')">追加</button>
         </div>
@@ -155,6 +179,13 @@
                 <option value="wedding dress">ウェディングドレス</option>
                 <option value="witch robe">魔女のローブ</option>
                 <option value="gothic lolita">ゴスロリ</option>
+                <option value="gothic corset">ゴシックコルセット</option>
+                <option value="sailor shirt">セーラー服</option>
+                <option value="track jacket">ジャージ（トラックジャケット）</option>
+                <option value="tube top">チューブトップ</option>
+                <option value="bikini top">ビキニトップ</option>
+                <option value="cardigan">カーディガン</option>
+                <option value="turtleneck sweater">タートルネックセーター</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-tops')">追加</button>
         </div>
@@ -172,6 +203,12 @@
                 <option value="leather pants">レザーパンツ</option>
                 <option value="leggings">レギンス</option>
                 <option value="sweatpants">スウェットパンツ</option>
+                <option value="flared skirt">フレアスカート</option>
+                <option value="pencil skirt">ペンシルスカート</option>
+                <option value="booty shorts">ブーティーショーツ</option>
+                <option value="overalls">オーバーオール</option>
+                <option value="flared pants">フレアパンツ</option>
+                <option value="suspender skirt">サスペンダースカート</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-bottoms')">追加</button>
         </div>
@@ -189,6 +226,11 @@
                 <option value="pantyhose">パンティストッキング</option>
                 <option value="white socks">白い靴下</option>
                 <option value="fishnet tights">網タイツ</option>
+                <option value="combat boots">コンバットブーツ</option>
+                <option value="platform shoes">厚底靴 (platform shoes)</option>
+                <option value="mary janes">メリージェーン</option>
+                <option value="ballet shoes">バレエシューズ</option>
+                <option value="gladiator sandals">グラディエーターサンダル</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-shoes')">追加</button>
         </div>
@@ -206,6 +248,16 @@
                 <option value="scarf">マフラー・スカーフ</option>
                 <option value="headphones">ヘッドホン</option>
                 <option value="hair ribbon">ヘアリボン</option>
+                <option value="tiara">ティアラ</option>
+                <option value="crown">王冠 (crown)</option>
+                <option value="eyepatch">眼帯 (eyepatch)</option>
+                <option value="bandages">包帯 (bandages)</option>
+                <option value="fairy wings">妖精の羽 (fairy wings)</option>
+                <option value="demon wings">悪魔の羽 (demon wings)</option>
+                <option value="tail">しっぽ (tail)</option>
+                <option value="collar">首輪 (collar)</option>
+                <option value="piercings">ピアス・ボディピアス</option>
+                <option value="mask">マスク (mask)</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-acc')">追加</button>
         </div>
@@ -236,6 +288,12 @@
                 <option value="snow-covered village">雪に覆われた村</option>
                 <option value="blooming flower field">満開のお花畑</option>
                 <option value="abandoned factory">廃工場</option>
+                <option value="crystal cave">クリスタルの洞窟</option>
+                <option value="futuristic laboratory">近未来の研究所</option>
+                <option value="traditional shrine">伝統的な神社</option>
+                <option value="enchanted library">魔法の図書館</option>
+                <option value="casino">カジノ</option>
+                <option value="stadium">スタジアム</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-bg')">追加</button>
         </div>
@@ -250,16 +308,23 @@
                 <option value="magical aura">魔法のオーラ</option>
                 <option value="magic circle">魔法陣</option>
                 <option value="sun rays">木漏れ日（光の筋）</option>
+                <option value="lightning">稲妻 (lightning)</option>
+                <option value="water splashes">水しぶき (water splashes)</option>
+                <option value="glowing runes">光るルーン文字</option>
+                <option value="rose petals falling">薔薇の花びらが舞う</option>
+                <option value="fog">濃霧 (fog)</option>
+                <option value="cinematic smoke">シネマティックな煙</option>
+                <option value="holy light">聖なる光 (holy light)</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-effect')">追加</button>
         </div>
     </div>
 
     <div class="category">
-        <h2>🎬 5. 動画AI用の動き（Action）</h2>
+        <h2>🎬 5. ポーズ・動画AI用の動き（Action）</h2>
         <div class="input-group">
             <select id="sel-action">
-                <option value="">動きを選んでください...</option>
+                <option value="">動き・ポーズを選んでください...</option>
                 <option value="hair blowing softly in the wind">髪が風でなびく</option>
                 <option value="blinking eyes slowly">ゆっくり瞬きする</option>
                 <option value="looking at viewer">こっちを見る</option>
@@ -270,6 +335,14 @@
                 <option value="breathing gently">優しく呼吸する</option>
                 <option value="clothes fluttering">服がひらひら揺れる</option>
                 <option value="hands completely hidden">【崩れ防止】手を完全に隠す</option>
+                <option value="reaching out to the viewer">手を差し伸べる</option>
+                <option value="holding a sword">剣を構える</option>
+                <option value="holding a magic staff">魔法の杖を持つ</option>
+                <option value="reading a book">本を読んでいる</option>
+                <option value="dancing">踊っている</option>
+                <option value="sitting on a chair">椅子に座っている</option>
+                <option value="sleeping">眠っている</option>
+                <option value="drinking coffee">コーヒーを飲んでいる</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-action')">追加</button>
         </div>
@@ -287,6 +360,9 @@
                 <option value="from below">下から (from below)</option>
                 <option value="from above">上から (from above)</option>
                 <option value="dynamic angle">ダイナミックアングル</option>
+                <option value="dutch angle">ダッチアングル（斜め構図）</option>
+                <option value="macro shot">マクロ撮影（超近接）</option>
+                <option value="fish-eye lens">魚眼レンズ</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-camera')">追加</button>
         </div>
@@ -296,8 +372,12 @@
                 <option value="masterpiece, best quality, ultra-detailed">✨ 最高品質セット</option>
                 <option value="--ar 16:9">📺 横長(--ar 16:9)</option>
                 <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
+                <option value="--ar 21:9">🎞️ 映画サイズ(--ar 21:9)</option>
                 <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
                 <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
+                <option value="--v 6.0">🤖 Midjourney v6(--v 6.0)</option>
+                <option value="--style raw">🎨 スタイルRaw(--style raw)</option>
+                <option value="--stylize 250">✨ 描き込み強化(--stylize 250)</option>
                 <option value="--cref ">🔗 キャラ固定(--cref URL)</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-quality')">追加</button>
@@ -313,18 +393,34 @@
             if (!value) return;
 
             let currentText = output.value.trim();
-            
-            if (currentText === '') {
-                output.value = value;
-            } else {
-                // 【V5で実装した魔法】パラメータ（--から始まるもの）が選ばれたときのカンマ削除処理
-                if (value.startsWith('--')) {
+
+            if (value.startsWith('--')) {
+                if (currentText === '') {
+                    output.value = value;
+                } else {
                     if (currentText.endsWith(',')) {
                         currentText = currentText.slice(0, -1).trim();
                     }
                     output.value = currentText + ' ' + value;
+                }
+            } else {
+                let paramIndex = currentText.search(/(?:^|\s)--[a-zA-Z]/);
+                
+                if (paramIndex !== -1) {
+                    let promptPart = currentText.substring(0, paramIndex).trim();
+                    let paramPart = currentText.substring(paramIndex).trim();
+                    
+                    if (promptPart === '') {
+                        output.value = value + ' ' + paramPart;
+                    } else {
+                        output.value = promptPart + (promptPart.endsWith(',') ? ' ' : ', ') + value + ' ' + paramPart;
+                    }
                 } else {
-                    output.value = currentText + (currentText.endsWith(',') ? ' ' : ', ') + value;
+                    if (currentText === '') {
+                        output.value = value;
+                    } else {
+                        output.value = currentText + (currentText.endsWith(',') ? ' ' : ', ') + value;
+                    }
                 }
             }
             
