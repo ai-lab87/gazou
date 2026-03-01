@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V4</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V4.1</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 12px; background-color: #f0f4f8; color: #333; }
         h1 { font-size: 1.4rem; text-align: center; color: #1a365d; margin-bottom: 5px; }
         p.subtitle { text-align: center; font-size: 0.85rem; color: #4a5568; margin-top: 0; margin-bottom: 15px; font-weight: bold; }
         #prompt-output { width: 100%; height: 160px; margin-bottom: 15px; padding: 12px; box-sizing: border-box; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 0.95rem; resize: none; background-color: #fff; line-height: 1.4; }
         .controls { display: flex; gap: 8px; margin-bottom: 20px; }
-        .btn-control { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-control { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;}
         .btn-copy { background-color: #38a169; }
         .btn-clear { background-color: #e53e3e; }
+        /* 有料noteへのリンクボタンのスタイル */
+        .btn-link { background-color: #FF8C00; flex: 1.2; } /* noteカラーっぽく、少し幅広に */
+
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; }
@@ -24,13 +27,14 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V4（究極版）</p>
+    <p class="subtitle">神プロンプトメーカー V4.1（大増量版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップしてください..."></textarea>
 
     <div class="controls">
         <button class="btn-control btn-copy" onclick="copyPrompt()">📋 コピー</button>
         <button class="btn-control btn-clear" onclick="clearPrompt()">🗑️ クリア</button>
+        <a href="https://note.com/ai_labo_chan/n/nb12b361578be" class="btn-control btn-link" target="_blank" rel="noopener noreferrer">🎬 動画化noteへ</a>
     </div>
 
     <div class="category">
@@ -101,6 +105,16 @@
                 <option value="hair bun">お団子ヘア</option>
                 <option value="messy hair">無造作ヘア</option>
                 <option value="ahoge">アホ毛</option>
+                <option value="straight long hair">ストレートロングヘア</option>
+                <option value="side tail">サイドテール</option>
+                <option value="wolf cut hair">ウルフカット</option>
+                <option value="shaggy hair">シャギーカット</option>
+                <option value="asymmetrical hair">アシンメトリー</option>
+                <option value="mohawk hair">モヒカン風</option>
+                <option value="afro hair">アフロ</option>
+                <option value="pigtails hair">三つ編みおさげ</option>
+                <option value="dreadlocks hair">ドレッドヘア</option>
+                <option value="cornrows hair">コーンロウ</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-hair-style')">追加</button>
         </div>
@@ -141,6 +155,16 @@
                 <option value="fantasy armor">ファンタジーの鎧</option>
                 <option value="business suit">ビジネススーツ</option>
                 <option value="wedding dress">ウェディングドレス</option>
+                <option value="oversized T-shirt">オーバーサイズTシャツ</option>
+                <option value="parka hoodie">パーカー</option>
+                <option value="tank top">タンクトップ</option>
+                <option value="denim jacket">デニムジャケット</option>
+                <option value="leather jacket">レザージャケット</option>
+                <option value="long coat">ロングコート</option>
+                <option value="pajamas">パジャマ</option>
+                <option value="lingerie">ランジェリー</option>
+                <option value="summer dress">サマードレス</option>
+                <option value="evening dress">イブニングドレス</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-clothes')">追加</button>
         </div>
