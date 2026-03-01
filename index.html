@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIちゃん実験室：プロンプトメーカー</title>
+    <style>
+        body { font-family: sans-serif; padding: 15px; background-color: #f4f7f6; color: #333; }
+        h1 { font-size: 1.3rem; text-align: center; color: #0056b3; margin-bottom: 5px; }
+        p.subtitle { text-align: center; font-size: 0.8rem; color: #666; margin-top: 0; margin-bottom: 20px; }
+        #prompt-output { width: 100%; height: 120px; margin-bottom: 10px; padding: 10px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 8px; font-size: 1rem; resize: none; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .btn-control { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; font-size: 1rem; }
+        .btn-copy { background-color: #28a745; }
+        .btn-clear { background-color: #dc3545; }
+        .category { margin-bottom: 15px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .category h2 { font-size: 1rem; margin-top: 0; color: #444; border-bottom: 2px solid #eef; padding-bottom: 5px; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag-btn { background-color: #e2e8f0; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 20px; font-size: 0.9rem; color: #333; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>🧪 AIちゃん実験室</h1>
+    <p class="subtitle">動画AI＆Midjourney プロンプトメーカー</p>
+
+    <textarea id="prompt-output" placeholder="下のボタンをタップしてプロンプトを錬成してください..."></textarea>
+
+    <div class="controls">
+        <button class="btn-control btn-copy" onclick="copyPrompt()">📋 コピーする</button>
+        <button class="btn-control btn-clear" onclick="clearPrompt()">🗑️ クリア</button>
+    </div>
+
+    <div class="category">
+        <h2>1. 主役（Subject）</h2>
+        <div class="tag-container">
+            <button class="tag-btn" onclick="addTag('A beautiful anime angel girl')">👼 銀髪の天使</button>
+            <button class="tag-btn" onclick="addTag('1girl')">👧 1girl</button>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>2. 動き（Action）※動画AI用</h2>
+        <div class="tag-container">
+            <button class="tag-btn" onclick="addTag('blinking eyes gently')">瞬きする</button>
+            <button class="tag-btn" onclick="addTag('hair blowing softly in the wind')">髪が風になびく</button>
+            <button class="tag-btn" onclick="addTag('smiling gently')">優しく微笑む</button>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>3. カメラワーク・品質</h2>
+        <div class="tag-container">
+            <button class="tag-btn" onclick="addTag('cinematic pull back shot')">🎥 シネマティックな引き</button>
+            <button class="tag-btn" onclick="addTag('masterpiece, best quality')">✨ 最高品質</button>
+            <button class="tag-btn" onclick="addTag('--ar 16:9')">📺 横長(16:9)</button>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('prompt-output');
+        function addTag(tagText) {
+            let currentText = output.value.trim();
+            if (currentText === '') { output.value = tagText; } 
+            else { output.value = currentText + (currentText.endsWith(',') ? ' ' : ', ') + tagText; }
+        }
+        function clearPrompt() { output.value = ''; }
+        function copyPrompt() {
+            output.select(); document.execCommand('copy');
+            const copyBtn = document.querySelector('.btn-copy');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '✅ コピー完了！'; copyBtn.style.backgroundColor = '#1e7e34';
+            setTimeout(() => { copyBtn.innerHTML = originalText; copyBtn.style.backgroundColor = '#28a745'; }, 2000);
+        }
+    </script>
+</body>
+</html>
