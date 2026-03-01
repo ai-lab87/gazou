@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V4.1</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V5</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 12px; background-color: #f0f4f8; color: #333; }
         h1 { font-size: 1.4rem; text-align: center; color: #1a365d; margin-bottom: 5px; }
@@ -13,9 +13,7 @@
         .btn-control { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;}
         .btn-copy { background-color: #38a169; }
         .btn-clear { background-color: #e53e3e; }
-        /* 有料noteへのリンクボタンのスタイル */
-        .btn-link { background-color: #FF8C00; flex: 1.2; } /* noteカラーっぽく、少し幅広に */
-
+        .btn-link { background-color: #FF8C00; flex: 1.2; }
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; }
@@ -27,7 +25,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V4.1（大増量版）</p>
+    <p class="subtitle">神プロンプトメーカー V5（コーデ特化版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップしてください..."></textarea>
 
@@ -48,8 +46,6 @@
                 <option value="A handsome young man">イケメンの青年</option>
                 <option value="A cute elf girl">可愛いエルフの女の子</option>
                 <option value="A cyberpunk hacker">サイバーパンクなハッカー</option>
-                <option value="A powerful witch">強力な魔女</option>
-                <option value="A mecha pilot">メカパイロット</option>
                 <option value="A magical girl">魔法少女</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-subject')">追加</button>
@@ -60,7 +56,6 @@
                 <option value="young">若い (young)</option>
                 <option value="adult">大人 (adult)</option>
                 <option value="child">子供 (child)</option>
-                <option value="mature">成熟した (mature)</option>
                 <option value="tall">背が高い (tall)</option>
                 <option value="petite">小柄 (petite)</option>
                 <option value="curvy">曲線美 (curvy)</option>
@@ -71,7 +66,7 @@
     </div>
 
     <div class="category">
-        <h2>💇‍♀️ 2. 頭部（髪・瞳・表情）</h2>
+        <h2>💇‍♀️ 2. 頭部（髪・表情）</h2>
         <div class="input-group">
             <select id="sel-hair-color">
                 <option value="">髪色を選んでください...</option>
@@ -81,10 +76,6 @@
                 <option value="pink hair">ピンク髪</option>
                 <option value="blue hair">青髪</option>
                 <option value="white hair">白髪</option>
-                <option value="brown hair">茶髪</option>
-                <option value="red hair">赤髪</option>
-                <option value="purple hair">紫髪</option>
-                <option value="green hair">緑髪</option>
                 <option value="two-tone hair">ツートーンカラー</option>
                 <option value="gradient hair">グラデーション</option>
             </select>
@@ -94,27 +85,14 @@
             <select id="sel-hair-style">
                 <option value="">髪型を選んでください...</option>
                 <option value="long hair">ロングヘア</option>
-                <option value="short hair">ショートヘア</option>
                 <option value="short bob hair">ショートボブ</option>
                 <option value="twintails">ツインテール</option>
                 <option value="ponytail">ポニーテール</option>
                 <option value="hime cut">姫カット</option>
                 <option value="drill hair">縦ロール（ドリル）</option>
-                <option value="wavy hair">ウェーブヘア</option>
-                <option value="braided hair">三つ編み</option>
-                <option value="hair bun">お団子ヘア</option>
                 <option value="messy hair">無造作ヘア</option>
                 <option value="ahoge">アホ毛</option>
-                <option value="straight long hair">ストレートロングヘア</option>
-                <option value="side tail">サイドテール</option>
                 <option value="wolf cut hair">ウルフカット</option>
-                <option value="shaggy hair">シャギーカット</option>
-                <option value="asymmetrical hair">アシンメトリー</option>
-                <option value="mohawk hair">モヒカン風</option>
-                <option value="afro hair">アフロ</option>
-                <option value="pigtails hair">三つ編みおさげ</option>
-                <option value="dreadlocks hair">ドレッドヘア</option>
-                <option value="cornrows hair">コーンロウ</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-hair-style')">追加</button>
         </div>
@@ -128,57 +106,72 @@
                 <option value="angry">怒っている</option>
                 <option value="winking">ウインク</option>
                 <option value="smug face">ドヤ顔</option>
-                <option value="yandere pose">ヤンデレ</option>
-                <option value="sleepy">眠そう</option>
-                <option value="surprised">驚いている</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-expression')">追加</button>
         </div>
     </div>
 
     <div class="category">
-        <h2>👗 3. 服装・アクセサリー</h2>
+        <h2>👗 3. 全身コーデ・アクセサリー</h2>
         <div class="input-group">
-            <select id="sel-clothes">
-                <option value="">服装を選んでください...</option>
+            <select id="sel-tops">
+                <option value="">全身・トップス...</option>
                 <option value="pure white dress">純白のドレス</option>
-                <option value="cyberpunk suit">サイバーパンクスーツ</option>
-                <option value="maid outfit">メイド服</option>
                 <option value="school uniform">学生服</option>
-                <option value="casual wear">カジュアルウェア</option>
-                <option value="kimono">着物</option>
-                <option value="hanbok">チマチョゴリ（韓服）</option>
-                <option value="cheongsam">チャイナドレス</option>
-                <option value="witch robe">魔女のローブ</option>
-                <option value="gothic lolita">ゴスロリ</option>
-                <option value="techwear">テックウェア（近未来服）</option>
-                <option value="fantasy armor">ファンタジーの鎧</option>
-                <option value="business suit">ビジネススーツ</option>
-                <option value="wedding dress">ウェディングドレス</option>
+                <option value="maid outfit">メイド服</option>
                 <option value="oversized T-shirt">オーバーサイズTシャツ</option>
                 <option value="parka hoodie">パーカー</option>
+                <option value="blouse">ブラウス</option>
+                <option value="off-shoulder sweater">オフショルニット</option>
                 <option value="tank top">タンクトップ</option>
-                <option value="denim jacket">デニムジャケット</option>
                 <option value="leather jacket">レザージャケット</option>
                 <option value="long coat">ロングコート</option>
-                <option value="pajamas">パジャマ</option>
-                <option value="lingerie">ランジェリー</option>
-                <option value="summer dress">サマードレス</option>
-                <option value="evening dress">イブニングドレス</option>
+                <option value="cyberpunk suit">サイバーパンクスーツ</option>
+                <option value="kimono">着物</option>
+                <option value="swimsuit">水着</option>
             </select>
-            <button class="btn-add" onclick="addFromSelect('sel-clothes')">追加</button>
+            <button class="btn-add" onclick="addFromSelect('sel-tops')">追加</button>
+        </div>
+        <div class="input-group">
+            <select id="sel-bottoms">
+                <option value="">ボトムス...</option>
+                <option value="pleated skirt">プリーツスカート</option>
+                <option value="mini skirt">ミニスカート</option>
+                <option value="long skirt">ロングスカート</option>
+                <option value="tight skirt">タイトスカート</option>
+                <option value="denim shorts">デニムショートパンツ</option>
+                <option value="hot pants">ホットパンツ</option>
+                <option value="jeans">ジーンズ</option>
+                <option value="cargo pants">カーゴパンツ</option>
+                <option value="leather pants">レザーパンツ</option>
+                <option value="leggings">レギンス</option>
+            </select>
+            <button class="btn-add" onclick="addFromSelect('sel-bottoms')">追加</button>
+        </div>
+        <div class="input-group">
+            <select id="sel-shoes">
+                <option value="">靴・足元...</option>
+                <option value="sneakers">スニーカー</option>
+                <option value="leather boots">レザーブーツ</option>
+                <option value="thighhigh boots">サイハイブーツ</option>
+                <option value="high heels">ハイヒール</option>
+                <option value="sandals">サンダル</option>
+                <option value="loafers">ローファー</option>
+                <option value="barefoot">裸足 (barefoot)</option>
+                <option value="thighhighs">ニーソックス</option>
+                <option value="pantyhose">パンティストッキング</option>
+                <option value="white socks">白い靴下</option>
+            </select>
+            <button class="btn-add" onclick="addFromSelect('sel-shoes')">追加</button>
         </div>
         <div class="input-group">
             <select id="sel-acc">
                 <option value="">装飾品（アクセサリー）...</option>
                 <option value="glasses">メガネ</option>
-                <option value="sunglasses">サングラス</option>
                 <option value="choker">チョーカー</option>
-                <option value="earrings">イヤリング</option>
                 <option value="halo">天使の輪 (halo)</option>
                 <option value="demon horns">悪魔のツノ</option>
                 <option value="cat ears">猫耳 (cat ears)</option>
-                <option value="fox ears">狐耳</option>
                 <option value="scarf">マフラー・スカーフ</option>
                 <option value="headphones">ヘッドホン</option>
             </select>
@@ -187,20 +180,16 @@
     </div>
 
     <div class="category">
-        <h2>✨ 4. 背景・時間・エフェクト</h2>
+        <h2>✨ 4. 背景・エフェクト</h2>
         <div class="input-group">
             <select id="sel-bg">
                 <option value="">背景を選んでください...</option>
                 <option value="simple background">シンプルな背景</option>
                 <option value="cyberpunk city background">サイバーパンクな街</option>
-                <option value="ruined city background">廃墟の街</option>
                 <option value="magical forest background">魔法の森</option>
                 <option value="starry night sky">満天の星空</option>
-                <option value="beautiful beach">美しいビーチ</option>
                 <option value="classroom background">教室</option>
-                <option value="outer space">宇宙空間</option>
                 <option value="traditional japanese room">和室</option>
-                <option value="gothic castle">ゴシックな城</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-bg')">追加</button>
         </div>
@@ -210,11 +199,8 @@
                 <option value="floating glowing particles">光る粒子が舞う</option>
                 <option value="cherry blossoms falling">桜が舞い散る</option>
                 <option value="snowflakes">雪の結晶</option>
-                <option value="fire sparkles">炎の火の粉</option>
                 <option value="lens flare">レンズフレア</option>
-                <option value="magical aura">魔法のオーラ</option>
                 <option value="magic circle">魔法陣</option>
-                <option value="sun rays">木漏れ日（光の筋）</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-effect')">追加</button>
         </div>
@@ -228,12 +214,8 @@
                 <option value="hair blowing softly in the wind">髪が風でなびく</option>
                 <option value="blinking eyes slowly">ゆっくり瞬きする</option>
                 <option value="looking at viewer">こっちを見る</option>
-                <option value="turning around">振り返る</option>
                 <option value="walking towards camera">カメラに向かって歩く</option>
-                <option value="crying, shedding tears">涙を流す</option>
                 <option value="smiling happily">嬉しそうに笑う</option>
-                <option value="breathing gently">優しく呼吸する</option>
-                <option value="clothes fluttering">服がひらひら揺れる</option>
                 <option value="hands completely hidden">【崩れ防止】手を完全に隠す</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-action')">追加</button>
@@ -241,7 +223,7 @@
     </div>
 
     <div class="category">
-        <h2>🎥 6. カメラ・画風・品質</h2>
+        <h2>🎥 6. カメラ・品質・パラメータ</h2>
         <div class="input-group">
             <select id="sel-camera">
                 <option value="">カメラワーク...</option>
@@ -249,9 +231,6 @@
                 <option value="close-up shot">顔アップ (close-up)</option>
                 <option value="full body shot">全身 (full body)</option>
                 <option value="cowboy shot">太ももから上 (cowboy shot)</option>
-                <option value="from below">下から (from below)</option>
-                <option value="from above">上から (from above)</option>
-                <option value="dynamic angle">ダイナミックアングル</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-camera')">追加</button>
         </div>
@@ -278,10 +257,22 @@
             if (!value) return;
 
             let currentText = output.value.trim();
+            
             if (currentText === '') {
                 output.value = value;
             } else {
-                output.value = currentText + (currentText.endsWith(',') ? ' ' : ', ') + value;
+                // 【V5修正】パラメータ（--から始まるもの）が選ばれたときの特別処理
+                if (value.startsWith('--')) {
+                    // もし直前がカンマで終わっていたら、カンマを削除する！
+                    if (currentText.endsWith(',')) {
+                        currentText = currentText.slice(0, -1).trim();
+                    }
+                    // カンマではなく、ただの「スペース」で繋げる
+                    output.value = currentText + ' ' + value;
+                } else {
+                    // 通常のタグ（髪型や服など）の場合はカンマで繋げる
+                    output.value = currentText + (currentText.endsWith(',') ? ' ' : ', ') + value;
+                }
             }
             
             const btn = select.nextElementSibling;
