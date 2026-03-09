@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V9</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V11</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 12px; background-color: #f0f4f8; color: #333; }
         h1 { font-size: 1.4rem; text-align: center; color: #1a365d; margin-bottom: 5px; }
@@ -25,7 +25,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V9（無限錬成版）</p>
+    <p class="subtitle">神プロンプトメーカー V11（特盛り完全版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップしてください..."></textarea>
 
@@ -98,7 +98,7 @@
     </div>
 
     <div class="category">
-        <h2>💇 2. 頭部（髪・表情）</h2>
+        <h2>💇 2. 頭部（髪・表情・視線）</h2>
         <div class="input-group">
             <select id="sel-hair-color">
                 <option value="">髪色を選んでください...</option>
@@ -178,34 +178,43 @@
         </div>
         <div class="input-group">
             <select id="sel-expression">
-                <option value="">表情を選んでください...</option>
-                <option value="smiling gently">優しく微笑む</option>
-                <option value="expressionless">無表情</option>
-                <option value="blushing">照れている</option>
-                <option value="crying">泣いている</option>
-                <option value="angry">怒っている</option>
-                <option value="winking">ウインク</option>
-                <option value="smug face">ドヤ顔</option>
-                <option value="yandere pose">ヤンデレ</option>
-                <option value="sleepy">眠そう</option>
-                <option value="surprised">驚いている</option>
-                <option value="mischievous smile">いたずらな笑顔</option>
-                <option value="gentle gaze">優しい眼差し</option>
-                <option value="teary-eyed">涙目 (teary-eyed)</option>
-                <option value="pouting">ふくれっ面 (pouting)</option>
-                <option value="crazy smile">狂気的な笑顔</option>
-                <option value="looking disgusted">嫌悪した表情</option>
-                <option value="cool gaze">クールな視線</option>
-                <option value="blushing heavily">顔を真っ赤にする</option>
-                <option value="smug grin">ニヤリと笑う</option>
-                <option value="nervous sweating">冷や汗</option>
-                <option value="rolling eyes">呆れた目</option>
-                <option value="wide-eyed shock">目を見開いて驚く</option>
-                <option value="gentle smile with closed eyes">目を閉じて微笑む</option>
-                <option value="angry pout">怒ってふくれる</option>
-                <option value="crying tears of joy">嬉し泣き</option>
-                <option value="biting lip">唇を噛む</option>
-                <option value="crazy laugh">狂気的な高笑い</option>
+                <option value="">表情・視線を選んでください...</option>
+                <optgroup label="視線（カメラ目線・外し）">
+                    <option value="looking at viewer">👀 カメラ目線（こっちを見る）</option>
+                    <option value="looking away">↪️ 視線を外す</option>
+                    <option value="looking up">⬆️ 上を見上げる</option>
+                    <option value="looking down">⬇️ 下を見下ろす</option>
+                    <option value="looking over shoulder">🔙 肩越しに振り返って見る</option>
+                </optgroup>
+                <optgroup label="表情">
+                    <option value="smiling gently">優しく微笑む</option>
+                    <option value="expressionless">無表情</option>
+                    <option value="blushing">照れている</option>
+                    <option value="crying">泣いている</option>
+                    <option value="angry">怒っている</option>
+                    <option value="winking">ウインク</option>
+                    <option value="smug face">ドヤ顔</option>
+                    <option value="yandere pose">ヤンデレ</option>
+                    <option value="sleepy">眠そう</option>
+                    <option value="surprised">驚いている</option>
+                    <option value="mischievous smile">いたずらな笑顔</option>
+                    <option value="gentle gaze">優しい眼差し</option>
+                    <option value="teary-eyed">涙目 (teary-eyed)</option>
+                    <option value="pouting">ふくれっ面 (pouting)</option>
+                    <option value="crazy smile">狂気的な笑顔</option>
+                    <option value="looking disgusted">嫌悪した表情</option>
+                    <option value="cool gaze">クールな視線</option>
+                    <option value="blushing heavily">顔を真っ赤にする</option>
+                    <option value="smug grin">ニヤリと笑う</option>
+                    <option value="nervous sweating">冷や汗</option>
+                    <option value="rolling eyes">呆れた目</option>
+                    <option value="wide-eyed shock">目を見開いて驚く</option>
+                    <option value="gentle smile with closed eyes">目を閉じて微笑む</option>
+                    <option value="angry pout">怒ってふくれる</option>
+                    <option value="crying tears of joy">嬉し泣き</option>
+                    <option value="biting lip">唇を噛む</option>
+                    <option value="crazy laugh">狂気的な高笑い</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-expression')">追加</button>
         </div>
@@ -446,20 +455,27 @@
     </div>
 
     <div class="category">
-        <h2>🎥 6. カメラ・品質・パラメータ</h2>
+        <h2>🎥 6. カメラ・配置・パラメータ</h2>
         <div class="input-group">
             <select id="sel-camera">
-                <option value="">カメラワーク...</option>
-                <option value="depth of field">被写界深度（背景ボケ）</option>
-                <option value="close-up shot">顔アップ (close-up)</option>
-                <option value="full body shot">全身 (full body)</option>
-                <option value="cowboy shot">太ももから上 (cowboy shot)</option>
-                <option value="from below">下から (from below)</option>
-                <option value="from above">上から (from above)</option>
-                <option value="dynamic angle">ダイナミックアングル</option>
-                <option value="dutch angle">ダッチアングル（斜め構図）</option>
-                <option value="macro shot">マクロ撮影（超近接）</option>
-                <option value="fish-eye lens">魚眼レンズ</option>
+                <option value="">カメラワーク・キャラの配置...</option>
+                <optgroup label="キャラクターの配置（余白作り）">
+                    <option value="character on the left side">⬅️ キャラを左半分に配置（右に余白）</option>
+                    <option value="character on the right side">➡️ キャラを右半分に配置（左に余白）</option>
+                    <option value="centered composition">⏺️ キャラを中央に配置</option>
+                </optgroup>
+                <optgroup label="アングル・構図">
+                    <option value="depth of field">被写界深度（背景ボケ）</option>
+                    <option value="close-up shot">顔アップ (close-up)</option>
+                    <option value="full body shot">全身 (full body)</option>
+                    <option value="cowboy shot">太ももから上 (cowboy shot)</option>
+                    <option value="from below">下からアオリ (from below)</option>
+                    <option value="from above">上からフカン (from above)</option>
+                    <option value="dynamic angle">ダイナミックアングル</option>
+                    <option value="dutch angle">ダッチアングル（斜め構図）</option>
+                    <option value="macro shot">マクロ撮影（超近接）</option>
+                    <option value="fish-eye lens">魚眼レンズ</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-camera')">追加</button>
         </div>
@@ -475,9 +491,26 @@
                 <option value="--cref ">🔗 キャラ固定(--cref URL)</option>
                 <option value="--cw 0">👗 服・背景変更用(--cw 0:顔のみ固定)</option>
                 <option value="--cw 100">🔒 全体固定用(--cw 100:服装も維持)</option>
-                <option value="--no ">🚫 ネガティブ(--no 除外したい要素)</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-quality')">追加</button>
+        </div>
+    </div>
+
+    <div class="category">
+        <h2>🚫 7. ネガティブ（除外したい要素）</h2>
+        <div class="input-group">
+            <select id="sel-negative">
+                <option value="">除外する要素を選んでください...</option>
+                <option value="--no text, watermark, signature, username">📝 文字・透かし・サインを除外</option>
+                <option value="--no bad anatomy, extra digits, missing fingers, mutated hands">🖐️ 作画崩れ・指の異常を除外</option>
+                <option value="--no background">⬜ 背景透過用（背景を描かない）</option>
+                <option value="--no monochrome, grayscale">🎨 モノクロ・白黒を回避</option>
+                <option value="--no nsfw, nude">🛡️ 健全化（R-18要素を回避）</option>
+                <option value="--no animal ears, animal tail">🐱 ケモミミ・尻尾を除外</option>
+                <option value="--no glasses">👓 メガネを除外</option>
+                <option value="--no 3d, realistic">🖌️ 3D感・リアルさを除外（アニメ塗り重視）</option>
+            </select>
+            <button class="btn-add" onclick="addFromSelect('sel-negative')">追加</button>
         </div>
     </div>
 
