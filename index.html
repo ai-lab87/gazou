@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIちゃん実験室：神プロンプトメーカー V11</title>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BW3KE7HNR1');
+    </script>
+
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; padding: 12px; background-color: #f0f4f8; color: #333; }
         h1 { font-size: 1.4rem; text-align: center; color: #1a365d; margin-bottom: 5px; }
@@ -17,7 +27,8 @@
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; }
-        select { flex: 1; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #2d3748; }
+        /* ▼ ここが修正ポイント！ min-width: 0; 等を追加してボタンのはみ出しを直しました ▼ */
+        select { flex: 1; min-width: 0; text-overflow: ellipsis; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #2d3748; }
         .btn-add { padding: 8px 12px; background-color: #3182ce; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 0.9rem;}
         .btn-add:active { background-color: #2b6cb0; transform: scale(0.98); }
     </style>
