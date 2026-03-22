@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.2</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.3</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -70,7 +70,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.2（構図同調アップデート）</p>
+    <p class="subtitle">神プロンプトメーカー V13.3（構図完全同調版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -98,6 +98,7 @@
         <h2>✨ 0. 実写化・リアルテイスト錬金術</h2>
         <p class="help-text">
             💡 <b>【重要】アニメ絵を実写化するコツ：</b><br>
+            矛盾解消のため、リアル化時の主役から「アングル指示（ポートレート等）」を除去しました。 WhoとHow（Angle）の分離を徹底しています。<br>
             影響度(iw)は<b>「0.6〜0.8」</b>程度に下げ、下のメニューから<b>「元画像と同じポーズ・服装」を正確に選んで追加</b>すると、構図を維持したままリアル化できます！
         </p>
         <div class="input-group">
@@ -137,8 +138,8 @@
                     <option value="A futuristic cyborg">近未来のサイボーグ</option>
                 </optgroup>
                 <optgroup label="実写・リアル系">
-                    <option value="A high-resolution photorealistic portrait photograph of a young woman">リアルな若い女性</option>
-                    <option value="A handsome cinematic portrait photograph of a young man">リアルな若い男性</option>
+                    <option value="A high-resolution photorealistic young woman">リアルな若い女性</option>
+                    <option value="A handsome cinematic young man">リアルな若い男性</option>
                     <option value="A K-pop idol style beautiful woman">K-POPアイドル風の美女</option>
                     <option value="A mature sophisticated realistic woman">洗練された大人の女性（実写）</option>
                     <option value="A ruggedly handsome realistic western man">ワイルドなイケメン西洋人男性</option>
@@ -888,7 +889,7 @@
             }
         }
 
-        // 一発で実写化のベースプロンプトを付与するボタン
+        // 一発で実写化のベースプロンプトを付与するボタン（構図維持対応）
         function applyRealSpells(gender) {
             const keepComp = document.getElementById('real-keep-composition').checked;
             
