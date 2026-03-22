@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.3</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.4</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -39,15 +39,20 @@
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         
-        /* 実写化専用パネルのスタイル */
-        .category.real-magic { border: 2px solid #ed64a6; background-color: #fff5f7; }
+        /* 特殊カテゴリ（ガチャ・リアル・テキスト）のスタイル */
+        .category.special { border: 2px solid; }
+        .category.real-magic { border-color: #ed64a6; background-color: #fff5f7; }
         .category.real-magic h2 { color: #d53f8c; border-bottom: 2px solid #fed7e2; margin-bottom: 5px; }
+        
+        .category.text-magic { border-color: #4299e1; background-color: #e6f6ff; }
+        .category.text-magic h2 { color: #3182ce; border-bottom: 2px solid #b3d9ff; margin-bottom: 5px; }
+        
         .help-text { font-size: 0.8rem; color: #718096; margin-top: 0; margin-bottom: 10px; line-height: 1.4; }
         .real-btn-female { background-color: #ed64a6; }
         .real-btn-male { background-color: #4299e1; }
         
         /* 入力欄の見切れ・はみ出し対策 */
-        .url-input { flex: 2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
+        .url-input, .text-input { flex: 2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
         .iw-input { flex: 1.2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
 
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
@@ -60,7 +65,7 @@
         .option-settings label { font-size: 0.85rem; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;}
         .option-settings input[type="checkbox"] { transform: scale(1.1); }
         
-        /* ガチャ・リアルオプションの色 */
+        /* トグルオプションの色 */
         .gacha-label { color: #b7791f; }
         .gacha-label input[type="checkbox"] { accent-color: #d69e2e; }
         .real-option-label { color: #d53f8c; }
@@ -70,7 +75,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.3（構図完全同調版）</p>
+    <p class="subtitle">神プロンプトメーカー V13.4（V8対応＆テキスト錬成）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -94,12 +99,26 @@
         </div>
     </div>
 
-    <div class="category real-magic">
+    <div class="category special text-magic">
+        <h2>🖊️ 特殊. テキスト生成（Midjourney V8以降専用）</h2>
+        <p class="help-text">
+            💡 <b>V8からテキスト生成が劇的に進化しました！</b><br>
+            画像に入れたい文字と、その表記方法（場所、スタイル）を組み合わせて追加します。<br>
+            <b>例：</b> テキスト内容に `"OPEN"`、表記方法に `as a glowing neon sign` と入力して追加。
+        </p>
+        <div class="input-group">
+            <input type="text" id="text-content" class="text-input" placeholder="画像に入れる文字（例： OPEN）">
+            <input type="text" id="text-style" class="text-input" placeholder="表記方法（例： as a glowing neon sign）">
+            <button class="btn-add" id="btn-add-text" style="background-color: #3182ce;" onclick="addTextGenerationPrompt()">追加</button>
+        </div>
+    </div>
+
+    <div class="category special real-magic">
         <h2>✨ 0. 実写化・リアルテイスト錬金術</h2>
         <p class="help-text">
-            💡 <b>【重要】アニメ絵を実写化するコツ：</b><br>
-            矛盾解消のため、リアル化時の主役から「アングル指示（ポートレート等）」を除去しました。 WhoとHow（Angle）の分離を徹底しています。<br>
-            影響度(iw)は<b>「0.6〜0.8」</b>程度に下げ、下のメニューから<b>「元画像と同じポーズ・服装」を正確に選んで追加</b>すると、構図を維持したままリアル化できます！
+            💡 <b>【重要】V8対応アップデート：</b><br>
+            AI矛盾を避けるため、リアル化ボタンはバージョン（V6/V8等）を自動付与しません。下のセレクトボックスから手動で選んでください。<br>
+             iwは<b>「0.6〜0.8」</b>に下げ、<b>「元画像と同じポーズ・服装」を正確に選んで追加</b>するのが実写化成功の黄金律です。
         </p>
         <div class="input-group">
             <input type="text" id="base-image-url" class="url-input" placeholder="画像URL (https://...)">
@@ -138,8 +157,8 @@
                     <option value="A futuristic cyborg">近未来のサイボーグ</option>
                 </optgroup>
                 <optgroup label="実写・リアル系">
-                    <option value="A high-resolution photorealistic young woman">リアルな若い女性</option>
-                    <option value="A handsome cinematic young man">リアルな若い男性</option>
+                    <option value="A photorealistic young woman">リアルな若い女性</option>
+                    <option value="A photorealistic handsome young man">リアルな若い男性</option>
                     <option value="A K-pop idol style beautiful woman">K-POPアイドル風の美女</option>
                     <option value="A mature sophisticated realistic woman">洗練された大人の女性（実写）</option>
                     <option value="A ruggedly handsome realistic western man">ワイルドなイケメン西洋人男性</option>
@@ -772,8 +791,9 @@
                     <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
                     <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
                     <option value="--ar 3:2">🖼️ 写真比率(--ar 3:2)</option>
+                    <option value="--v 8.0">🤖 Midjourney V8 Alpha(--v 8.0)</option>
+                    <option value="--v 6.1">🤖 Midjourney v6.1(--v 6.1)</option>
                     <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
-                    <option value="--v 6.0">🤖 Midjourney v6(--v 6.0)</option>
                 </optgroup>
                 <optgroup label="キャラ固定機能">
                     <option value="--cref ">🔗 キャラ固定(--cref URL)</option>
@@ -889,7 +909,7 @@
             }
         }
 
-        // 一発で実写化のベースプロンプトを付与するボタン（構図維持対応）
+        // 一発で実写化のベースプロンプトを付与するボタン
         function applyRealSpells(gender) {
             const keepComp = document.getElementById('real-keep-composition').checked;
             
@@ -905,8 +925,7 @@
             let promptToAdd = gender === 'female' ? `${framingPrefix}${femaleSpecific}, ${baseReal}` : `${framingPrefix}${maleSpecific}, ${baseReal}`;
 
             addTextToPrompt(promptToAdd);
-            addTextToPrompt("--v 6.0");
-            addTextToPrompt("--style raw");
+            // V8対応のため、強制的な--v 6.0と--style rawの削除。ユーザーの選択に委ねる。
             
             const btnClass = gender === 'female' ? '.real-btn-female' : '.real-btn-male';
             const btn = document.querySelector(btnClass);
@@ -921,14 +940,49 @@
             }, 1000);
         }
 
-        // 闇鍋ガチャ（アニメ用・リアル用に分岐 + リアル用は主役と表情を強制上書き）
+        // 新機能：テキスト生成プロンプトの追加
+        function addTextGenerationPrompt() {
+            const contentInput = document.getElementById('text-content');
+            const styleInput = document.getElementById('text-style');
+            const rawContent = contentInput.value.trim();
+            const rawStyle = styleInput.value.trim();
+            
+            if (rawContent) {
+                // V8仕様：テキストは必ず引用符で囲む。単一単語でも有効。
+                let finalContent = '"' + rawContent + '"';
+                
+                // 表記方法（スタイル/場所）を組み合わせる
+                let finalValue = finalContent;
+                if (rawStyle) {
+                    finalValue += ' ' + rawStyle;
+                }
+                
+                addTextToPrompt(finalValue);
+                
+                contentInput.value = '';
+                styleInput.value = '';
+                
+                const btn = document.getElementById('btn-add-text');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✔ テキスト追加';
+                btn.style.backgroundColor = '#48bb78';
+                setTimeout(() => { 
+                    btn.innerHTML = originalText; 
+                    btn.style.backgroundColor = '#3182ce'; 
+                }, 800);
+            } else {
+                alert("画像に入れるテキスト（文字）を入力してください");
+            }
+        }
+
+        // 闇鍋ガチャ（アニメ用・リアル用に分岐）
         function generateRandomPrompt(type) {
             clearPrompt();
             
             // アニメガチャ用のカテゴリ
             const animeCategories = ['sel-subject', 'sel-nationality', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
             
-            // リアルガチャ用のランダムカテゴリ（主役・国籍・表情は除外）
+            // リアルガチャ用のランダムカテゴリ
             const realCategories = ['sel-hair-color', 'sel-hair-style', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
             
             let parts = [];
@@ -961,37 +1015,24 @@
                     }
                 });
 
-                // 日本人に固定チェックボックスの状態を取得
                 const isJpFix = document.getElementById('gacha-jp-fix').checked;
                 const isFemale = Math.random() > 0.3; // 女性7割、男性3割
                 
                 let baseSubject = "";
-                
                 if (isJpFix) {
-                    baseSubject = isFemale ? 
-                        "A high-resolution photorealistic portrait photograph of a young Japanese woman, distinct East Asian facial features" : 
-                        "A high-resolution photorealistic portrait photograph of a young Japanese man, distinct East Asian facial features";
+                    baseSubject = isFemale ? "photorealistic Japanese young woman" : "photorealistic Japanese handsome young man";
                 } else {
-                    baseSubject = isFemale ? 
-                        "A high-resolution photorealistic portrait photograph of a beautiful young woman" : 
-                        "A high-resolution photorealistic portrait photograph of a handsome young man";
+                    baseSubject = isFemale ? "photorealistic young woman" : "photorealistic handsome young man";
                 }
 
-                // 実写に映える安全な表情リスト
-                const safeRealExpressions = [
-                    "gentle soft smile", 
-                    "looking at viewer with a calm expression", 
-                    "slight smile", 
-                    "cool cinematic gaze", 
-                    "natural relaxed expression"
-                ];
+                // 安全な表情
+                const safeRealExpressions = ["gentle soft smile", " calm expression", "slight smile", "cool gaze", "natural expression"];
                 const safeExpression = safeRealExpressions[Math.floor(Math.random() * safeRealExpressions.length)];
                 
-                // 強力なアニメ除外ネガティブプロンプト
-                const realNegative = "--no anime, cartoon, illustration, 3d, sketch, painting, exaggerated expressions";
+                const realNegative = "--no anime, cartoon, illustration, painting, exaggerated expressions";
                 
-                // リアルガチャ用の完全プロンプト構築
-                output.value = baseSubject + ', ' + safeExpression + ', ' + parts.join(', ') + ', realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on 85mm lens ' + realNegative + ' --ar 9:16 --v 6.0 --style raw';
+                // ガチャではまだV8をデフォルトにせず、ユーザーの選択に委ねる。矛盾解消。
+                output.value = baseSubject + ', ' + safeExpression + ', ' + parts.join(', ') + ', highly detailed, photorealistic, 8k, cinematic lighting ' + realNegative + ' --ar 9:16';
                 
                 const btn = document.querySelector('.btn-gacha-real');
                 const originalText = btn.innerHTML;
