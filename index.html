@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.1</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -55,16 +55,22 @@
         .btn-add { flex-shrink: 0; padding: 8px 12px; background-color: #3182ce; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 0.9rem;}
         .btn-add:active { background-color: #2b6cb0; transform: scale(0.98); }
 
-        /* ガチャ用トグルのスタイル */
-        .gacha-options { text-align: center; margin-top: -5px; margin-bottom: -5px; }
-        .gacha-options label { font-size: 0.85rem; font-weight: bold; color: #b7791f; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;}
-        .gacha-options input[type="checkbox"] { accent-color: #d69e2e; transform: scale(1.1); }
+        /* オプション設定の共通スタイル */
+        .option-settings { text-align: center; margin-top: -5px; margin-bottom: 5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        .option-settings label { font-size: 0.85rem; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;}
+        .option-settings input[type="checkbox"] { transform: scale(1.1); }
+        
+        /* ガチャ・リアルオプションの色 */
+        .gacha-label { color: #b7791f; }
+        .gacha-label input[type="checkbox"] { accent-color: #d69e2e; }
+        .real-option-label { color: #d53f8c; }
+        .real-option-label input[type="checkbox"] { accent-color: #d53f8c; }
     </style>
 </head>
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13（完全版）</p>
+    <p class="subtitle">神プロンプトメーカー V13.1（構図維持対応）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -75,8 +81,8 @@
             <a href="https://note.com/ai_labo_chan/n/n2599d651222d" class="btn-control btn-link" target="_blank" rel="noopener noreferrer">👑 ロードマップ</a>
         </div>
         
-        <div class="gacha-options">
-            <label>
+        <div class="option-settings">
+            <label class="gacha-label">
                 <input type="checkbox" id="gacha-jp-fix" checked> リアルガチャを日本人に固定 🇯🇵
             </label>
         </div>
@@ -99,7 +105,14 @@
             <input type="number" id="base-image-iw" class="iw-input" placeholder="影響度(iw) 1.5" step="0.1" min="0.1" max="3.0">
             <button class="btn-add" id="btn-add-url" style="background-color: #d53f8c;" onclick="addRealBase()">追加</button>
         </div>
-        <div class="controls" style="margin-top: 10px;">
+
+        <div class="option-settings" style="margin-top: 10px;">
+            <label class="real-option-label">
+                <input type="checkbox" id="real-keep-composition"> 構図をアニメイラストに寄せる（全身対応）
+            </label>
+        </div>
+
+        <div class="controls" style="margin-top: 5px;">
             <button class="btn-control real-btn-female" onclick="applyRealSpells('female')">👩 リアル美女化</button>
             <button class="btn-control real-btn-male" onclick="applyRealSpells('male')">👨 リアル美男化</button>
         </div>
@@ -875,17 +888,27 @@
             }
         }
 
-        // 一発で実写化のベースプロンプトを付与するボタン
+        // 一発で実写化のベースプロンプトを付与するボタン（構図維持対応）
         function applyRealSpells(gender) {
-            const baseReal = "photorealistic, highly detailed portrait photograph, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on a full-frame camera like a Sony A1 with an 85mm f/1.4 lens";
+            const keepComp = document.getElementById('real-keep-composition').checked;
+            
+            // 共通のリアル化呪文
+            const baseReal = "photorealistic, highly detailed, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on a full-frame camera like a Sony A1 with an 85mm f/1.4 lens";
+            
+            // 構図維持モードがONの場合は Portrait を外して全身指示を追加
+            const framingPrefix = keepComp ? "full body shot, cinematic wide shot, " : "portrait photograph, ";
             
             const femaleSpecific = "young Japanese woman, gentle soft smile, distinct East Asian facial features";
-            const maleSpecific = "young Japanese man, distinct jawline, handsome cinematic portrait, distinct East Asian facial features";
+            const maleSpecific = "young Japanese man, distinct jawline, handsome cinematic facial features, distinct East Asian facial features";
             
-            const promptToAdd = gender === 'female' ? `${femaleSpecific}, ${baseReal}` : `${maleSpecific}, ${baseReal}`;
+            let promptToAdd = gender === 'female' ? `${framingPrefix}${femaleSpecific}, ${baseReal}` : `${framingPrefix}${maleSpecific}, ${baseReal}`;
             
+            // 構図維持の場合は末尾にさらに全身を強調
+            if (keepComp) {
+                promptToAdd += ", entire body visible from head to toe";
+            }
+
             addTextToPrompt(promptToAdd);
-            
             addTextToPrompt("--v 6.0");
             addTextToPrompt("--style raw");
             
