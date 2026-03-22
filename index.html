@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.1</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.2</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -70,7 +70,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.1（構図維持対応）</p>
+    <p class="subtitle">神プロンプトメーカー V13.2（構図同調アップデート）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -97,18 +97,18 @@
     <div class="category real-magic">
         <h2>✨ 0. 実写化・リアルテイスト錬金術</h2>
         <p class="help-text">
-            💡 <b>使い方：</b>ベースにしたい画像のURLを貼り付けてください。<br>
-            「影響度(iw)」は数値を大きくするほど元画像の構図や絵柄に近づきます。（推奨：0.5〜2.0）
+            💡 <b>【重要】アニメ絵を実写化するコツ：</b><br>
+            影響度(iw)は<b>「0.6〜0.8」</b>程度に下げ、下のメニューから<b>「元画像と同じポーズ・服装」を正確に選んで追加</b>すると、構図を維持したままリアル化できます！
         </p>
         <div class="input-group">
             <input type="text" id="base-image-url" class="url-input" placeholder="画像URL (https://...)">
-            <input type="number" id="base-image-iw" class="iw-input" placeholder="影響度(iw) 1.5" step="0.1" min="0.1" max="3.0">
+            <input type="number" id="base-image-iw" class="iw-input" placeholder="影響度(iw) 0.8" step="0.1" min="0.1" max="3.0">
             <button class="btn-add" id="btn-add-url" style="background-color: #d53f8c;" onclick="addRealBase()">追加</button>
         </div>
 
         <div class="option-settings" style="margin-top: 10px;">
             <label class="real-option-label">
-                <input type="checkbox" id="real-keep-composition"> 構図をアニメイラストに寄せる（全身対応）
+                <input type="checkbox" id="real-keep-composition"> 顔アップ強制を解除して元画像の構図を優先する
             </label>
         </div>
 
@@ -870,7 +870,7 @@
                 let currentText = output.value.trim();
                 output.value = url + " " + currentText;
                 
-                if(!iw) iw = "1.5";
+                if(!iw) iw = "0.8"; // デフォルトを0.8に変更
                 addTextToPrompt(`--iw ${iw}`);
                 
                 urlInput.value = '';
@@ -888,25 +888,20 @@
             }
         }
 
-        // 一発で実写化のベースプロンプトを付与するボタン（構図維持対応）
+        // 一発で実写化のベースプロンプトを付与するボタン
         function applyRealSpells(gender) {
             const keepComp = document.getElementById('real-keep-composition').checked;
             
             // 共通のリアル化呪文
             const baseReal = "photorealistic, highly detailed, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on a full-frame camera like a Sony A1 with an 85mm f/1.4 lens";
             
-            // 構図維持モードがONの場合は Portrait を外して全身指示を追加
-            const framingPrefix = keepComp ? "full body shot, cinematic wide shot, " : "portrait photograph, ";
+            // 構図維持モードがONの場合は Portrait を外してプレーンな状態にする
+            const framingPrefix = keepComp ? "" : "portrait photograph, ";
             
             const femaleSpecific = "young Japanese woman, gentle soft smile, distinct East Asian facial features";
             const maleSpecific = "young Japanese man, distinct jawline, handsome cinematic facial features, distinct East Asian facial features";
             
             let promptToAdd = gender === 'female' ? `${framingPrefix}${femaleSpecific}, ${baseReal}` : `${framingPrefix}${maleSpecific}, ${baseReal}`;
-            
-            // 構図維持の場合は末尾にさらに全身を強調
-            if (keepComp) {
-                promptToAdd += ", entire body visible from head to toe";
-            }
 
             addTextToPrompt(promptToAdd);
             addTextToPrompt("--v 6.0");
