@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V16</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V17</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -64,7 +64,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V16（日本人固定機能搭載版）</p>
+    <p class="subtitle">神プロンプトメーカー V17（リアルガチャ完全実写化対応版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -124,8 +124,8 @@
                     <option value="A futuristic cyborg">近未来のサイボーグ</option>
                 </optgroup>
                 <optgroup label="実写・リアル系">
-                    <option value="A high-resolution photorealistic young woman">リアルな若い女性</option>
-                    <option value="A handsome cinematic portrait of a young man">リアルな若い男性</option>
+                    <option value="A high-resolution photorealistic portrait photograph of a young woman">リアルな若い女性</option>
+                    <option value="A handsome cinematic portrait photograph of a young man">リアルな若い男性</option>
                     <option value="A K-pop idol style beautiful woman">K-POPアイドル風の美女</option>
                     <option value="A mature sophisticated realistic woman">洗練された大人の女性（実写）</option>
                 </optgroup>
@@ -739,7 +739,7 @@
                 <option value="--no animal ears, animal tail">🐱 ケモミミ・尻尾を除外</option>
                 <option value="--no glasses">👓 メガネを除外</option>
                 <option value="--no 3d, realistic">🖌️ 3D感・リアルさを除外（アニメ塗り重視）</option>
-                <option value="--no anime, cartoon, illustration">🚫 【実写用】アニメやイラスト感を除外</option>
+                <option value="--no anime, cartoon, illustration, 3d, sketch, painting">🚫 【実写用】アニメやイラスト感を除外</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-negative')">追加</button>
         </div>
@@ -856,34 +856,68 @@
             }, 1000);
         }
 
-        // 闇鍋ガチャ（アニメ用・リアル用に分岐 + 日本人固定機能）
+        // 闇鍋ガチャ（アニメ用・リアル用に分岐 + リアル用は主役を強制上書き）
         function generateRandomPrompt(type) {
             clearPrompt();
-            const categories = ['sel-subject', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg'];
+            
+            // アニメガチャ用のカテゴリ（主役・国籍含む）
+            const animeCategories = ['sel-subject', 'sel-nationality', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
+            
+            // リアルガチャ用のランダムカテゴリ（主役・国籍は除外して後で強制指定する）
+            const realCategories = ['sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
+            
             let parts = [];
             
-            categories.forEach(id => {
-                const select = document.getElementById(id);
-                const options = Array.from(select.options).filter(opt => opt.value !== '');
-                if(options.length > 0) {
-                    const randomOpt = options[Math.floor(Math.random() * options.length)];
-                    parts.push(randomOpt.value);
-                }
-            });
-            
             if (type === 'anime') {
+                animeCategories.forEach(id => {
+                    const select = document.getElementById(id);
+                    if(!select) return;
+                    const options = Array.from(select.options).filter(opt => opt.value !== '');
+                    if(options.length > 0) {
+                        const randomOpt = options[Math.floor(Math.random() * options.length)];
+                        parts.push(randomOpt.value);
+                    }
+                });
+                
                 output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
                 const btn = document.querySelector('.btn-gacha-anime');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✨ アニメ錬成！';
                 setTimeout(() => { btn.innerHTML = originalText; }, 1000);
+                
             } else if (type === 'real') {
+                realCategories.forEach(id => {
+                    const select = document.getElementById(id);
+                    if(!select) return;
+                    const options = Array.from(select.options).filter(opt => opt.value !== '');
+                    if(options.length > 0) {
+                        const randomOpt = options[Math.floor(Math.random() * options.length)];
+                        parts.push(randomOpt.value);
+                    }
+                });
+
                 // 日本人に固定チェックボックスの状態を取得
                 const isJpFix = document.getElementById('gacha-jp-fix').checked;
-                const jpPrompt = isJpFix ? "Japanese, distinct East Asian facial features, " : "";
+                // 性別をランダム決定（女性7割、男性3割くらいの確率で）
+                const isFemale = Math.random() > 0.3;
                 
-                // リアルガチャ用のプロンプト構築
-                output.value = jpPrompt + parts.join(', ') + ', photorealistic, 8k resolution, ultra-realistic, realistic skin texture, cinematic lighting, shot on 85mm lens --ar 9:16 --v 6.0 --style raw';
+                let baseSubject = "";
+                
+                if (isJpFix) {
+                    baseSubject = isFemale ? 
+                        "A high-resolution photorealistic portrait photograph of a young Japanese woman, distinct East Asian facial features" : 
+                        "A high-resolution photorealistic portrait photograph of a young Japanese man, distinct East Asian facial features";
+                } else {
+                    baseSubject = isFemale ? 
+                        "A high-resolution photorealistic portrait photograph of a beautiful young woman" : 
+                        "A high-resolution photorealistic portrait photograph of a handsome young man";
+                }
+                
+                // 強力なアニメ除外ネガティブプロンプト
+                const realNegative = "--no anime, cartoon, illustration, 3d, sketch, painting";
+                
+                // リアルガチャ用の完全プロンプト構築
+                output.value = baseSubject + ', ' + parts.join(', ') + ', realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on 85mm lens ' + realNegative + ' --ar 9:16 --v 6.0 --style raw';
                 
                 const btn = document.querySelector('.btn-gacha-real');
                 const originalText = btn.innerHTML;
