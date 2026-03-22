@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V12</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -29,13 +29,22 @@
         .btn-link { background-color: #FF8C00; flex: 1.2; }
         
         /* 新機能ボタンのスタイル */
-        .btn-gacha { background-color: #805ad5; } /* 紫 */
+        .btn-gacha { background-color: #805ad5; } 
         .btn-gacha:active { background-color: #6b46c1; }
-        .btn-standing { background-color: #319795; flex: 1.5; } /* 青緑 */
+        .btn-standing { background-color: #319795; flex: 1.5; } 
         .btn-standing:active { background-color: #2c7a7b; }
 
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
+        
+        /* 実写化専用パネルのスタイル */
+        .category.real-magic { border: 2px solid #ed64a6; background-color: #fff5f7; }
+        .category.real-magic h2 { color: #d53f8c; border-bottom: 2px solid #fed7e2; }
+        .real-btn-female { background-color: #ed64a6; }
+        .real-btn-male { background-color: #4299e1; }
+        .url-input { flex: 2; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; }
+        .iw-input { flex: 0.8; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; }
+
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; }
         select { flex: 1; min-width: 0; text-overflow: ellipsis; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #2d3748; }
         .btn-add { padding: 8px 12px; background-color: #3182ce; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 0.9rem;}
@@ -45,7 +54,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V12（新機能アプデ版）</p>
+    <p class="subtitle">神プロンプトメーカー V13（実写化対応版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -61,36 +70,58 @@
         </div>
     </div>
 
+    <div class="category real-magic">
+        <h2>✨ 0. 実写化・リアルテイスト錬金術</h2>
+        <div class="input-group">
+            <input type="text" id="base-image-url" class="url-input" placeholder="ベース画像URL (https://...)">
+            <input type="number" id="base-image-iw" class="iw-input" placeholder="影響度(iw) 1.5" step="0.1" min="0.1" max="3.0">
+            <button class="btn-add" id="btn-add-url" style="background-color: #d53f8c;" onclick="addRealBase()">URL追加</button>
+        </div>
+        <div class="controls" style="margin-top: 10px;">
+            <button class="btn-control real-btn-female" onclick="applyRealSpells('female')">👩 リアル美女化の呪文</button>
+            <button class="btn-control real-btn-male" onclick="applyRealSpells('male')">👨 リアル美男化の呪文</button>
+        </div>
+    </div>
+
     <div class="category">
         <h2>👤 1. ベース（主役・体型）</h2>
         <div class="input-group">
             <select id="sel-subject">
                 <option value="">主役を選んでください...</option>
-                <option value="1girl">1人の女の子 (1girl)</option>
-                <option value="1boy">1人の男の子 (1boy)</option>
-                <option value="A beautiful anime angel girl">美しい天使の女の子</option>
-                <option value="A handsome young man">イケメンの青年</option>
-                <option value="A cute elf girl">可愛いエルフの女の子</option>
-                <option value="A cyberpunk hacker">サイバーパンクなハッカー</option>
-                <option value="A powerful witch">強力な魔女</option>
-                <option value="A mecha pilot">メカパイロット</option>
-                <option value="A magical girl">魔法少女</option>
-                <option value="A vampire noble">吸血鬼の貴族</option>
-                <option value="A holy knight">聖騎士（ナイト）</option>
-                <option value="A beautiful goddess">美しい女神</option>
-                <option value="A shrine maiden">巫女</option>
-                <option value="A ninja girl">くノ一（忍者）</option>
-                <option value="A pop idol">ポップアイドル</option>
-                <option value="A beautiful fairy">美しい妖精</option>
-                <option value="A fierce dragon knight">勇猛な竜騎士</option>
-                <option value="A steampunk inventor">スチームパンクの発明家</option>
-                <option value="A royal princess">王室の姫</option>
-                <option value="A demon lord">魔王</option>
-                <option value="A mysterious fortune teller">ミステリアスな占い師</option>
-                <option value="A high school delinquent">不良高校生</option>
-                <option value="A brave adventurer">勇敢な冒険者</option>
-                <option value="A gentle healer">優しいヒーラー</option>
-                <option value="A phantom thief">怪盗</option>
+                <optgroup label="アニメ・2D系">
+                    <option value="1girl">1人の女の子 (1girl)</option>
+                    <option value="1boy">1人の男の子 (1boy)</option>
+                    <option value="A beautiful anime angel girl">美しい天使の女の子</option>
+                    <option value="A cyberpunk hacker">サイバーパンクなハッカー</option>
+                    <option value="A magical girl">魔法少女</option>
+                    <option value="A ninja girl">くノ一（忍者）</option>
+                </optgroup>
+                <optgroup label="実写・リアル系">
+                    <option value="A high-resolution photorealistic young Japanese woman">リアルな若い日本人女性</option>
+                    <option value="A handsome cinematic portrait of a young Japanese man">リアルな若い日本人男性</option>
+                    <option value="A beautiful realistic western woman">美しい西洋人女性</option>
+                    <option value="A ruggedly handsome realistic western man">ワイルドなイケメン西洋人男性</option>
+                </optgroup>
+                <optgroup label="ファンタジー・その他">
+                    <option value="A cute elf girl">可愛いエルフの女の子</option>
+                    <option value="A powerful witch">強力な魔女</option>
+                    <option value="A mecha pilot">メカパイロット</option>
+                    <option value="A vampire noble">吸血鬼の貴族</option>
+                    <option value="A holy knight">聖騎士（ナイト）</option>
+                    <option value="A beautiful goddess">美しい女神</option>
+                    <option value="A shrine maiden">巫女</option>
+                    <option value="A pop idol">ポップアイドル</option>
+                    <option value="A beautiful fairy">美しい妖精</option>
+                    <option value="A fierce dragon knight">勇猛な竜騎士</option>
+                    <option value="A steampunk inventor">スチームパンクの発明家</option>
+                    <option value="A royal princess">王室の姫</option>
+                    <option value="A demon lord">魔王</option>
+                    <option value="A mysterious fortune teller">ミステリアスな占い師</option>
+                    <option value="A high school delinquent">不良高校生</option>
+                    <option value="A brave adventurer">勇敢な冒険者</option>
+                    <option value="A gentle healer">優しいヒーラー</option>
+                    <option value="A phantom thief">怪盗</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-subject')">追加</button>
         </div>
@@ -251,6 +282,13 @@
         <div class="input-group">
             <select id="sel-tops">
                 <option value="">全身・トップス...</option>
+                <optgroup label="実写向け・リアル服">
+                    <option value="simple plain cotton t-shirt">シンプルな無地コットンTシャツ</option>
+                    <option value="realistic modern streetwear">リアルなモダインストリートウェア</option>
+                    <option value="tailored suit jacket">仕立ての良いスーツジャケット</option>
+                    <option value="casual knit sweater">カジュアルなニットセーター</option>
+                    <option value="denim jacket">デニムジャケット</option>
+                </optgroup>
                 <optgroup label="女性向け">
                     <option value="pure white dress">純白のドレス</option>
                     <option value="school uniform">学生服</option>
@@ -392,6 +430,7 @@
             <select id="sel-bg">
                 <option value="">背景を選んでください...</option>
                 <option value="simple background">シンプルな背景</option>
+                <option value="modern room with large windows">大きな窓のあるモダンな部屋</option>
                 <option value="cyberpunk city background">サイバーパンクな街</option>
                 <option value="ruined city background">廃墟の街</option>
                 <option value="magical forest background">魔法の森</option>
@@ -508,15 +547,22 @@
         <div class="input-group">
             <select id="sel-quality">
                 <option value="">品質・パラメータ（末尾に追加）...</option>
-                <option value="masterpiece, best quality, ultra-detailed">✨ 最高品質セット</option>
-                <option value="--ar 16:9">📺 横長(--ar 16:9)</option>
-                <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
-                <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
-                <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
-                <option value="--v 6.0">🤖 Midjourney v6(--v 6.0)</option>
-                <option value="--cref ">🔗 キャラ固定(--cref URL)</option>
-                <option value="--cw 0">👗 服・背景変更用(--cw 0:顔のみ固定)</option>
-                <option value="--cw 100">🔒 全体固定用(--cw 100:服装も維持)</option>
+                <optgroup label="品質セット">
+                    <option value="masterpiece, best quality, ultra-detailed">✨ 最高品質セット(アニメ用)</option>
+                    <option value="--style raw">📸 実写用パラメータ(--style raw)</option>
+                </optgroup>
+                <optgroup label="アスペクト比・バージョン">
+                    <option value="--ar 16:9">📺 横長(--ar 16:9)</option>
+                    <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
+                    <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
+                    <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
+                    <option value="--v 6.0">🤖 Midjourney v6(--v 6.0)</option>
+                </optgroup>
+                <optgroup label="キャラ固定機能">
+                    <option value="--cref ">🔗 キャラ固定(--cref URL)</option>
+                    <option value="--cw 0">👗 服・背景変更用(--cw 0:顔のみ固定)</option>
+                    <option value="--cw 100">🔒 全体固定用(--cw 100:服装も維持)</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-quality')">追加</button>
         </div>
@@ -535,6 +581,7 @@
                 <option value="--no animal ears, animal tail">🐱 ケモミミ・尻尾を除外</option>
                 <option value="--no glasses">👓 メガネを除外</option>
                 <option value="--no 3d, realistic">🖌️ 3D感・リアルさを除外（アニメ塗り重視）</option>
+                <option value="--no anime, cartoon, illustration">🚫 【実写用】アニメやイラスト感を除外</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-negative')">追加</button>
         </div>
@@ -596,7 +643,64 @@
             select.selectedIndex = 0;
         }
 
-        // 【新機能1】闇鍋ガチャ（ランダム抽出）
+        // 【新機能】URLをプロンプトの先頭に追加する処理
+        function addRealBase() {
+            const urlInput = document.getElementById('base-image-url');
+            const url = urlInput.value.trim();
+            let iw = document.getElementById('base-image-iw').value;
+            
+            if (url) {
+                // Midjourneyの仕様上、画像URLはプロンプトの一番先頭に置く
+                let currentText = output.value.trim();
+                output.value = url + " " + currentText;
+                
+                // iw値の追加
+                if(!iw) iw = "1.5"; // デフォルト値
+                addTextToPrompt(`--iw ${iw}`);
+                
+                // 入力欄をクリア
+                urlInput.value = '';
+                
+                // ボタンのアニメーション
+                const btn = document.getElementById('btn-add-url');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✔ 追加';
+                btn.style.backgroundColor = '#48bb78';
+                setTimeout(() => { btn.innerHTML = originalText; btn.style.backgroundColor = '#d53f8c'; }, 800);
+            } else {
+                alert("画像URLを入力してください");
+            }
+        }
+
+        // 【新機能】一発で実写化のベースプロンプトを付与するボタン
+        function applyRealSpells(gender) {
+            const baseReal = "photorealistic, highly detailed portrait photograph, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on a full-frame camera like a Sony A1 with an 85mm f/1.4 lens";
+            
+            const femaleSpecific = "young Japanese woman, gentle soft smile, distinct East Asian facial features";
+            const maleSpecific = "young Japanese man, distinct jawline, handsome cinematic portrait, distinct East Asian facial features";
+            
+            const promptToAdd = gender === 'female' ? `${femaleSpecific}, ${baseReal}` : `${maleSpecific}, ${baseReal}`;
+            
+            addTextToPrompt(promptToAdd);
+            
+            // 実写用の必須パラメータを付与
+            addTextToPrompt("--v 6.0");
+            addTextToPrompt("--style raw");
+            
+            // ボタンのアニメーション
+            const btnClass = gender === 'female' ? '.real-btn-female' : '.real-btn-male';
+            const btn = document.querySelector(btnClass);
+            const originalColor = btn.style.backgroundColor;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✨ 魔法付与完了！';
+            btn.style.backgroundColor = '#48bb78';
+            setTimeout(() => { 
+                btn.innerHTML = originalText; 
+                btn.style.backgroundColor = originalColor; // 元の色に戻す
+            }, 1000);
+        }
+
+        // 闇鍋ガチャ（ランダム抽出）
         function generateRandomPrompt() {
             clearPrompt();
             const categories = ['sel-subject', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg'];
@@ -604,7 +708,6 @@
             
             categories.forEach(id => {
                 const select = document.getElementById(id);
-                // 空白以外のオプションを取得
                 const options = Array.from(select.options).filter(opt => opt.value !== '');
                 if(options.length > 0) {
                     const randomOpt = options[Math.floor(Math.random() * options.length)];
@@ -612,26 +715,22 @@
                 }
             });
             
-            // ランダムパーツと、汎用の高品質・縦長パラメータを結合
             output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
             
-            // ボタンのアニメーション
             const btn = document.querySelector('.btn-gacha');
             const originalText = btn.innerHTML;
             btn.innerHTML = '✨ 錬成完了！';
             setTimeout(() => { btn.innerHTML = originalText; }, 1000);
         }
 
-        // 【新機能2】完璧な立ち絵モード（影消し完全版）
+        // 完璧な立ち絵モード
         function applyPerfectStandingMode() {
             const magicPrompt = "full body toe to head shot, standing straight on two feet, simple white background, completely white background, no shadows, flat color";
-            // 所長考案！影（shadow）を確実に消すネガティブプロンプト
             const magicNegative = "--no floor, shadow";
             
             addTextToPrompt(magicPrompt);
             addTextToPrompt(magicNegative);
             
-            // ボタンのアニメーション
             const btn = document.querySelector('.btn-standing');
             const originalText = btn.innerHTML;
             btn.innerHTML = '✨ 追加完了！';
