@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.4</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.5</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -75,7 +75,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.4（V8対応＆テキスト錬成）</p>
+    <p class="subtitle">神プロンプトメーカー V13.5（V8テキスト選択対応）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -102,13 +102,41 @@
     <div class="category special text-magic">
         <h2>🖊️ 特殊. テキスト生成（Midjourney V8以降専用）</h2>
         <p class="help-text">
-            💡 <b>V8からテキスト生成が劇的に進化しました！</b><br>
-            画像に入れたい文字と、その表記方法（場所、スタイル）を組み合わせて追加します。<br>
-            <b>例：</b> テキスト内容に `"OPEN"`、表記方法に `as a glowing neon sign` と入力して追加。
+            💡 <b>V8からの新機能！画像内に文字を入れられます。</b><br>
+            左の枠に入れたい文字を入力し、右のプルダウンで「どこに・どう表記するか」を選んで追加してください。
         </p>
         <div class="input-group">
-            <input type="text" id="text-content" class="text-input" placeholder="画像に入れる文字（例： OPEN）">
-            <input type="text" id="text-style" class="text-input" placeholder="表記方法（例： as a glowing neon sign）">
+            <input type="text" id="text-content" class="text-input" placeholder="入れる文字（例： HELLO）">
+            <select id="text-style">
+                <option value="">文字の表記方法（スタイル・場所）...</option>
+                <optgroup label="光・サイバー・看板">
+                    <option value="as a glowing neon sign">光るネオンサインとして</option>
+                    <option value="as a huge billboard">巨大なビルボード（看板）として</option>
+                    <option value="as a holographic text projection">ホログラムテキストとして</option>
+                    <option value="written in cinematic title font">映画のタイトルロゴ風</option>
+                </optgroup>
+                <optgroup label="服・ファッション">
+                    <option value="printed on a t-shirt">Tシャツにプリントされている</option>
+                    <option value="embroidered on a jacket">ジャケットに刺繍されている</option>
+                    <option value="written on a baseball cap">キャップに書かれている</option>
+                </optgroup>
+                <optgroup label="街・風景・壁">
+                    <option value="as graffiti on a brick wall">レンガの壁のグラフィティ（落書き）</option>
+                    <option value="written on a street sign">道路標識に書かれている</option>
+                    <option value="carved into a stone wall">石壁に彫られている</option>
+                </optgroup>
+                <optgroup label="紙・本・画面">
+                    <option value="written on a piece of paper">紙のメモに書かれている</option>
+                    <option value="printed on a magazine cover">雑誌の表紙のタイトル</option>
+                    <option value="displayed on a computer screen">PCモニターに表示されている</option>
+                    <option value="as a newspaper headline">新聞の見出し</option>
+                </optgroup>
+                <optgroup label="小物・その他">
+                    <option value="written on a coffee mug">コーヒーマグに書かれている</option>
+                    <option value="engraved on a metal plate">金属プレートに刻印されている</option>
+                    <option value="as a tattoo on the skin">肌のタトゥーとして</option>
+                </optgroup>
+            </select>
             <button class="btn-add" id="btn-add-text" style="background-color: #3182ce;" onclick="addTextGenerationPrompt()">追加</button>
         </div>
     </div>
@@ -943,24 +971,24 @@
         // 新機能：テキスト生成プロンプトの追加
         function addTextGenerationPrompt() {
             const contentInput = document.getElementById('text-content');
-            const styleInput = document.getElementById('text-style');
+            const styleSelect = document.getElementById('text-style');
             const rawContent = contentInput.value.trim();
-            const rawStyle = styleInput.value.trim();
+            const selectedStyle = styleSelect.value;
             
             if (rawContent) {
                 // V8仕様：テキストは必ず引用符で囲む。単一単語でも有効。
                 let finalContent = '"' + rawContent + '"';
                 
-                // 表記方法（スタイル/場所）を組み合わせる
+                // 表記方法（スタイル/場所）が選ばれていれば組み合わせる
                 let finalValue = finalContent;
-                if (rawStyle) {
-                    finalValue += ' ' + rawStyle;
+                if (selectedStyle !== "") {
+                    finalValue += ' ' + selectedStyle;
                 }
                 
                 addTextToPrompt(finalValue);
                 
                 contentInput.value = '';
-                styleInput.value = '';
+                styleSelect.selectedIndex = 0;
                 
                 const btn = document.getElementById('btn-add-text');
                 const originalText = btn.innerHTML;
