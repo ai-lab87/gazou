@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V14</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -23,15 +23,17 @@
         /* コントロールボタン群のスタイル */
         .controls-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .controls { display: flex; gap: 8px; }
-        .btn-control { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.2s; }
+        .btn-control { flex: 1; padding: 10px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 0.9rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.2s; }
         .btn-copy { background-color: #38a169; }
         .btn-clear { background-color: #e53e3e; }
-        .btn-link { background-color: #FF8C00; flex: 1.2; }
+        .btn-link { background-color: #FF8C00; }
         
         /* 新機能ボタンのスタイル */
-        .btn-gacha { background-color: #805ad5; } 
-        .btn-gacha:active { background-color: #6b46c1; }
-        .btn-standing { background-color: #319795; flex: 1.5; } 
+        .btn-gacha-anime { background-color: #805ad5; } 
+        .btn-gacha-anime:active { background-color: #6b46c1; }
+        .btn-gacha-real { background-color: #d69e2e; } /* リアルガチャはオレンジ/ゴールド系 */
+        .btn-gacha-real:active { background-color: #b7791f; }
+        .btn-standing { background-color: #319795; } 
         .btn-standing:active { background-color: #2c7a7b; }
 
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -54,7 +56,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13（実写化対応版）</p>
+    <p class="subtitle">神プロンプトメーカー V14（実写ガチャ＆バグ修正版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -62,11 +64,12 @@
         <div class="controls">
             <button class="btn-control btn-copy" onclick="copyPrompt()">📋 コピー</button>
             <button class="btn-control btn-clear" onclick="clearPrompt()">🗑️ クリア</button>
-            <a href="https://note.com/ai_labo_chan/n/n2599d651222d" class="btn-control btn-link" target="_blank" rel="noopener noreferrer">👑 完全ロードマップへ</a>
+            <a href="https://note.com/ai_labo_chan/n/n2599d651222d" class="btn-control btn-link" target="_blank" rel="noopener noreferrer">👑 ロードマップ</a>
         </div>
         <div class="controls">
-            <button class="btn-control btn-gacha" onclick="generateRandomPrompt()">🎲 おまかせガチャ</button>
-            <button class="btn-control btn-standing" onclick="applyPerfectStandingMode()">🧍‍♀️ 完璧な立ち絵セット</button>
+            <button class="btn-control btn-gacha-anime" onclick="generateRandomPrompt('anime')">🎲 アニメガチャ</button>
+            <button class="btn-control btn-gacha-real" onclick="generateRandomPrompt('real')">🎲 リアルガチャ</button>
+            <button class="btn-control btn-standing" onclick="applyPerfectStandingMode()">🧍‍♀️ 完璧な立ち絵</button>
         </div>
     </div>
 
@@ -637,42 +640,41 @@
             btn.style.backgroundColor = '#48bb78';
             setTimeout(() => {
                 btn.innerHTML = originalText;
-                btn.style.backgroundColor = '#3182ce';
+                btn.style.backgroundColor = ''; // CSSのクラス指定に戻す
             }, 800);
             
             select.selectedIndex = 0;
         }
 
-        // 【新機能】URLをプロンプトの先頭に追加する処理
+        // URLをプロンプトの先頭に追加する処理
         function addRealBase() {
             const urlInput = document.getElementById('base-image-url');
             const url = urlInput.value.trim();
             let iw = document.getElementById('base-image-iw').value;
             
             if (url) {
-                // Midjourneyの仕様上、画像URLはプロンプトの一番先頭に置く
                 let currentText = output.value.trim();
                 output.value = url + " " + currentText;
                 
-                // iw値の追加
-                if(!iw) iw = "1.5"; // デフォルト値
+                if(!iw) iw = "1.5";
                 addTextToPrompt(`--iw ${iw}`);
                 
-                // 入力欄をクリア
                 urlInput.value = '';
                 
-                // ボタンのアニメーション
                 const btn = document.getElementById('btn-add-url');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✔ 追加';
                 btn.style.backgroundColor = '#48bb78';
-                setTimeout(() => { btn.innerHTML = originalText; btn.style.backgroundColor = '#d53f8c'; }, 800);
+                setTimeout(() => { 
+                    btn.innerHTML = originalText; 
+                    btn.style.backgroundColor = ''; // CSSの指定に戻す
+                }, 800);
             } else {
                 alert("画像URLを入力してください");
             }
         }
 
-        // 【新機能】一発で実写化のベースプロンプトを付与するボタン
+        // 一発で実写化のベースプロンプトを付与するボタン
         function applyRealSpells(gender) {
             const baseReal = "photorealistic, highly detailed portrait photograph, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on a full-frame camera like a Sony A1 with an 85mm f/1.4 lens";
             
@@ -683,25 +685,24 @@
             
             addTextToPrompt(promptToAdd);
             
-            // 実写用の必須パラメータを付与
             addTextToPrompt("--v 6.0");
             addTextToPrompt("--style raw");
             
-            // ボタンのアニメーション
             const btnClass = gender === 'female' ? '.real-btn-female' : '.real-btn-male';
             const btn = document.querySelector(btnClass);
-            const originalColor = btn.style.backgroundColor;
             const originalText = btn.innerHTML;
+            
             btn.innerHTML = '✨ 魔法付与完了！';
-            btn.style.backgroundColor = '#48bb78';
+            btn.style.backgroundColor = '#48bb78'; // 一時的に色を変更
+            
             setTimeout(() => { 
                 btn.innerHTML = originalText; 
-                btn.style.backgroundColor = originalColor; // 元の色に戻す
+                btn.style.backgroundColor = ''; // インラインスタイルを消去し、元のCSSに戻す
             }, 1000);
         }
 
-        // 闇鍋ガチャ（ランダム抽出）
-        function generateRandomPrompt() {
+        // 闇鍋ガチャ（アニメ用・リアル用に分岐）
+        function generateRandomPrompt(type) {
             clearPrompt();
             const categories = ['sel-subject', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg'];
             let parts = [];
@@ -715,12 +716,20 @@
                 }
             });
             
-            output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
-            
-            const btn = document.querySelector('.btn-gacha');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '✨ 錬成完了！';
-            setTimeout(() => { btn.innerHTML = originalText; }, 1000);
+            if (type === 'anime') {
+                output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
+                const btn = document.querySelector('.btn-gacha-anime');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✨ アニメ錬成！';
+                setTimeout(() => { btn.innerHTML = originalText; }, 1000);
+            } else if (type === 'real') {
+                // リアル用は末尾に実写必須パラメータを強力に追加
+                output.value = parts.join(', ') + ', photorealistic, 8k resolution, ultra-realistic, realistic skin texture, cinematic lighting, shot on 85mm lens --ar 9:16 --v 6.0 --style raw';
+                const btn = document.querySelector('.btn-gacha-real');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✨ リアル錬成！';
+                setTimeout(() => { btn.innerHTML = originalText; }, 1000);
+            }
         }
 
         // 完璧な立ち絵モード
@@ -743,7 +752,7 @@
             const copyBtn = document.querySelector('.btn-copy');
             const originalText = copyBtn.innerHTML;
             copyBtn.innerHTML = '✅ 完了！'; copyBtn.style.backgroundColor = '#2f855a';
-            setTimeout(() => { copyBtn.innerHTML = originalText; copyBtn.style.backgroundColor = '#38a169'; }, 2000);
+            setTimeout(() => { copyBtn.innerHTML = originalText; copyBtn.style.backgroundColor = ''; }, 2000);
         }
     </script>
 </body>
