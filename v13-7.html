@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.9</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.10</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -36,7 +36,6 @@
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         
-        /* 特殊カテゴリのスタイル */
         .category.special { border: 2px solid; }
         .category.real-magic { border-color: #ed64a6; background-color: #fff5f7; }
         .category.real-magic h2 { color: #d53f8c; border-bottom: 2px solid #fed7e2; margin-bottom: 5px; }
@@ -74,7 +73,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.9（バナーキャラ自由化）</p>
+    <p class="subtitle">神プロンプトメーカー V13.10（語彙力爆発アップデート）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -118,19 +117,31 @@
                 <option value="a cinematic billboard displaying">シネマティックな看板</option>
                 <option value="a wooden signboard reading">アウトドア風の木製看板</option>
                 <option value="a holographic text projection displaying">近未来のホログラムテキスト</option>
+                <option value="painted on a large canvas displaying">大きなキャンバスに描かれた文字</option>
+                <option value="glowing magical floating letters spelling">魔法で光って浮かぶ文字</option>
             </select>
         </div>
 
         <div class="input-group">
             <select id="banner-subject">
                 <option value="">主役（デフォルトは1girl / 若い女性）...</option>
-                <option value="none">🚫 キャラクターなし（文字と背景のみ）</option>
-                <option value="1girl">1人の女の子 (1girl)</option>
-                <option value="1boy">1人の男の子 (1boy)</option>
-                <option value="a cute cat">可愛い猫</option>
-                <option value="a cute dog">可愛い犬</option>
-                <option value="a cool camper">クールなキャンパー</option>
-                <option value="a futuristic robot">近未来のロボット</option>
+                <optgroup label="キャラクターなし・動物">
+                    <option value="none">🚫 キャラクターなし（文字と背景のみ）</option>
+                    <option value="a cute cat">可愛い猫</option>
+                    <option value="a cute dog">可愛い犬</option>
+                    <option value="a wise old owl">賢そうなフクロウ</option>
+                </optgroup>
+                <optgroup label="職業・スタイル（アニメ/リアル共通）">
+                    <option value="1girl">1人の女の子 (1girl)</option>
+                    <option value="1boy">1人の男の子 (1boy)</option>
+                    <option value="a cool camper">クールなキャンパー</option>
+                    <option value="a beautiful teacher">美しい先生</option>
+                    <option value="a handsome doctor">イケメンの医者</option>
+                    <option value="a female researcher in a white coat">白衣を着た女性研究員</option>
+                    <option value="a cyberpunk hacker">サイバーパンクなハッカー</option>
+                    <option value="a cute maid">可愛いメイド</option>
+                    <option value="a confident business person">自信に満ちたビジネスパーソン</option>
+                </optgroup>
             </select>
         </div>
 
@@ -142,12 +153,14 @@
                     <option value="winking and pointing at the sign">ウインクしてテキストを指差す</option>
                     <option value="explaining with a pointer stick, wearing glasses">メガネをかけて指示棒で解説する</option>
                     <option value="holding a magnifying glass, looking curious">虫眼鏡を持ってテキストを覗き込む</option>
+                    <option value="presenting the text with both hands">両手でテキストを案内する（プレゼンポーズ）</option>
                 </optgroup>
                 <optgroup label="リラックス・ひょっこり">
                     <option value="peeking from the side of the text, cute expression">テキストの横からひょっこり覗き込む</option>
                     <option value="sitting on top of the text, relaxing">テキストの上に座ってリラックスする</option>
                     <option value="leaning against the text, looking at viewer">テキストに寄りかかってこちらを見る</option>
                     <option value="sleeping peacefully next to the text">テキストの横でスヤスヤ眠る</option>
+                    <option value="drinking coffee while looking at the text">コーヒーを飲みながらテキストを眺める</option>
                 </optgroup>
             </select>
         </div>
@@ -160,6 +173,8 @@
                 <option value="cozy cafe interior, out of focus">おしゃれなカフェの店内（背景ボケ）</option>
                 <option value="cyberpunk neon alleyway, dark background">サイバーパンクなネオン街（暗め）</option>
                 <option value="dark moody camping site with a campfire, night">夜のキャンプサイトと焚き火（アウトドア用）</option>
+                <option value="a stylish workspace with multiple monitors, blurred">おしゃれなワークスペース（背景ボケ）</option>
+                <option value="a beautiful sunset over the ocean, cinematic">海に沈む美しい夕日</option>
             </select>
         </div>
 
@@ -242,8 +257,6 @@
                     <option value="A ninja girl">くノ一（忍者）</option>
                     <option value="An elegant student council president">エレガントな生徒会長</option>
                     <option value="A hard-working office lady">働くOL</option>
-                    <option value="A wandering samurai">流浪の侍</option>
-                    <option value="A futuristic cyborg">近未来のサイボーグ</option>
                 </optgroup>
                 <optgroup label="実写・リアル系">
                     <option value="A photorealistic young woman">リアルな若い女性</option>
@@ -251,28 +264,18 @@
                     <option value="A K-pop idol style beautiful woman">K-POPアイドル風の美女</option>
                     <option value="A mature sophisticated realistic woman">洗練された大人の女性（実写）</option>
                     <option value="A ruggedly handsome realistic western man">ワイルドなイケメン西洋人男性</option>
+                    <option value="A professional fashion model">プロのファッションモデル</option>
+                    <option value="An urban street dancer">ストリートダンサー</option>
                 </optgroup>
-                <optgroup label="ファンタジー・その他">
+                <optgroup label="趣味・ファンタジー・その他">
+                    <option value="A cool solo camper">クールなソロキャンパー</option>
+                    <option value="A hardcore outdoorsman">ガチのアウトドアマン</option>
                     <option value="A cute elf girl">可愛いエルフの女の子</option>
                     <option value="A powerful witch">強力な魔女</option>
                     <option value="A mecha pilot">メカパイロット</option>
                     <option value="A vampire noble">吸血鬼の貴族</option>
-                    <option value="A holy knight">聖騎士（ナイト）</option>
                     <option value="A beautiful goddess">美しい女神</option>
-                    <option value="A shrine maiden">巫女</option>
                     <option value="A pop idol">ポップアイドル</option>
-                    <option value="A beautiful fairy">美しい妖精</option>
-                    <option value="A fierce dragon knight">勇猛な竜騎士</option>
-                    <option value="A steampunk inventor">スチームパンクの発明家</option>
-                    <option value="A royal princess">王室の姫</option>
-                    <option value="A demon lord">魔王</option>
-                    <option value="A mysterious fortune teller">ミステリアスな占い師</option>
-                    <option value="A high school delinquent">不良高校生</option>
-                    <option value="A brave adventurer">勇敢な冒険者</option>
-                    <option value="A gentle healer">優しいヒーラー</option>
-                    <option value="A phantom thief">怪盗</option>
-                    <option value="A beautiful mermaid">美しい人魚</option>
-                    <option value="A cool sniper">クールなスナイパー</option>
                     <option value="A beastman warrior">獣人の戦士</option>
                 </optgroup>
             </select>
@@ -491,38 +494,55 @@
     </div>
 
     <div class="category">
-        <h2>👗 3. 全身コーデ・アクセサリー</h2>
+        <h2>👗 3. 全身コーデ・アクセサリー（超大増量）</h2>
         <div class="input-group">
             <select id="sel-tops">
                 <option value="">全身・トップス...</option>
-                <optgroup label="実写向け・リアル服">
+                <optgroup label="実写向け・カジュアル・ストリート">
                     <option value="simple plain cotton t-shirt">シンプルな無地コットンTシャツ</option>
+                    <option value="oversized plain hoodie">オーバーサイズの無地パーカー</option>
                     <option value="realistic modern streetwear">リアルなモダインストリートウェア</option>
-                    <option value="tailored suit jacket">仕立ての良いスーツジャケット</option>
-                    <option value="casual knit sweater">カジュアルなニットセーター</option>
                     <option value="denim jacket">デニムジャケット</option>
                     <option value="leather biker jacket">レザーバイカージャケット</option>
-                    <option value="blue hoodie">青いパーカー（フーディ）</option>
+                    <option value="casual knit sweater">カジュアルなニットセーター</option>
+                    <option value="flannel shirt unbuttoned over a t-shirt">Tシャツの上に開けたネルシャツ</option>
+                    <option value="vintage band t-shirt">ヴィンテージのバンドTシャツ</option>
+                    <option value="cropped puffer jacket">ショート丈のダウンジャケット</option>
+                    <option value="long trench coat">ロングトレンチコート</option>
+                    <option value="stylish activewear">スタイリッシュなスポーツウェア</option>
+                </optgroup>
+                <optgroup label="アウトドア・ミリタリー（キャンプ・DIY向け）">
+                    <option value="black outdoor tactical jacket">黒のアウトドアタクティカルジャケット</option>
+                    <option value="heavy duty camping vest">ヘビーデューティーなキャンプ用ベスト</option>
+                    <option value="dark green mountain parka">深緑のマウンテンパーカー</option>
+                    <option value="fishing vest with multiple pockets">ポケットがたくさんのフィッシングベスト</option>
+                    <option value="camouflage tactical gear">迷彩柄のタクティカルギア</option>
+                    <option value="black techwear jacket with straps">黒のテックウェアジャケット（ストラップ付き）</option>
+                    <option value="sturdy overalls">頑丈なオーバーオール（DIYスタイル）</option>
+                </optgroup>
+                <optgroup label="フォーマル・制服・仕事着">
+                    <option value="tailored suit jacket">仕立ての良いスーツジャケット</option>
                     <option value="white lab coat">白衣 (white lab coat)</option>
                     <option value="blue hoodie under a white lab coat">✨ 白衣の下に青いパーカー（研究員コーデ）</option>
-                    <option value="trench coat over a suit">スーツの上にトレンチコート</option>
-                    <option value="casual bomber jacket">カジュアルなMA-1ジャケット</option>
-                </optgroup>
-                <optgroup label="女性向け">
-                    <option value="pure white dress">純白のドレス</option>
                     <option value="school uniform">学生服</option>
                     <option value="maid outfit">メイド服</option>
+                    <option value="nurse uniform">ナース服</option>
+                    <option value="police uniform">警察官の制服</option>
+                    <option value="flight attendant uniform">CAの制服</option>
+                    <option value="chef uniform with an apron">エプロンをつけたシェフの服</option>
+                    <option value="traditional martial arts dogi">伝統的な道着</option>
+                </optgroup>
+                <optgroup label="女性向けフェミニン・セクシー">
+                    <option value="pure white dress">純白のドレス</option>
                     <option value="off-shoulder sweater">オフショルニット</option>
                     <option value="tube top">チューブトップ</option>
                     <option value="bikini top">ビキニトップ</option>
                     <option value="wedding dress">ウェディングドレス</option>
-                    <option value="witch robe">魔女のローブ</option>
                     <option value="gothic lolita">ゴスロリ</option>
                     <option value="sailor shirt">セーラー服</option>
                     <option value="cheongsam">チャイナドレス</option>
                     <option value="hanbok">チマチョゴリ</option>
                     <option value="oversized knitted sweater">萌え袖ニット</option>
-                    <option value="nurse uniform">ナース服</option>
                     <option value="bunny girl suit">バニーガール</option>
                     <option value="corset dress">コルセットドレス</option>
                     <option value="crop top">へそ出しクロップトップ</option>
@@ -531,30 +551,21 @@
                     <option value="gym uniform">体操服</option>
                     <option value="cheerleader outfit">チアガール</option>
                     <option value="sukumizu">スクール水着</option>
+                    <option value="elegant evening gown">エレガントなイブニングガウン</option>
+                    <option value="lace babydoll">レースのベビードール</option>
+                    <option value="micro bikini">マイクロビキニ</option>
                 </optgroup>
-                <optgroup label="男性・ユニセックス向け">
-                    <option value="business suit">ビジネススーツ</option>
-                    <option value="tuxedo">タキシード</option>
-                    <option value="military uniform">軍服 (military uniform)</option>
-                    <option value="formal vest">フォーマルベスト</option>
-                    <option value="oversized T-shirt">オーバーサイズTシャツ</option>
-                    <option value="parka hoodie">パーカー</option>
-                    <option value="leather jacket">レザージャケット</option>
-                    <option value="long coat">ロングコート</option>
+                <optgroup label="ファンタジー・SF・その他">
+                    <option value="witch robe">魔女のローブ</option>
                     <option value="cyberpunk suit">サイバーパンクスーツ</option>
-                    <option value="kimono">着物</option>
-                    <option value="track jacket">ジャージ（トラックジャケット）</option>
-                    <option value="turtleneck sweater">タートルネックセーター</option>
-                    <option value="formal suit with tie">ネクタイ付きスーツ</option>
-                    <option value="tactical vest">タクティカルベスト</option>
-                    <option value="hawaiian shirt">アロハシャツ</option>
-                    <option value="trench coat">トレンチコート</option>
-                    <option value="martial arts dogi">道着</option>
                     <option value="astronaut spacesuit">宇宙服</option>
                     <option value="fantasy armor">ファンタジーの鎧</option>
                     <option value="cybernetic armor">サイバーアーマー</option>
                     <option value="priest robes">神父のローブ</option>
                     <option value="detective coat">探偵のコート</option>
+                    <option value="glowing magical robes">光る魔法のローブ</option>
+                    <option value="steampunk corset and gears">スチームパンクのコルセットと歯車</option>
+                    <option value="ninja outfit">忍者の装束</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-tops')">追加</button>
@@ -577,12 +588,16 @@
                     <option value="plaid skirt">チェック柄スカート</option>
                     <option value="pencil skirt">ペンシルスカート</option>
                     <option value="pleated mini skirt">プリーツミニスカート</option>
+                    <option value="gothic ruffled skirt">ゴシック調のフリルスカート</option>
+                    <option value="denim skirt">デニムスカート</option>
+                    <option value="leather mini skirt">レザーのミニスカート</option>
                 </optgroup>
-                <optgroup label="パンツ系">
+                <optgroup label="パンツ・アウトドア系">
                     <option value="slacks">スラックス (slacks)</option>
                     <option value="chino pants">チノパン (chino pants)</option>
                     <option value="jeans">ジーンズ</option>
                     <option value="cargo pants">カーゴパンツ</option>
+                    <option value="black tactical cargo pants">黒のタクティカルカーゴパンツ</option>
                     <option value="leather pants">レザーパンツ</option>
                     <option value="denim shorts">デニムショートパンツ</option>
                     <option value="hot pants">ホットパンツ</option>
@@ -598,6 +613,7 @@
                     <option value="flared jeans">ベルボトム（フレアジーンズ）</option>
                     <option value="loincloth">ふんどし・腰布</option>
                     <option value="ripped jeans">ダメージジーンズ</option>
+                    <option value="techwear jogger pants">テックウェアのジョガーパンツ</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-bottoms')">追加</button>
@@ -605,45 +621,56 @@
         <div class="input-group">
             <select id="sel-shoes">
                 <option value="">靴・足元...</option>
-                <option value="sneakers">スニーカー</option>
-                <option value="leather boots">レザーブーツ</option>
-                <option value="thighhigh boots">サイハイブーツ</option>
-                <option value="high heels">ハイヒール</option>
-                <option value="sandals">サンダル</option>
-                <option value="loafers">ローファー</option>
-                <option value="combat boots">コンバットブーツ</option>
-                <option value="platform shoes">厚底靴 (platform shoes)</option>
-                <option value="barefoot">裸足 (barefoot)</option>
-                <option value="thighhighs">ニーソックス</option>
-                <option value="pantyhose">パンティストッキング</option>
-                <option value="white socks">白い靴下</option>
-                <option value="fishnet tights">網タイツ</option>
-                <option value="glass slippers">ガラスの靴</option>
-                <option value="geta">下駄</option>
-                <option value="roller skates">ローラースケート</option>
-                <option value="western boots">ウェスタンブーツ</option>
-                <option value="over-the-knee boots">ニーハイブーツ</option>
-                <option value="bare feet with ankle bracelet">アンクレットをつけた裸足</option>
-                <option value="strappy heels">ストラップヒール</option>
-                <option value="rain boots">長靴</option>
-                <option value="slip-on sneakers">スリッポン</option>
-                <option value="mary janes">メリージェーン（ストラップシューズ）</option>
-                <option value="gladiator sandals">グラディエーターサンダル</option>
-                <option value="ice skates">アイススケート靴</option>
-                <option value="barefoot with painted nails">ペディキュアを塗った裸足</option>
-                <option value="high top sneakers">ハイカットスニーカー</option>
-                <option value="dress shoes">革靴（ドレスシューズ）</option>
+                <optgroup label="カジュアル・アウトドア">
+                    <option value="sneakers">スニーカー</option>
+                    <option value="chunky sneakers">ダッドスニーカー（厚底スニーカー）</option>
+                    <option value="high top sneakers">ハイカットスニーカー</option>
+                    <option value="slip-on sneakers">スリッポン</option>
+                    <option value="leather boots">レザーブーツ</option>
+                    <option value="sturdy hiking boots">頑丈なハイキングブーツ</option>
+                    <option value="combat boots">コンバットブーツ</option>
+                    <option value="sandals">サンダル</option>
+                    <option value="sports sandals">スポーツサンダル</option>
+                </optgroup>
+                <optgroup label="フォーマル・女性向け">
+                    <option value="high heels">ハイヒール</option>
+                    <option value="strappy heels">ストラップヒール</option>
+                    <option value="thighhigh boots">サイハイブーツ</option>
+                    <option value="over-the-knee boots">ニーハイブーツ</option>
+                    <option value="platform shoes">厚底靴 (platform shoes)</option>
+                    <option value="loafers">ローファー</option>
+                    <option value="mary janes">メリージェーン（ストラップシューズ）</option>
+                    <option value="glass slippers">ガラスの靴</option>
+                    <option value="dress shoes">革靴（ドレスシューズ）</option>
+                </optgroup>
+                <optgroup label="靴下・裸足・その他">
+                    <option value="barefoot">裸足 (barefoot)</option>
+                    <option value="thighhighs">ニーソックス</option>
+                    <option value="pantyhose">パンティストッキング</option>
+                    <option value="white socks">白い靴下</option>
+                    <option value="fishnet tights">網タイツ</option>
+                    <option value="geta">下駄</option>
+                    <option value="roller skates">ローラースケート</option>
+                    <option value="western boots">ウェスタンブーツ</option>
+                    <option value="bare feet with ankle bracelet">アンクレットをつけた裸足</option>
+                    <option value="rain boots">長靴</option>
+                    <option value="ice skates">アイススケート靴</option>
+                    <option value="barefoot with painted nails">ペディキュアを塗った裸足</option>
+                    <option value="glowing cyber boots">光るサイバーブーツ</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-shoes')">追加</button>
         </div>
         <div class="input-group">
             <select id="sel-acc">
-                <option value="">装飾品（アクセサリー）...</option>
-                <optgroup label="頭・顔周り">
+                <option value="">装飾品（アクセサリー）・手持ち道具...</option>
+                <optgroup label="頭・帽子・顔周り">
                     <option value="glasses">メガネ</option>
+                    <option value="round wire-rimmed glasses">丸メガネ</option>
                     <option value="sunglasses">サングラス</option>
-                    <option value="earrings">イヤリング</option>
+                    <option value="earrings">イヤリング/ピアス</option>
                     <option value="headphones">ヘッドホン</option>
+                    <option value="cat ear headphones">猫耳ヘッドホン</option>
                     <option value="headphones around neck">首にかけたヘッドホン</option>
                     <option value="tiara">ティアラ</option>
                     <option value="eyepatch">眼帯 (eyepatch)</option>
@@ -652,28 +679,45 @@
                     <option value="fox mask">狐のお面</option>
                     <option value="band-aid on face">顔に絆創膏</option>
                     <option value="flower crown">花冠</option>
-                    <option value="cybernetic eye">サイバーアイ</option>
-                    <option value="halo">天使の輪 (halo)</option>
-                    <option value="multiple glowing halos">複数の光る輪</option>
-                    <option value="crown">王冠</option>
                     <option value="hair ribbon">髪の毛のリボン</option>
                     <option value="beret">ベレー帽</option>
                     <option value="baseball cap">ベースボールキャップ</option>
+                    <option value="bucket hat">バケットハット</option>
+                    <option value="beanie">ニット帽（ビーニー）</option>
+                    <option value="witch hat">魔女の帽子</option>
+                    <option value="diving goggles on head">頭に乗せたゴーグル</option>
                 </optgroup>
-                <optgroup label="首・体・その他">
+                <optgroup label="首・体・カバン">
                     <option value="choker">チョーカー</option>
                     <option value="necktie">ネクタイ (necktie)</option>
                     <option value="silver necklace">シルバーネックレス</option>
                     <option value="scarf">マフラー・スカーフ</option>
                     <option value="bandages">包帯 (bandages)</option>
                     <option value="backpack">リュックサック</option>
+                    <option value="black tactical backpack">黒のタクティカルバックパック</option>
+                    <option value="tote bag">トートバッグ</option>
+                    <option value="crossbody bag">ショルダーバッグ</option>
                     <option value="tribal tattoos">トライバルタトゥー</option>
-                    <option value="magic floating orbs">魔法の浮遊オーブ</option>
+                    <option value="glowing tattoos">光るタトゥー</option>
                     <option value="black leather gloves">黒のレザーグローブ</option>
-                    <option value="pocket watch">懐中時計</option>
-                    <option value="katana">日本刀</option>
+                    <option value="fingerless gloves">指なしグローブ</option>
                 </optgroup>
-                <optgroup label="人外パーツ">
+                <optgroup label="手持ち道具（スマホ・飲食物・キャンプギア）">
+                    <option value="holding a smartphone">スマホを持っている</option>
+                    <option value="taking a selfie with a smartphone">スマホで自撮りをしている</option>
+                    <option value="holding a cup of coffee">コーヒーカップを持っている</option>
+                    <option value="holding a black camping mug">黒のキャンプ用マグカップを持っている</option>
+                    <option value="holding a glowing magic staff">光る魔法の杖を持っている</option>
+                    <option value="carrying a guitar case">ギターケースを背負っている</option>
+                    <option value="holding a katana">日本刀を持っている</option>
+                    <option value="holding a futuristic gun">近未来の銃を持っている</option>
+                    <option value="holding an open book">開いた本を持っている</option>
+                    <option value="holding a camera">カメラを持っている</option>
+                    <option value="holding a lantern">ランタンを持っている</option>
+                    <option value="holding a black steel lantern">黒いスチール製のランタンを持っている</option>
+                    <option value="holding a colorful umbrella">カラフルな傘をさしている</option>
+                </optgroup>
+                <optgroup label="人外パーツ・エフェクト系">
                     <option value="demon horns">悪魔のツノ</option>
                     <option value="cat ears">猫耳 (cat ears)</option>
                     <option value="fox ears">狐耳</option>
@@ -686,6 +730,11 @@
                     <option value="dragon wings">ドラゴンの羽</option>
                     <option value="multiple angel wings">複数の天使の羽</option>
                     <option value="glowing mechanical wings">光る機械の羽</option>
+                    <option value="cybernetic eye">サイバーアイ</option>
+                    <option value="halo">天使の輪 (halo)</option>
+                    <option value="multiple glowing halos">複数の光る輪</option>
+                    <option value="magic floating orbs">魔法の浮遊オーブ</option>
+                    <option value="floating magical crystals">浮遊する魔法のクリスタル</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-acc')">追加</button>
@@ -712,7 +761,7 @@
                     <option value="high-tech laboratory">ハイテクな研究室</option>
                     <option value="industrial CARGO CONTAINER yard">✨ 工業用カーゴコンテナ置き場</option>
                 </optgroup>
-                <optgroup label="自然・屋外">
+                <optgroup label="自然・屋外・キャンプ">
                     <option value="starry night sky">満天の星空</option>
                     <option value="beautiful beach">美しいビーチ</option>
                     <option value="sunny sunflower field">ひまわり畑</option>
@@ -723,6 +772,8 @@
                     <option value="deep underwater">深い海の中</option>
                     <option value="flower garden in full bloom">満開の花畑</option>
                     <option value="bamboo forest">竹林</option>
+                    <option value="camping site in a dense forest">深い森のキャンプサイト</option>
+                    <option value="camping site organized with black gear">黒で統一されたキャンプサイト</option>
                 </optgroup>
                 <optgroup label="SF・ファンタジー">
                     <option value="cyberpunk city background">サイバーパンクな街</option>
@@ -1081,20 +1132,16 @@
             // 主役（Subject）のロジック
             let subjectElement = "";
             if (subjectSelect === "none") {
-                // キャラなしの場合は空にする
                 subjectElement = "";
             } else if (subjectSelect) {
-                // 選ばれたキャラ
                 subjectElement = subjectSelect;
             } else if (pose) {
-                // 未選択だがポーズがある場合はデフォルトを入れる
                 subjectElement = isAnime ? "1girl" : "photorealistic Japanese young woman";
             }
 
             // キャラクター部分の結合（主役＋ポーズ）
             let characterPart = "";
             if (subjectSelect === "none") {
-                // キャラなしならポーズも無視
                 characterPart = "";
             } else if (subjectElement && pose) {
                 characterPart = `${subjectElement}, ${pose}, `;
