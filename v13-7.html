@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.8</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.9</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -74,7 +74,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.8（バナー独立＆V8自動付与）</p>
+    <p class="subtitle">神プロンプトメーカー V13.9（バナーキャラ自由化）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -102,7 +102,7 @@
         <h2>🏷️ 独立機能. 記事間バナー特化ジェネレーター</h2>
         <p class="help-text">
             💡 <b>ブログ用の超横長バナーを一発錬成！</b><br>
-            読者の目を引くポーズと文字を組み合わせます。追加時に<b>「--ar 5:1」と「--v 8.0」</b>が自動で付与されます。（※現在V8ではcrefが使用不可のためキャラ指定はプロンプトで行います）
+            読者の目を引くポーズと文字を組み合わせます。追加時に<b>「--ar 5:1」と「--v 8.0」</b>が自動で付与されます。
         </p>
         
         <div class="input-group">
@@ -118,6 +118,19 @@
                 <option value="a cinematic billboard displaying">シネマティックな看板</option>
                 <option value="a wooden signboard reading">アウトドア風の木製看板</option>
                 <option value="a holographic text projection displaying">近未来のホログラムテキスト</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <select id="banner-subject">
+                <option value="">主役（デフォルトは1girl / 若い女性）...</option>
+                <option value="none">🚫 キャラクターなし（文字と背景のみ）</option>
+                <option value="1girl">1人の女の子 (1girl)</option>
+                <option value="1boy">1人の男の子 (1boy)</option>
+                <option value="a cute cat">可愛い猫</option>
+                <option value="a cute dog">可愛い犬</option>
+                <option value="a cool camper">クールなキャンパー</option>
+                <option value="a futuristic robot">近未来のロボット</option>
             </select>
         </div>
 
@@ -867,6 +880,8 @@
                     <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
                     <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
                     <option value="--ar 3:2">🖼️ 写真比率(--ar 3:2)</option>
+                    <option value="--ar 5:1">⬛ 記事間バナー(--ar 5:1)</option>
+                    <option value="--ar 4:1">⬛ 超横長バナー(--ar 4:1)</option>
                     <option value="--v 8.0">🤖 Midjourney V8 Alpha(--v 8.0)</option>
                     <option value="--v 6.1">🤖 Midjourney v6.1(--v 6.1)</option>
                     <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
@@ -1003,7 +1018,7 @@
             setTimeout(() => { btn.innerHTML = originalText; btn.style.backgroundColor = ''; }, 1000);
         }
 
-        // 新設：一般テキスト追加（V8自動付与）
+        // 一般テキスト追加（V8自動付与）
         function addTextGenerationPrompt() {
             const contentInput = document.getElementById('text-content');
             const styleSelect = document.getElementById('text-style');
@@ -1021,7 +1036,6 @@
                 
                 addTextToPrompt(finalValue);
                 
-                // V8自動付与ロジック
                 if (!output.value.includes('--v 8')) {
                     addTextToPrompt('--v 8.0');
                 }
@@ -1048,6 +1062,7 @@
 
             const textInput = document.getElementById('banner-text').value.trim();
             const textStyle = document.getElementById('banner-style').value;
+            const subjectSelect = document.getElementById('banner-subject').value;
             const pose = document.getElementById('banner-pose').value;
             const bg = document.getElementById('banner-bg').value;
             const isAnime = document.getElementById('banner-is-anime').checked;
@@ -1057,26 +1072,48 @@
                 return;
             }
 
+            // 文字構文
             let textElement = `"${textInput}"`;
             if (textStyle) {
                 textElement = `${textStyle} "${textInput}"`;
             }
 
+            // 主役（Subject）のロジック
+            let subjectElement = "";
+            if (subjectSelect === "none") {
+                // キャラなしの場合は空にする
+                subjectElement = "";
+            } else if (subjectSelect) {
+                // 選ばれたキャラ
+                subjectElement = subjectSelect;
+            } else if (pose) {
+                // 未選択だがポーズがある場合はデフォルトを入れる
+                subjectElement = isAnime ? "1girl" : "photorealistic Japanese young woman";
+            }
+
+            // キャラクター部分の結合（主役＋ポーズ）
+            let characterPart = "";
+            if (subjectSelect === "none") {
+                // キャラなしならポーズも無視
+                characterPart = "";
+            } else if (subjectElement && pose) {
+                characterPart = `${subjectElement}, ${pose}, `;
+            } else if (subjectElement) {
+                characterPart = `${subjectElement}, `;
+            }
+
+            // 品質タグ
             let qualityTags = isAnime ? "masterpiece, best quality, ultra-detailed, anime style illustration" : "photorealistic, highly detailed, 8k, cinematic lighting";
             let negativeTags = isAnime ? "" : "--no anime, cartoon, 3d, illustration";
             
-            let subject = "";
-            if(pose) {
-               subject = isAnime ? "1girl, " : "photorealistic Japanese young woman, ";
-            }
-
+            // 最終プロンプトの組み立て
             let finalPrompt = "";
-            if (pose) finalPrompt += `${subject}${pose}, `;
-            finalPrompt += `${textElement}`;
+            finalPrompt += characterPart;
+            finalPrompt += textElement;
             if (bg) finalPrompt += `, ${bg}`;
             finalPrompt += `, ${qualityTags}`;
 
-            // バナー用の超横長とV8を強制付与（crefは現状使えないため除外）
+            // バナー用の超横長とV8を強制付与
             finalPrompt += ` --ar 5:1 --v 8.0 ${negativeTags}`;
 
             output.value = finalPrompt.trim();
