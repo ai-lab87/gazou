@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.15</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V14.0</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -73,7 +73,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.15（完全体・語彙力＆機能全開放）</p>
+    <p class="subtitle">神プロンプトメーカー V14.0（聖典＆語彙力爆発版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -101,11 +101,11 @@
         <h2>🏷️ 独立機能. 記事間バナー特化ジェネレーター (V8専用)</h2>
         <p class="help-text">
             💡 <b>ブログ用の超横長バナーを一発錬成！</b><br>
-            日本語入力OK！ダブルクォーテーションの直後の結合バグ修正済み。
+            日本語入力OK！「主役」でノアちゃん（黒Tシャツ）を選択可能です。
         </p>
         
         <div class="input-group">
-            <input type="text" id="banner-text" class="text-input" placeholder="バナー文字（例：まとめ、発見、キャンプギア）">
+            <input type="text" id="banner-text" class="text-input" placeholder="バナー文字（例：まとめ、発見、デジタルDIY）">
         </div>
         
         <div class="input-group">
@@ -121,37 +121,32 @@
                 <option value="glowing magical floating letters spelling">魔法で光って浮かぶ文字</option>
                 <option value="written on a torn piece of paper reading">破れた紙切れに書かれた文字</option>
                 <option value="carved into an ancient stone wall reading">古代の石壁に刻まれた文字</option>
+                <option value="printed on an oversized black t-shirt reading">✨ オーバーサイズの黒Tシャツにプリント</option>
             </select>
         </div>
 
         <div class="input-group">
             <select id="banner-subject">
-                <option value="">主役（デフォルトは1girl / 若い女性）...</option>
-                <optgroup label="キャラクターなし・動物">
-                    <option value="none">🚫 キャラクターなし（文字と背景のみ）</option>
-                    <option value="a cute cat">可愛い猫</option>
-                    <option value="a cute dog">可愛い犬</option>
-                    <option value="a wise old owl">賢そうなフクロウ</option>
-                    <option value="a majestic dragon">荘厳なドラゴン</option>
-                </optgroup>
-                <optgroup label="職業・スタイル（アニメ/リアル共通）">
-                    <option value="1girl">1人の女の子 (1girl)</option>
-                    <option value="1boy">1人の男の子 (1boy)</option>
-                    <option value="2girls">2人の女の子 (2girls)</option>
-                    <option value="a cool solo camper">クールなソロキャンパー</option>
-                    <option value="a female researcher in a white coat">白衣を着た女性研究員</option>
-                    <option value="a cyberpunk hacker">サイバーパンクなハッカー</option>
-                    <option value="a cute maid">可愛いメイド</option>
-                    <option value="a confident business person">自信に満ちたビジネスパーソン</option>
-                    <option value="a lazy gamer girl">怠惰なゲーマー女子</option>
-                    <option value="an elegant student council president">エレガントな生徒会長</option>
-                </optgroup>
+                <option value="">主役...</option>
+                <option value="A cute anime girl with split-dyed black and white straight hair and blue eyes, wearing an oversized black t-shirt">✨ ノアちゃん（聖典準拠：白黒ツートン/ストレート/青目/黒T）</option>
+                <option value="none">🚫 キャラクターなし（文字と背景のみ）</option>
+                <option value="1girl">1人の女の子 (1girl)</option>
+                <option value="1boy">1人の男の子 (1boy)</option>
+                <option value="a cute cat">可愛い猫</option>
+                <option value="a cute dog">可愛い犬</option>
+                <option value="a wise old owl">賢そうなフクロウ</option>
+                <option value="a majestic dragon">荘厳なドラゴン</option>
+                <option value="a cool solo camper">クールなソロキャンパー</option>
+                <option value="a female researcher in a white coat">白衣を着た女性研究員</option>
+                <option value="a cyberpunk hacker">サイバーパンクなハッカー</option>
+                <option value="a cute maid">可愛いメイド</option>
+                <option value="a confident business person">自信に満ちたビジネスパーソン</option>
             </select>
         </div>
 
         <div class="input-group">
             <select id="banner-pose">
-                <option value="">キャラの表情・ポーズ（視線誘導・感情）...</option>
+                <option value="">キャラの表情・ポーズ（大げさな感情対応）...</option>
                 <optgroup label="案内・指差し">
                     <option value="pointing at the text, winking">テキストを指差してウインクする</option>
                     <option value="pointing finger at the text with a confident smile">テキストを指差して自信満々に微笑む</option>
@@ -185,12 +180,11 @@
                 <option value="clean modern studio background, softly blurred">清潔感のあるモダンなスタジオ（背景ボケ）</option>
                 <option value="cozy cafe interior, out of focus">おしゃれなカフェの店内（背景ボケ）</option>
                 <option value="black background with cyberpunk neon alleyway, cinematic">ネオン街（黒背景）</option>
-                <option value="dark moody camping site with black gear, night">夜のキャンプサイトと焚き火（アウトドア用）</option>
+                <option value="dark moody camping site with black gear, night">夜のキャンプサイトと焚き火</option>
                 <option value="a stylish workspace with multiple monitors, blurred">おしゃれなワークスペース（背景ボケ）</option>
                 <option value="a beautiful sunset over the ocean, cinematic">海に沈む美しい夕日</option>
                 <option value="a grand magical library, blurred">魔法の大図書館（背景ボケ）</option>
                 <option value="a high-tech laboratory, out of focus">ハイテク研究所（背景ボケ）</option>
-                <option value="an abandoned ruined city, moody lighting">廃墟の街（ダークな雰囲気）</option>
             </select>
         </div>
 
@@ -205,15 +199,12 @@
 
     <div class="category special text-magic">
         <h2>🖊️ 特殊. テキスト追加（一般用）</h2>
-        <p class="help-text">
-            💡 <b>通常の画像生成に文字を足したい時</b>はこちら。<br>
-            ※追加すると、テキスト生成に必須な<b>「--v 8.0」</b>が自動で付与されます。
-        </p>
         <div class="input-group">
-            <input type="text" id="text-content" class="text-input" placeholder="入れる文字（例： HELLO、みっどじゃーにー）">
+            <input type="text" id="text-content" class="text-input" placeholder="入れる文字（例： HELLO）">
             <select id="text-style">
                 <option value="">文字の表記方法（スタイル・場所）...</option>
                 <optgroup label="服・ファッション">
+                    <option value="printed on an oversized black t-shirt">✨ オーバーサイズの黒Tシャツにプリント</option>
                     <option value="printed on a t-shirt">Tシャツにプリント</option>
                     <option value="embroidered on a jacket">ジャケットに刺繍</option>
                     <option value="written on a baseball cap">キャップに書かれている</option>
@@ -238,7 +229,6 @@
 
     <div class="category special real-magic">
         <h2>✨ 0. 実写化・リアルテイスト錬金術</h2>
-        <p class="help-text">💡 V8対応 iw「0.6〜0.8」推奨。元画像と同じポーズを1~6で選んでください。</p>
         <div class="input-group">
             <input type="text" id="base-image-url" class="url-input" placeholder="画像URL (https://...)">
             <input type="number" id="base-image-iw" class="iw-input" placeholder="iw 0.8" step="0.1" min="0.1" max="3.0">
@@ -254,8 +244,7 @@
             <button class="btn-control real-btn-male" onclick="applyRealSpells('male')">👨 リアル美男化</button>
         </div>
     </div>
-
-    <div class="category">
+        <div class="category">
         <h2>👤 1. ベース（主役・国籍・体型）</h2>
         <div class="input-group">
             <select id="sel-subject">
@@ -272,6 +261,7 @@
                     <option value="A wandering samurai">流浪の侍</option>
                     <option value="A futuristic cyborg">近未来のサイボーグ</option>
                     <option value="A magical girl">魔法少女</option>
+                    <option value="A lazy gamer girl">怠惰なゲーマー女子</option>
                 </optgroup>
                 <optgroup label="実写・リアル系">
                     <option value="A photorealistic young woman">リアルな若い女性</option>
@@ -304,23 +294,28 @@
         
         <div class="input-group">
             <select id="sel-nationality">
-                <option value="">国籍（実写用）...</option>
-                <option value="Japanese, distinct East Asian facial features">日本人 (Japanese)</option>
-                <option value="Korean">韓国人 (Korean)</option>
-                <option value="Chinese">中国人 (Chinese)</option>
-                <option value="Asian">アジア系 (Asian)</option>
-                <option value="Caucasian">白人・西洋人 (Caucasian)</option>
-                <option value="American">アメリカ人 (American)</option>
-                <option value="European">ヨーロッパ系 (European)</option>
-                <option value="French">フランス人 (French)</option>
-                <option value="British">イギリス人 (British)</option>
-                <option value="Russian">ロシア人 (Russian)</option>
-                <option value="Nordic">北欧系 (Nordic)</option>
-                <option value="Latin American">ラテン系 (Latin American)</option>
-                <option value="African">アフリカ系 (African)</option>
-                <option value="Middle Eastern">中東系 (Middle Eastern)</option>
-                <option value="Indian">インド人 (Indian)</option>
-                <option value="mixed race">ハーフ・混血 (mixed race)</option>
+                <option value="">国籍・瞳の色...</option>
+                <optgroup label="瞳の色（アニメ向け）">
+                    <option value="blue eyes">✨ 青目 (blue eyes)</option>
+                    <option value="red eyes">赤目 (red eyes)</option>
+                    <option value="green eyes">緑目 (green eyes)</option>
+                    <option value="yellow eyes">金目 (yellow eyes)</option>
+                    <option value="purple eyes">紫目 (purple eyes)</option>
+                    <option value="heterochromia">オッドアイ (heterochromia)</option>
+                </optgroup>
+                <optgroup label="国籍（実写向け）">
+                    <option value="Japanese, distinct East Asian facial features">日本人 (Japanese)</option>
+                    <option value="Korean">韓国人 (Korean)</option>
+                    <option value="Chinese">中国人 (Chinese)</option>
+                    <option value="Asian">アジア系 (Asian)</option>
+                    <option value="Caucasian">白人・西洋人 (Caucasian)</option>
+                    <option value="American">アメリカ人 (American)</option>
+                    <option value="European">ヨーロッパ系 (European)</option>
+                    <option value="French">フランス人 (French)</option>
+                    <option value="British">イギリス人 (British)</option>
+                    <option value="Russian">ロシア人 (Russian)</option>
+                    <option value="mixed race">ハーフ・混血 (mixed race)</option>
+                </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-nationality')">追加</button>
         </div>
@@ -359,7 +354,10 @@
         <div class="input-group">
             <select id="sel-hair-color">
                 <option value="">髪色を選んでください...</option>
-                <optgroup label="基本カラー">
+                <optgroup label="基本・特殊カラー">
+                    <option value="split-dyed black and white hair">✨ 白黒のハーフ＆ハーフ（ツートーン）</option>
+                    <option value="two-tone hair">ツートーンカラー</option>
+                    <option value="inner color hair">インナーカラー</option>
                     <option value="silver hair">銀髪</option>
                     <option value="black hair">黒髪</option>
                     <option value="blonde hair">金髪</option>
@@ -370,24 +368,11 @@
                     <option value="red hair">赤髪</option>
                     <option value="purple hair">紫髪</option>
                     <option value="green hair">緑髪</option>
-                    <option value="orange hair">オレンジ髪</option>
-                </optgroup>
-                <optgroup label="特殊・グラデーション">
-                    <option value="split-dyed black and white hair">白黒のハーフ＆ハーフ（スプリット）</option>
-                    <option value="two-tone hair">ツートーンカラー</option>
                     <option value="gradient hair">グラデーション</option>
-                    <option value="inner color hair">インナーカラー</option>
                     <option value="mesh highlights">メッシュハイライト</option>
                     <option value="platinum blonde hair">プラチナブロンド</option>
-                    <option value="mint green hair">ミントグリーン</option>
                     <option value="ash gray hair">アッシュグレー</option>
-                    <option value="rainbow hair">虹色の髪</option>
                     <option value="rose gold hair">ローズゴールド</option>
-                    <option value="lavender hair">ラベンダー</option>
-                    <option value="deep crimson hair">深紅</option>
-                    <option value="pastel pink hair">パステルピンク</option>
-                    <option value="neon green hair">ネオングリーン</option>
-                    <option value="galaxy colored hair">銀河のような髪色</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-hair-color')">追加</button>
@@ -396,6 +381,8 @@
             <select id="sel-hair-style">
                 <option value="">髪型を選んでください...</option>
                 <optgroup label="女性向け">
+                    <option value="straight long hair">✨ ストレートロングヘア</option>
+                    <option value="straight hair">✨ ストレートヘア</option>
                     <option value="long hair">ロングヘア</option>
                     <option value="short hair">ショートヘア</option>
                     <option value="short bob hair">ショートボブ</option>
@@ -409,14 +396,8 @@
                     <option value="hair bun">お団子ヘア</option>
                     <option value="messy hair">無造作ヘア</option>
                     <option value="ahoge">アホ毛</option>
-                    <option value="straight long hair">ストレートロングヘア</option>
-                    <option value="side tail">サイドテール</option>
                     <option value="wolf cut hair">ウルフカット</option>
                     <option value="space buns">お団子ツイン</option>
-                    <option value="french braid">編み込み</option>
-                    <option value="half-up half-down">ハーフアップ</option>
-                    <option value="ringlets">お嬢様縦ロール</option>
-                    <option value="drill hair">縦ロール（ドリル）</option>
                 </optgroup>
                 <optgroup label="男性・ユニセックス向け">
                     <option value="mushroom cut hair">マッシュヘア</option>
@@ -460,7 +441,7 @@
                     <option value="sleepy">眠そう</option>
                     <option value="gentle smile with closed eyes">目を閉じて微笑む</option>
                 </optgroup>
-                <optgroup label="感情表現（バナー・アニメ向け大げさな表情）">
+                <optgroup label="感情表現（大げさな表情）">
                     <option value="wide-eyed shock, surprised expression">目を見開いて驚く (Surprised)</option>
                     <option value="sad and teary-eyed, crying">悲しそうに涙ぐむ、泣く</option>
                     <option value="panicking, screaming in terror">パニックになって叫ぶ</option>
@@ -490,16 +471,8 @@
         <div class="input-group">
             <select id="sel-tops">
                 <option value="">全身・トップス...</option>
-                <optgroup label="アウトドア・ミリタリー（キャンプ・DIY向け）">
-                    <option value="black outdoor tactical jacket">黒のアウトドアタクティカルジャケット</option>
-                    <option value="heavy duty camping vest">ヘビーデューティーなキャンプ用ベスト</option>
-                    <option value="black techwear jacket with straps">黒のテックウェアジャケット（ストラップ付き）</option>
-                    <option value="sturdy overalls">頑丈なオーバーオール</option>
-                    <option value="dark green mountain parka">深緑のマウンテンパーカー</option>
-                    <option value="fishing vest with multiple pockets">ポケットがたくさんのフィッシングベスト</option>
-                    <option value="camouflage tactical gear">迷彩柄のタクティカルギア</option>
-                </optgroup>
-                <optgroup label="実写・カジュアル・ストリート">
+                <optgroup label="カジュアル・ストリート（聖典含む）">
+                    <option value="oversized black t-shirt">✨ オーバーサイズの黒Tシャツ</option>
                     <option value="simple plain cotton t-shirt">シンプルな無地コットンTシャツ</option>
                     <option value="oversized white hoodie">オーバーサイズの白パーカー</option>
                     <option value="realistic modern streetwear">リアルなモダインストリートウェア</option>
@@ -512,19 +485,25 @@
                     <option value="long trench coat">ロングトレンチコート</option>
                     <option value="stylish activewear">スタイリッシュなスポーツウェア</option>
                 </optgroup>
+                <optgroup label="アウトドア・ミリタリー（DIY向け）">
+                    <option value="black outdoor tactical jacket">黒のアウトドアタクティカルジャケット</option>
+                    <option value="heavy duty camping vest">ヘビーデューティーなキャンプ用ベスト</option>
+                    <option value="black techwear jacket with straps">黒のテックウェアジャケット（ストラップ付）</option>
+                    <option value="sturdy overalls">頑丈なオーバーオール</option>
+                    <option value="dark green mountain parka">深緑のマウンテンパーカー</option>
+                    <option value="fishing vest with multiple pockets">ポケットがたくさんのフィッシングベスト</option>
+                    <option value="camouflage tactical gear">迷彩柄のタクティカルギア</option>
+                </optgroup>
                 <optgroup label="制服・フォーマル・仕事着">
                     <option value="white lab coat">白衣 (white lab coat)</option>
-                    <option value="blue hoodie under a white lab coat">✨ 白衣の下に青いパーカー（研究員コーデ）</option>
+                    <option value="blue hoodie under a white lab coat">白衣の下に青いパーカー（研究員コーデ）</option>
                     <option value="school uniform">学生服</option>
                     <option value="maid outfit">メイド服</option>
                     <option value="nurse uniform">ナース服</option>
                     <option value="tailored suit jacket">仕立ての良いスーツジャケット</option>
                     <option value="police uniform">警察官の制服</option>
-                    <option value="flight attendant uniform">CAの制服</option>
                     <option value="chef uniform with an apron">エプロンをつけたシェフの服</option>
-                    <option value="traditional martial arts dogi">伝統的な道着</option>
                     <option value="business suit">ビジネススーツ</option>
-                    <option value="tuxedo">タキシード</option>
                 </optgroup>
                 <optgroup label="女性向けフェミニン・セクシー">
                     <option value="pure white dress">純白のドレス</option>
@@ -546,7 +525,6 @@
                     <option value="gym uniform">体操服</option>
                     <option value="cheerleader outfit">チアガール</option>
                     <option value="elegant evening gown">エレガントなイブニングガウン</option>
-                    <option value="lace babydoll">レースのベビードール</option>
                 </optgroup>
                 <optgroup label="ファンタジー・SF・その他">
                     <option value="witch robe">魔女のローブ</option>
@@ -684,8 +662,8 @@
                 <optgroup label="手持ち道具・カバン">
                     <option value="backpack">リュックサック</option>
                     <option value="black tactical backpack">黒のタクティカルバックパック</option>
-                    <option value="holding a black camping mug">黒のキャンプ用マグカップを持っている</option>
-                    <option value="holding a black steel lantern">黒いスチール製のランタンを持っている</option>
+                    <option value="holding a black camping mug">黒のキャンプ用マグカップ</option>
+                    <option value="holding a black steel lantern">黒いスチール製のランタン</option>
                     <option value="holding a sword">剣を持っている</option>
                     <option value="holding a smartphone">スマホを持っている</option>
                     <option value="taking a selfie with a smartphone">スマホで自撮りをしている</option>
@@ -927,7 +905,6 @@
             <button class="btn-add" onclick="addFromSelect('sel-negative')">追加</button>
         </div>
     </div>
-
     <script>
         const output = document.getElementById('prompt-output');
 
@@ -1048,10 +1025,8 @@
             let existingPrompt = output.value.trim();
             let paramIndex = existingPrompt.search(/(?:^|\s)--[a-zA-Z]/);
             let existingPromptMain = "";
-            let existingParamPart = "";
             if (paramIndex !== -1) {
                 existingPromptMain = existingPrompt.substring(0, paramIndex).trim();
-                existingParamPart = existingPrompt.substring(paramIndex).trim();
             } else {
                 existingPromptMain = existingPrompt;
             }
@@ -1066,6 +1041,7 @@
                 subjectElement = isAnime ? "1girl" : "photorealistic Japanese young woman";
             }
 
+            // ダブルクォーテーション直後のカンマを確実に入れる（文字化け回避）
             let characterPart = "";
             if (subjectSelect.value === "none") {
                 characterPart = ""; 
@@ -1081,6 +1057,7 @@
             }
             let qualityTags = isAnime ? ", masterpiece, best quality, anime style illustration" : ", photorealistic, highly detailed";
             
+            // 通常プロンプトを文字列の途中に差し込む（上書きしない）
             let newPromptMain = textElement + characterPart;
 
             if (existingPromptMain !== "") {
@@ -1090,6 +1067,9 @@
             newPromptMain += bgPart + qualityTags;
 
             let negativeTags = isAnime ? "" : "--no anime, cartoon, illustration";
+            
+            // 出力欄をリセットしてから構築し直す（パラメータをきれいに末尾につけるため）
+            output.value = "";
             addTextToPrompt(newPromptMain.trim());
 
             if (!output.value.includes('--ar 5:1')) {
@@ -1106,7 +1086,7 @@
             btn.innerHTML = '✔ バナー錬成準備完了';
             btn.style.backgroundColor = '#48bb78';
             setTimeout(() => { 
-                btn.innerHTML = '✨ V8 バナー錬成 (結合修正＆上書きなし)'; 
+                btn.innerHTML = '✨ V8 バナー錬成 (完全体システム)'; 
                 btn.style.backgroundColor = '#dd6b20'; 
             }, 1500);
 
@@ -1121,7 +1101,6 @@
         function generateRandomPrompt(type) {
             clearPrompt();
             
-            // 抽選対象のセレクトボックスのIDリスト（全カテゴリー対応）
             const animeCategories = ['sel-subject', 'sel-nationality', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bottoms', 'sel-shoes', 'sel-acc', 'sel-bg', 'sel-effect', 'sel-action'];
             const realCategories = ['sel-hair-color', 'sel-hair-style', 'sel-tops', 'sel-bottoms', 'sel-shoes', 'sel-acc', 'sel-bg', 'sel-effect', 'sel-action'];
             
@@ -1131,7 +1110,6 @@
                 animeCategories.forEach(id => {
                     const select = document.getElementById(id);
                     if(!select) return;
-                    // 空白以外の選択肢をすべて取得
                     const options = Array.from(select.options).filter(opt => opt.value !== '' && !opt.value.startsWith('--'));
                     if(options.length > 0) {
                         const randomOpt = options[Math.floor(Math.random() * options.length)];
@@ -1139,7 +1117,6 @@
                     }
                 });
                 
-                // ガチャのベースプロンプト組み立て
                 output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
                 
                 const btn = document.querySelector('.btn-gacha-anime');
@@ -1151,7 +1128,6 @@
                 realCategories.forEach(id => {
                     const select = document.getElementById(id);
                     if(!select) return;
-                    // 空白とパラメータ以外の選択肢をすべて取得
                     const options = Array.from(select.options).filter(opt => opt.value !== '' && !opt.value.startsWith('--'));
                     if(options.length > 0) {
                         const randomOpt = options[Math.floor(Math.random() * options.length)];
@@ -1160,7 +1136,7 @@
                 });
 
                 const isJpFix = document.getElementById('gacha-jp-fix').checked;
-                const isFemale = Math.random() > 0.3; // 女性7割、男性3割
+                const isFemale = Math.random() > 0.3;
                 
                 let baseSubject = "";
                 if (isJpFix) {
@@ -1169,13 +1145,11 @@
                     baseSubject = isFemale ? "photorealistic young woman" : "photorealistic handsome young man";
                 }
 
-                // リアル用は表情を自然なものに制限（ホラー防止）
                 const safeRealExpressions = ["gentle soft smile", "calm expression", "slight smile", "cool gaze", "natural relaxed expression"];
                 const safeExpression = safeRealExpressions[Math.floor(Math.random() * safeRealExpressions.length)];
                 
                 const realNegative = "--no anime, cartoon, illustration, painting, exaggerated expressions";
                 
-                // ガチャのベースプロンプト組み立て
                 output.value = baseSubject + ', ' + safeExpression + ', ' + parts.join(', ') + ', highly detailed, photorealistic, 8k, cinematic lighting ' + realNegative + ' --ar 9:16 --v 6.1';
                 
                 const btn = document.querySelector('.btn-gacha-real');
@@ -1205,3 +1179,4 @@
     </script>
 </body>
 </html>
+
