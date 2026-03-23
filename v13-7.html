@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V13.6</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V13.8</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-BW3KE7HNR1');
     </script>
 
@@ -20,7 +19,6 @@
         p.subtitle { text-align: center; font-size: 0.85rem; color: #4a5568; margin-top: 0; margin-bottom: 15px; font-weight: bold; }
         #prompt-output { width: 100%; height: 160px; margin-bottom: 10px; padding: 12px; box-sizing: border-box; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 0.95rem; resize: none; background-color: #fff; line-height: 1.4; }
         
-        /* コントロールボタン群のスタイル */
         .controls-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .controls { display: flex; gap: 8px; }
         .btn-control { flex: 1; padding: 10px; border: none; border-radius: 6px; font-weight: bold; color: white; cursor: pointer; font-size: 0.9rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.2s; }
@@ -28,7 +26,6 @@
         .btn-clear { background-color: #e53e3e; }
         .btn-link { background-color: #FF8C00; }
         
-        /* 新機能ボタンのスタイル */
         .btn-gacha-anime { background-color: #805ad5; } 
         .btn-gacha-anime:active { background-color: #6b46c1; }
         .btn-gacha-real { background-color: #d69e2e; } 
@@ -39,43 +36,45 @@
         .category { margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .category h2 { font-size: 1rem; margin-top: 0; color: #2d3748; border-bottom: 2px solid #edf2f7; padding-bottom: 6px; margin-bottom: 10px; }
         
-        /* 特殊カテゴリ（ガチャ・リアル・テキスト）のスタイル */
+        /* 特殊カテゴリのスタイル */
         .category.special { border: 2px solid; }
         .category.real-magic { border-color: #ed64a6; background-color: #fff5f7; }
         .category.real-magic h2 { color: #d53f8c; border-bottom: 2px solid #fed7e2; margin-bottom: 5px; }
         
-        .category.special-magic { border-color: #4299e1; background-color: #e6f6ff; }
-        .category.special-magic h2 { color: #3182ce; border-bottom: 2px solid #b3d9ff; margin-bottom: 5px; }
+        .category.text-magic { border-color: #4299e1; background-color: #e6f6ff; }
+        .category.text-magic h2 { color: #3182ce; border-bottom: 2px solid #b3d9ff; margin-bottom: 5px; }
+
+        .category.banner-magic { border-color: #dd6b20; background-color: #fffff0; }
+        .category.banner-magic h2 { color: #c05621; border-bottom: 2px solid #fbd38d; margin-bottom: 5px; }
+        .banner-btn { background-color: #dd6b20; width: 100%; padding: 12px; font-size: 1rem; margin-top: 10px; }
+        .banner-btn:active { background-color: #c05621; }
         
         .help-text { font-size: 0.8rem; color: #718096; margin-top: 0; margin-bottom: 10px; line-height: 1.4; }
         .real-btn-female { background-color: #ed64a6; }
         .real-btn-male { background-color: #4299e1; }
         
-        /* 入力欄の見切れ・はみ出し対策 */
-        .url-input, .text-input, .cref-input { flex: 2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
+        .url-input, .text-input { flex: 2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
         .iw-input { flex: 1.2; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.85rem; }
 
         .input-group { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
         select { flex: 1; min-width: 0; text-overflow: ellipsis; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 0.9rem; background-color: #f8fafc; color: #2d3748; }
         .btn-add { flex-shrink: 0; padding: 8px 12px; background-color: #3182ce; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; white-space: nowrap; font-size: 0.9rem;}
-        .btn-add:active { background-color: #2b6cb0; transform: scale(0.98); }
-
-        /* オプション設定の共通スタイル */
+        
         .option-settings { text-align: center; margin-top: -5px; margin-bottom: 5px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
         .option-settings label { font-size: 0.85rem; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;}
         .option-settings input[type="checkbox"] { transform: scale(1.1); }
-        
-        /* トグルオプションの色 */
         .gacha-label { color: #b7791f; }
         .gacha-label input[type="checkbox"] { accent-color: #d69e2e; }
         .real-option-label { color: #d53f8c; }
         .real-option-label input[type="checkbox"] { accent-color: #d53f8c; }
+        .banner-option-label { color: #c05621; }
+        .banner-option-label input[type="checkbox"] { accent-color: #dd6b20; }
     </style>
 </head>
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V13.6（記事間バナー完全攻略版）</p>
+    <p class="subtitle">神プロンプトメーカー V13.8（バナー独立＆V8自動付与）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -99,37 +98,93 @@
         </div>
     </div>
 
-    <div class="category special special-magic">
-        <h2>🖊️ 特殊. テキスト生成（記事間バナー・キャラとまとめ）</h2>
+    <div class="category special banner-magic">
+        <h2>🏷️ 独立機能. 記事間バナー特化ジェネレーター</h2>
         <p class="help-text">
-            💡 <b>V8活用：記事の間のバナー（超横長画像）を作成します。</b><br>
-            左の枠に入れる文字（単語や短いフレーズ推奨）を入力し、右で「どこに・どう表記するか」を選んで追加してください。アスペクト比（Category 6）で超横長を選ぶと効果的です。キャラクターも固定（--cref）できます。<br>
-            <b>例：</b> テキスト内容に `"まとめ"`、表記方法に `as a glowing neon sign` と入力して追加。
+            💡 <b>ブログ用の超横長バナーを一発錬成！</b><br>
+            読者の目を引くポーズと文字を組み合わせます。追加時に<b>「--ar 5:1」と「--v 8.0」</b>が自動で付与されます。（※現在V8ではcrefが使用不可のためキャラ指定はプロンプトで行います）
         </p>
+        
         <div class="input-group">
-            <input type="text" id="text-content" class="text-input" placeholder="入れる文字（例： まとめ）">
-            <select id="text-style">
+            <input type="text" id="banner-text" class="text-input" placeholder="バナー文字（例： まとめ、おすすめギア）">
+        </div>
+        
+        <div class="input-group">
+            <select id="banner-style">
                 <option value="">文字の表記方法（場所・スタイル）...</option>
-                <optgroup label="記事間バナー（セパレーター）">
-                    <option value="as a glowing neon sign">光るネオンサインとして</option>
-                    <option value="on a graphical banner separator">グラフィカルなバナーのセパレーターとして</option>
-                    <option value="written on a street sign in a neon alleyway">ネオン街の道路標識に</option>
-                    <option value="asgraffiti on a brick wall">レンガの壁のグラフィティ（落書き）</option>
+                <option value="a huge glowing neon sign reading">光る巨大なネオンサイン</option>
+                <option value="a large blackboard with chalk text writing">黒板にチョークで書かれた文字</option>
+                <option value="huge 3D pop text reading">巨大な3D立体ポップ文字</option>
+                <option value="a cinematic billboard displaying">シネマティックな看板</option>
+                <option value="a wooden signboard reading">アウトドア風の木製看板</option>
+                <option value="a holographic text projection displaying">近未来のホログラムテキスト</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <select id="banner-pose">
+                <option value="">キャラの表情・ポーズ（視線誘導）...</option>
+                <optgroup label="案内・指差し">
+                    <option value="pointing finger at the text, smiling confidently">テキストを指差して自信満々に微笑む</option>
+                    <option value="winking and pointing at the sign">ウインクしてテキストを指差す</option>
+                    <option value="explaining with a pointer stick, wearing glasses">メガネをかけて指示棒で解説する</option>
+                    <option value="holding a magnifying glass, looking curious">虫眼鏡を持ってテキストを覗き込む</option>
                 </optgroup>
-                <optgroup label="キャラクターの横・吹き出し">
-                    <option value="in a holographic text projection near a character">ホログラムテキストとしてキャラの横に</option>
-                    <option value="printed on a t-shirt">Tシャツにプリント</option>
-                    <option value="embroidered on a jacket">ジャケットに刺繍</option>
-                    <option value="written on a piece of paper in the background">背景の紙のメモに</option>
-                </optgroup>
-                <optgroup label="その他・光・サイバー">
-                    <option value="as a huge billboard">巨大なビルボード（看板）として</option>
-                    <option value="written in cinematic title font">映画のタイトルロゴ風</option>
+                <optgroup label="リラックス・ひょっこり">
+                    <option value="peeking from the side of the text, cute expression">テキストの横からひょっこり覗き込む</option>
+                    <option value="sitting on top of the text, relaxing">テキストの上に座ってリラックスする</option>
+                    <option value="leaning against the text, looking at viewer">テキストに寄りかかってこちらを見る</option>
+                    <option value="sleeping peacefully next to the text">テキストの横でスヤスヤ眠る</option>
                 </optgroup>
             </select>
         </div>
+
         <div class="input-group">
-            <input type="text" id="text-cref-url" class="cref-input" placeholder="キャラクターを固定する（--cref URL）">
+            <select id="banner-bg">
+                <option value="">バナー用の背景（文字が映える背景）...</option>
+                <option value="simple plain flat color background, minimalist">シンプル無地（透過・ブレンドしやすい）</option>
+                <option value="clean modern studio background, softly blurred">清潔感のあるモダンなスタジオ（背景ボケ）</option>
+                <option value="cozy cafe interior, out of focus">おしゃれなカフェの店内（背景ボケ）</option>
+                <option value="cyberpunk neon alleyway, dark background">サイバーパンクなネオン街（暗め）</option>
+                <option value="dark moody camping site with a campfire, night">夜のキャンプサイトと焚き火（アウトドア用）</option>
+            </select>
+        </div>
+
+        <div class="option-settings">
+            <label class="banner-option-label">
+                <input type="checkbox" id="banner-is-anime" checked> アニメ・イラスト調で生成する（OFFで実写調）
+            </label>
+        </div>
+
+        <button class="btn-control banner-btn" onclick="generateBannerPrompt()">✨ V8 バナーを一発錬成！(横長サイズ自動)</button>
+    </div>
+
+    <div class="category special text-magic">
+        <h2>🖊️ 特殊. テキスト追加（一般用）</h2>
+        <p class="help-text">
+            💡 <b>通常の画像生成に文字を足したい時</b>はこちら。<br>
+            ※追加すると、テキスト生成に必須な<b>「--v 8.0」</b>が自動で付与されます。
+        </p>
+        <div class="input-group">
+            <input type="text" id="text-content" class="text-input" placeholder="入れる文字（例： HELLO）">
+            <select id="text-style">
+                <option value="">文字の表記方法（スタイル・場所）...</option>
+                <optgroup label="服・ファッション">
+                    <option value="printed on a t-shirt">Tシャツにプリントされている</option>
+                    <option value="embroidered on a jacket">ジャケットに刺繍されている</option>
+                    <option value="written on a baseball cap">キャップに書かれている</option>
+                </optgroup>
+                <optgroup label="街・風景・壁">
+                    <option value="as a glowing neon sign">光るネオンサインとして</option>
+                    <option value="as graffiti on a brick wall">レンガの壁のグラフィティ（落書き）</option>
+                    <option value="written on a street sign">道路標識に書かれている</option>
+                </optgroup>
+                <optgroup label="紙・本・画面">
+                    <option value="printed on a magazine cover">雑誌の表紙のタイトル</option>
+                    <option value="written on a piece of paper">紙のメモに書かれている</option>
+                    <option value="displayed on a computer screen">PCモニターに表示されている</option>
+                </optgroup>
+            </select>
             <button class="btn-add" id="btn-add-text" style="background-color: #3182ce;" onclick="addTextGenerationPrompt()">追加</button>
         </div>
     </div>
@@ -587,9 +642,9 @@
                     <option value="cybernetic eye">サイバーアイ</option>
                     <option value="halo">天使の輪 (halo)</option>
                     <option value="multiple glowing halos">複数の光る輪</option>
-                    <option value="crown">왕관</option>
+                    <option value="crown">王冠</option>
                     <option value="hair ribbon">髪の毛のリボン</option>
-                    <option value="beret">베레모</option>
+                    <option value="beret">ベレー帽</option>
                     <option value="baseball cap">ベースボールキャップ</option>
                 </optgroup>
                 <optgroup label="首・体・その他">
@@ -651,25 +706,25 @@
                     <option value="traditional japanese festival">夏祭り</option>
                     <option value="magical forest background">魔法の森</option>
                     <option value="snowy mountain peak">雪山の頂上</option>
-                    <option Desert oasis">砂漠のオアシス</option>
-                    <option deep underwater">深い海の中</option>
-                    <option Flower garden in full bloom">満開の花畑</option>
-                    <option Bamboo forest">竹林</option>
+                    <option value="desert oasis">砂漠のオアシス</option>
+                    <option value="deep underwater">深い海の中</option>
+                    <option value="flower garden in full bloom">満開の花畑</option>
+                    <option value="bamboo forest">竹林</option>
                 </optgroup>
                 <optgroup label="SF・ファンタジー">
                     <option value="cyberpunk city background">サイバーパンクな街</option>
-                    <option Ruined city background">廃墟の街</option>
+                    <option value="ruined city background">廃墟の街</option>
                     <option value="outer space">宇宙空間</option>
                     <option value="gothic castle">ゴシックな城</option>
-                    <option Floating island">天空の浮遊島</option>
-                    <option Apocalyptic wasteland">終末の荒野</option>
-                    <option Steampunk laboratory">スチームパンクの研究所</option>
+                    <option value="floating island">天空の浮遊島</option>
+                    <option value="apocalyptic wasteland">終末の荒野</option>
+                    <option value="steampunk laboratory">スチームパンクの研究所</option>
                     <option value="abandoned amusement park">廃遊園地</option>
-                    <option Magical crystal cave">魔法のクリスタル洞窟</option>
-                    <option Grand library with floating books">本が浮遊する大図書館</option>
-                    <option Inside a spaceship">宇宙船の内部</option>
-                    <option Glowing bioluminescent forest">発光する森</option>
-                    <option Heavenly clouds with golden gates">黄金の門がある天国の雲</option>
+                    <option value="magical crystal cave">魔法のクリスタル洞窟</option>
+                    <option value="grand library with floating books">本が浮遊する大図書館</option>
+                    <option value="inside a spaceship">宇宙船の内部</option>
+                    <option value="glowing bioluminescent forest">発光する森</option>
+                    <option value="heavenly clouds with golden gates">黄金の門がある天国の雲</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-bg')">追加</button>
@@ -681,33 +736,33 @@
                     <option value="floating glowing particles">光る粒子が舞う</option>
                     <option value="cherry blossoms falling">桜が舞い散る</option>
                     <option value="falling autumn leaves">舞い散る紅葉</option>
-                    <option Fire sparkles">炎の火の粉</option>
-                    <option Lightning">稲妻 (lightning)</option>
-                    <option Water splashes">水しぶき (water splashes)</option>
-                    <option Falling snow">降る雪</option>
-                    <option Heavy rain">激しい雨</option>
-                    <option Lens flare">レンズフレア</option>
-                    <option Sun rays">木漏れ日（光の筋）</option>
-                    <option God rays">神々しい光芒（ゴッドレイ）</option>
-                    <option Rainbow light leak">虹色のライトリーク</option>
-                    <option Glowing dust motes">光る塵（ホコリ）</option>
-                    <option Soft morning mist">柔らかな朝霧</option>
+                    <option value="fire sparkles">炎の火の粉</option>
+                    <option value="lightning">稲妻 (lightning)</option>
+                    <option value="water splashes">水しぶき (water splashes)</option>
+                    <option value="falling snow">降る雪</option>
+                    <option value="heavy rain">激しい雨</option>
+                    <option value="lens flare">レンズフレア</option>
+                    <option value="sun rays">木漏れ日（光の筋）</option>
+                    <option value="god rays">神々しい光芒（ゴッドレイ）</option>
+                    <option value="rainbow light leak">虹色のライトリーク</option>
+                    <option value="glowing dust motes">光る塵（ホコリ）</option>
+                    <option value="soft morning mist">柔らかな朝霧</option>
                     <option value="aurora borealis">オーロラ</option>
-                    <option shooting stars">流れ星</option>
+                    <option value="shooting stars">流れ星</option>
                 </optgroup>
                 <optgroup label="魔法・SF・その他">
                     <option value="magical aura">魔法のオーラ</option>
                     <option value="magic circle">魔法陣</option>
                     <option value="holy light">聖なる光 (holy light)</option>
-                    <option Glowing magical glyphs">光るルーン文字</option>
-                    <option Holographic displays">ホログラムディスプレイ</option>
-                    <option Dark miasma">黒い瘴気</option>
-                    <option Sparkling glitter">キラキラ光るグリッター</option>
-                    <option Blood splatters">血しぶき</option>
+                    <option value="glowing magical glyphs">光るルーン文字</option>
+                    <option value="holographic displays">ホログラムディスプレイ</option>
+                    <option value="dark miasma">黒い瘴気</option>
+                    <option value="sparkling glitter">キラキラ光るグリッター</option>
+                    <option value="blood splatters">血しぶき</option>
                     <option value="lightning strikes">落雷</option>
-                    <option Chromatic aberration">色収差（グリッチエフェクト）</option>
-                    <option Manga speed lines">漫画の集中線</option>
-                    <option Digital matrix rain">マトリックス風のデジタル雨</option>
+                    <option value="chromatic aberration">色収差（グリッチエフェクト）</option>
+                    <option value="manga speed lines">漫画の集中線</option>
+                    <option value="digital matrix rain">マトリックス風のデジタル雨</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-effect')">追加</button>
@@ -721,43 +776,43 @@
                 <option value="">動き・ポーズを選んでください...</option>
                 <optgroup label="基本・静かな動き">
                     <option value="hair blowing softly in the wind">髪が風でなびく</option>
-                    <option Blinking eyes slowly">ゆっくり瞬きする</option>
+                    <option value="blinking eyes slowly">ゆっくり瞬きする</option>
                     <option value="looking at viewer">こっちを見る</option>
                     <option value="turning around">振り返る</option>
-                    <option Sitting on a chair">椅子に座っている</option>
+                    <option value="sitting on a chair">椅子に座っている</option>
                     <option value="sleeping">眠っている</option>
-                    <option Sitting on the floor hugging knees">体育座り</option>
-                    <option Sitting cross-legged">あぐらをかく</option>
-                    <option Leaning against a wall">壁にもたれる</option>
+                    <option value="sitting on the floor hugging knees">体育座り</option>
+                    <option value="sitting cross-legged">あぐらをかく</option>
+                    <option value="leaning against a wall">壁にもたれる</option>
                     <option value="reading a book">本を読んでいる</option>
-                    <option Drinking from a teacup">紅茶を飲む</option>
+                    <option value="drinking from a teacup">紅茶を飲む</option>
                     <option value="adjusting glasses">メガネを直す</option>
                     <option value="brushing hair behind ear">髪を耳にかける</option>
                     <option value="tying hair up">髪を結ぶ</option>
-                    <option Hands completely hidden">【崩れ防止】手を完全に隠す</option>
+                    <option value="hands completely hidden">【崩れ防止】手を完全に隠す</option>
                     <option value="posing like a fashion model">ファッションモデルのようなポーズ</option>
-                    <option Hands in pockets">ポケットに手を入れる</option>
+                    <option value="hands in pockets">ポケットに手を入れる</option>
                 </optgroup>
                 <optgroup label="アクティブ・感情表現">
                     <option value="walking towards camera">カメラに向かって歩く</option>
                     <option value="crying, shedding tears">涙を流す</option>
-                    <option Smiling happily">嬉しそうに笑う</option>
-                    <option Reaching out to the viewer">手を差し伸べる</option>
-                    <option Pointing finger at viewer">こちらを指差す</option>
+                    <option value="smiling happily">嬉しそうに笑う</option>
+                    <option value="reaching out to the viewer">手を差し伸べる</option>
+                    <option value="pointing finger at viewer">こちらを指差す</option>
                     <option value="waving hand">手を振る</option>
-                    <option Clothes fluttering">服がひらひら揺れる</option>
+                    <option value="clothes fluttering">服がひらひら揺れる</option>
                     <option value="jumping in the air">空中にジャンプ</option>
                     <option value="floating in mid-air">空中に浮遊する</option>
                     <option value="falling down">落下している</option>
                     <option value="dancing elegantly">優雅に踊る</option>
-                    <option Stretching body">伸びをする</option>
+                    <option value="stretching body">伸びをする</option>
                     <option value="running fast">速く走る</option>
                 </optgroup>
                 <optgroup label="戦闘・特殊">
                     <option value="holding a sword">剣を構える</option>
-                    <option Pointing a gun at the viewer">銃をこちらに向ける</option>
+                    <option value="pointing a gun at the viewer">銃をこちらに向ける</option>
                     <option value="playing an electric guitar">エレキギターを弾く</option>
-                    <option Casting a spell">魔法の詠唱</option>
+                    <option value="casting a spell">魔法の詠唱</option>
                     <option value="dodging an attack">攻撃を避ける</option>
                     <option value="drawing a bow">弓を引き絞る</option>
                 </optgroup>
@@ -785,17 +840,17 @@
                     <option value="wide angle shot">広角ショット（背景を広く）</option>
                     <option value="from below">下からアオリ (from below)</option>
                     <option value="from above">上からフカン (from above)</option>
-                    <option Over-the-shoulder shot">肩越しショット（なめ構図）</option>
+                    <option value="over-the-shoulder shot">肩越しショット（なめ構図）</option>
                 </optgroup>
                 <optgroup label="特殊なカメラワーク">
                     <option value="dynamic angle">ダイナミックアングル</option>
                     <option value="dutch angle">ダッチアングル（斜め構図）</option>
-                    <option Micro shot">マクロ撮影（超近接）</option>
+                    <option value="macro shot">マクロ撮影（超近接）</option>
                     <option value="fish-eye lens">魚眼レンズ</option>
-                    <option Drone shot">ドローン撮影（はるか上空から）</option>
-                    <option Cinematic lighting">シネマティックライティング</option>
-                    <option Studio lighting">スタジオライティング</option>
-                    <option Golden hour lighting">マジックアワー（夕暮れ）の光</option>
+                    <option value="drone shot">ドローン撮影（はるか上空から）</option>
+                    <option value="cinematic lighting">シネマティックライティング</option>
+                    <option value="studio lighting">スタジオライティング</option>
+                    <option value="golden hour lighting">マジックアワー（夕暮れ）の光</option>
                 </optgroup>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-camera')">追加</button>
@@ -804,7 +859,7 @@
             <select id="sel-quality">
                 <option value="">品質・パラメータ（末尾に追加）...</option>
                 <optgroup label="品質セット">
-                    <option Masterpiece, best quality, ultra-detailed">✨ 最高品質セット(アニメ用)</option>
+                    <option value="masterpiece, best quality, ultra-detailed">✨ 最高品質セット(アニメ用)</option>
                     <option value="--style raw">📸 実写用パラメータ(--style raw)</option>
                 </optgroup>
                 <optgroup label="アスペクト比・バージョン">
@@ -812,9 +867,8 @@
                     <option value="--ar 9:16">📱 縦長(--ar 9:16)</option>
                     <option value="--ar 1:1">🟩 正方形(--ar 1:1)</option>
                     <option value="--ar 3:2">🖼️ 写真比率(--ar 3:2)</option>
-                    <option value="--ar 5:1">⬛ 記事間バナー(--ar 5:1)</option>
-                    <option value="--ar 4:1">⬛ 超横長バナー(--ar 4:1)</option>
                     <option value="--v 8.0">🤖 Midjourney V8 Alpha(--v 8.0)</option>
+                    <option value="--v 6.1">🤖 Midjourney v6.1(--v 6.1)</option>
                     <option value="--niji 6">🌟 にじジャーニー(--niji 6)</option>
                 </optgroup>
                 <optgroup label="キャラ固定機能">
@@ -834,14 +888,14 @@
             <select id="sel-negative">
                 <option value="">除外する要素を選んでください...</option>
                 <option value="--no text, watermark, signature, username">📝 文字・透かし・サインを除外</option>
-                <option Bad anatomy, extra digits, missing fingers, mutated hands">🖐️ 作画崩れ・指の異常を除外</option>
-                <option Background透過用（背景を描かない）</option>
+                <option value="--no bad anatomy, extra digits, missing fingers, mutated hands">🖐️ 作画崩れ・指の異常を除外</option>
+                <option value="--no background">⬜ 背景透過用（背景を描かない）</option>
                 <option value="--no monochrome, grayscale">🎨 モノクロ・白黒を回避</option>
                 <option value="--no nsfw, nude">🛡️ 健全化（R-18要素を回避）</option>
                 <option value="--no animal ears, animal tail">🐱 ケモミミ・尻尾を除外</option>
-                <option glasses">メガネを除外</option>
-                <option 3d, realistic">🖌️ 3D感・リアルさを除外（アニメ塗り重視）</option>
-                <option Anime, cartoon, illustration, 3d, sketch, painting, exaggerated expressions">🚫 【実写用】アニメやイラスト感・過剰な表情を除外</option>
+                <option value="--no glasses">👓 メガネを除外</option>
+                <option value="--no 3d, realistic">🖌️ 3D感・リアルさを除外（アニメ塗り重視）</option>
+                <option value="--no anime, cartoon, illustration, 3d, sketch, painting, exaggerated expressions">🚫 【実写用】アニメやイラスト感・過剰な表情を除外</option>
             </select>
             <button class="btn-add" onclick="addFromSelect('sel-negative')">追加</button>
         </div>
@@ -850,7 +904,6 @@
     <script>
         const output = document.getElementById('prompt-output');
 
-        // プロンプトにテキストを綺麗に追加する共通関数
         function addTextToPrompt(value) {
             if (!value) return;
             let currentText = output.value.trim();
@@ -886,7 +939,6 @@
             }
         }
 
-        // セレクトボックスからの追加
         function addFromSelect(selectId) {
             const select = document.getElementById(selectId);
             addTextToPrompt(select.value);
@@ -903,7 +955,6 @@
             select.selectedIndex = 0;
         }
 
-        // URLをプロンプトの先頭に追加する処理
         function addRealBase() {
             const urlInput = document.getElementById('base-image-url');
             const url = urlInput.value.trim();
@@ -913,7 +964,7 @@
                 let currentText = output.value.trim();
                 output.value = url + " " + currentText;
                 
-                if(!iw) iw = "0.8"; // IW推奨を0.8に変更
+                if(!iw) iw = "0.8";
                 addTextToPrompt(`--iw ${iw}`);
                 
                 urlInput.value = '';
@@ -931,16 +982,13 @@
             }
         }
 
-        // 一発で実写化のベースプロンプトを付与するボタン
         function applyRealSpells(gender) {
             const keepComp = document.getElementById('real-keep-composition').checked;
             
             const baseReal = "photorealistic, highly detailed, realistic skin texture, visible pores, natural skin details, 8k resolution, ultra-realistic, cinematic lighting, shot on 85mm f/1.4 lens";
-            
             const framingPrefix = keepComp ? "" : "portrait photograph, ";
-            
-            const femaleSpecific = "photorealistic Japanese young woman, gentle soft smile, distinct East Asian facial features";
-            const maleSpecific = "photorealistic handsome Japanese young man, distinct jawline, handsome cinematic facial features, distinct East Asian facial features";
+            const femaleSpecific = "young Japanese woman, gentle soft smile, distinct East Asian facial features";
+            const maleSpecific = "young Japanese man, distinct jawline, handsome cinematic facial features, distinct East Asian facial features";
             
             let promptToAdd = gender === 'female' ? `${framingPrefix}${femaleSpecific}, ${baseReal}` : `${framingPrefix}${maleSpecific}, ${baseReal}`;
 
@@ -952,25 +1000,18 @@
             
             btn.innerHTML = '✨ 魔法付与完了！';
             btn.style.backgroundColor = '#48bb78'; 
-            
-            setTimeout(() => { 
-                btn.innerHTML = originalText; 
-                btn.style.backgroundColor = ''; 
-            }, 1000);
+            setTimeout(() => { btn.innerHTML = originalText; btn.style.backgroundColor = ''; }, 1000);
         }
 
-        // 新機能：テキスト生成プロンプトの追加（cref対応）
+        // 新設：一般テキスト追加（V8自動付与）
         function addTextGenerationPrompt() {
             const contentInput = document.getElementById('text-content');
             const styleSelect = document.getElementById('text-style');
-            const crefInput = document.getElementById('text-cref-url');
             
             const rawContent = contentInput.value.trim();
             const selectedStyle = styleSelect.value;
-            const crefUrl = crefInput.value.trim();
             
             if (rawContent) {
-                // V8仕様：テキストは必ず引用符で囲む。単一単語でも有効。
                 let finalContent = '"' + rawContent + '"';
                 
                 let finalValue = finalContent;
@@ -980,13 +1021,13 @@
                 
                 addTextToPrompt(finalValue);
                 
-                if (crefUrl !== "") {
-                    addTextToPrompt(`--cref ${crefUrl}`);
+                // V8自動付与ロジック
+                if (!output.value.includes('--v 8')) {
+                    addTextToPrompt('--v 8.0');
                 }
                 
                 contentInput.value = '';
                 styleSelect.selectedIndex = 0;
-                crefInput.value = '';
                 
                 const btn = document.getElementById('btn-add-text');
                 const originalText = btn.innerHTML;
@@ -1001,13 +1042,59 @@
             }
         }
 
-        // 闇鍋ガチャ（アニメ用・リアル用に分岐）
+        // 独立機能：バナー生成専用
+        function generateBannerPrompt() {
+            clearPrompt(); 
+
+            const textInput = document.getElementById('banner-text').value.trim();
+            const textStyle = document.getElementById('banner-style').value;
+            const pose = document.getElementById('banner-pose').value;
+            const bg = document.getElementById('banner-bg').value;
+            const isAnime = document.getElementById('banner-is-anime').checked;
+
+            if (!textInput) {
+                alert("バナーに入れる文字（例：まとめ、キャンプギア）を入力してください！");
+                return;
+            }
+
+            let textElement = `"${textInput}"`;
+            if (textStyle) {
+                textElement = `${textStyle} "${textInput}"`;
+            }
+
+            let qualityTags = isAnime ? "masterpiece, best quality, ultra-detailed, anime style illustration" : "photorealistic, highly detailed, 8k, cinematic lighting";
+            let negativeTags = isAnime ? "" : "--no anime, cartoon, 3d, illustration";
+            
+            let subject = "";
+            if(pose) {
+               subject = isAnime ? "1girl, " : "photorealistic Japanese young woman, ";
+            }
+
+            let finalPrompt = "";
+            if (pose) finalPrompt += `${subject}${pose}, `;
+            finalPrompt += `${textElement}`;
+            if (bg) finalPrompt += `, ${bg}`;
+            finalPrompt += `, ${qualityTags}`;
+
+            // バナー用の超横長とV8を強制付与（crefは現状使えないため除外）
+            finalPrompt += ` --ar 5:1 --v 8.0 ${negativeTags}`;
+
+            output.value = finalPrompt.trim();
+
+            const btn = document.querySelector('.banner-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✨ バナー錬成準備完了！';
+            btn.style.backgroundColor = '#48bb78';
+            setTimeout(() => { 
+                btn.innerHTML = originalText; 
+                btn.style.backgroundColor = ''; 
+            }, 1500);
+        }
+
         function generateRandomPrompt(type) {
             clearPrompt();
-            
             const animeCategories = ['sel-subject', 'sel-nationality', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
             const realCategories = ['sel-hair-color', 'sel-hair-style', 'sel-tops', 'sel-bg', 'sel-effect', 'sel-action'];
-            
             let parts = [];
             
             if (type === 'anime') {
@@ -1020,7 +1107,6 @@
                         parts.push(randomOpt.value);
                     }
                 });
-                
                 output.value = parts.join(', ') + ', masterpiece, best quality --ar 9:16 --niji 6';
                 const btn = document.querySelector('.btn-gacha-anime');
                 const originalText = btn.innerHTML;
@@ -1039,18 +1125,11 @@
                 });
 
                 const isJpFix = document.getElementById('gacha-jp-fix').checked;
-                const isFemale = Math.random() > 0.3; // 女性7割、男性3割
-                
-                let baseSubject = "";
-                if (isJpFix) {
-                    baseSubject = isFemale ? "photorealistic Japanese young woman" : "photorealistic handsome Japanese young man";
-                } else {
-                    baseSubject = isFemale ? "photorealistic young woman" : "photorealistic handsome young man";
-                }
+                const isFemale = Math.random() > 0.3;
+                let baseSubject = isJpFix ? (isFemale ? "photorealistic Japanese young woman" : "photorealistic Japanese handsome young man") : (isFemale ? "photorealistic young woman" : "photorealistic handsome young man");
 
                 const safeRealExpressions = ["gentle soft smile", " calm expression", "slight smile", "cool gaze", "natural expression"];
                 const safeExpression = safeRealExpressions[Math.floor(Math.random() * safeRealExpressions.length)];
-                
                 const realNegative = "--no anime, cartoon, illustration, painting, exaggerated expressions";
                 
                 output.value = baseSubject + ', ' + safeExpression + ', ' + parts.join(', ') + ', highly detailed, photorealistic, 8k, cinematic lighting ' + realNegative + ' --ar 9:16';
@@ -1062,11 +1141,9 @@
             }
         }
 
-        // 完璧な立ち絵モード
         function applyPerfectStandingMode() {
             const magicPrompt = "full body toe to head shot, standing straight on two feet, simple white background, completely white background, no shadows, flat color";
             const magicNegative = "--no floor, shadow";
-            
             addTextToPrompt(magicPrompt);
             addTextToPrompt(magicNegative);
             
