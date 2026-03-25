@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V14.0</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V14.1</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -73,7 +73,7 @@
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V14.0（聖典＆語彙力爆発版）</p>
+    <p class="subtitle">神プロンプトメーカー V14.1（聖典＆語彙力爆発版）</p>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -244,7 +244,7 @@
             <button class="btn-control real-btn-male" onclick="applyRealSpells('male')">👨 リアル美男化</button>
         </div>
     </div>
-        <div class="category">
+    <div class="category">
         <h2>👤 1. ベース（主役・国籍・体型）</h2>
         <div class="input-group">
             <select id="sel-subject">
@@ -337,7 +337,7 @@
                 <option value="chubby">ぽっちゃり (chubby)</option>
                 <option value="skinny">ガリガリ (skinny)</option>
                 <option value="model-like figure">モデル体型</option>
-                <option value="busty">巨乳 (busty)</option>
+                <option value="well-endowed, prominent bust">巨乳（※nijiモデルではエラーになるため使用不可）</option>
                 <option value="flat-chested">貧乳 (flat-chested)</option>
                 <option value="broad-shouldered">肩幅が広い</option>
                 <option value="hourglass figure">砂時計のような体型（くびれ）</option>
@@ -506,6 +506,8 @@
                     <option value="business suit">ビジネススーツ</option>
                 </optgroup>
                 <optgroup label="女性向けフェミニン・セクシー">
+                    <option value="Deep V-neck">Vネック（谷間が見える服）</option>
+                    <option value="tight ribbed knit sweater">ピタッとしたリブニットセーター</option>
                     <option value="pure white dress">純白のドレス</option>
                     <option value="off-shoulder sweater">オフショルニット</option>
                     <option value="tube top">チューブトップ</option>
@@ -801,8 +803,7 @@
             <button class="btn-add" onclick="addFromSelect('sel-effect')">追加</button>
         </div>
     </div>
-
-    <div class="category">
+        <div class="category">
         <h2>🎥 5. 配置・アクション・パラメータ・ネガティブ</h2>
         <div class="input-group">
             <select id="sel-action">
@@ -1179,3 +1180,4 @@
     </script>
 </body>
 </html>
+
