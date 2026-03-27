@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室・LINEスタンプ工場 Ver 2.1🧪✨</title>
+    <title>AIちゃん実験室・LINEスタンプ工場 Ver 2.2🧪✨</title>
     <style>
         /* --- クールな背景（ダークグラデーション＆ワークショップ仕様） --- */
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            /* 深夜のラボをイメージした、わずかに青みがかった黒のグラデーション */
             background-color: #111827;
             background-image: 
                 radial-gradient(at 10% 20%, rgba(31, 41, 58, 0.3) 0px, transparent 50%),
@@ -18,13 +17,13 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            padding-bottom: 120px; /* 固定バーの被り防止 */
+            padding-bottom: 120px;
         }
 
         h1 { text-align: center; color: #f9fafb; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .description { text-align: center; color: #9ca3af; margin-bottom: 20px; font-size: 14px; }
 
-        /* --- プロンプトメーカーへのバナーリンク --- */
+        /* --- プロンプトメーカーへのバナーリンク（画像差し替え版） --- */
         .prompt-maker-banner {
             display: block;
             width: 100%;
@@ -46,23 +45,11 @@
             height: auto;
             display: block;
         }
-        .banner-text {
-            position: absolute;
-            bottom: 12px;
-            left: 18px;
-            color: white;
-            background-color: rgba(0,0,0,0.65);
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 14px;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        /* 不要になった banner-text のCSSは削除しました */
 
-        /* --- セクションのデザイン（ダークモード仕様） --- */
+        /* --- セクションのデザイン --- */
         .config-section, .stamp-section {
-            background-color: #1f293a; /* セクション背景は少し明るめの紺黒 */
+            background-color: #1f293a;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
@@ -75,7 +62,6 @@
         
         label { display: block; margin-bottom: 8px; font-weight: bold; color: #f9fafb; font-size: 14px; }
         
-        /* 入力フォーム（ダークモード仕様） */
         textarea, select {
             width: 100%;
             padding: 12px;
@@ -96,7 +82,7 @@
         textarea { resize: vertical; }
         
         .reset-all-btn {
-            background-color: #ef4444; /* より鮮やかな赤 */
+            background-color: #ef4444;
             color: white;
             border: none;
             border-radius: 4px;
@@ -112,7 +98,7 @@
         .reset-all-btn:hover { background-color: #dc2626; transform: translateY(-1px); }
         .reset-all-btn:active { transform: translateY(0); }
 
-        /* --- スタンプセクションのボタン（ダークモード仕様） --- */
+        /* --- スタンプセクションのボタン --- */
         .category-container { margin-bottom: 20px; }
         .category-title { font-size: 16px; font-weight: bold; color: #f9fafb; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
         
@@ -137,17 +123,17 @@
         .stamp-button.active {
             border-color: #3498db;
             color: white;
-            background-color: #1d4ed8; /* より深みのある青 */
+            background-color: #1d4ed8;
             box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
         }
         
-        /* --- 出力バー（さらにギア感を強化） --- */
+        /* --- 出力バー --- */
         .output-section {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #111827; /* 漆黒に近い背景 */
+            background: #111827;
             padding: 15px 20px;
             box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
             display: none;
@@ -198,11 +184,10 @@
 <body>
 
     <a href="https://ai-lab87.github.io/gazou/" target="_blank" class="prompt-maker-banner">
-        <img src="https://cdn.midjourney.com/bcec217d-7669-4635-b13a-6dbb890342f9/0_0.jpeg" alt="プロンプトメーカーはこちら">
-        <div class="banner-text">← 元祖・神プロンプトメーカーはこちら🧪</div>
-    </a>
+        <img src="https://cdn.midjourney.com/bac8cfe3-f43d-4603-8989-245bb6b95375/0_1.jpeg" alt="プロンプトメーカーはこちら">
+        </a>
 
-    <h1>AIちゃん実験室・LINEスタンプ工場 Ver 2.1🧪✨</h1>
+    <h1>AIちゃん実験室・LINEスタンプ工場 Ver 2.2🧪✨</h1>
     <p class="description">V8の文字生成を活用して、40個分のスタンププロンプトを爆速で量産します。</p>
 
     <div class="config-section">
@@ -318,14 +303,13 @@
 
         const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
 
-        // カテゴリ名取得のバグ修正：catTitle.textContent = category.name; に変更
         stampData.forEach(category => {
             const catContainer = document.createElement('div');
             catContainer.className = 'category-container';
             
             const catTitle = document.createElement('div');
             catTitle.className = 'category-title';
-            catTitle.textContent = category.name; // category.name を使用
+            catTitle.textContent = category.name;
             catContainer.appendChild(catTitle);
             
             const btnGrid = document.createElement('div');
