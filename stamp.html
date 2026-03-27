@@ -5,23 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIちゃん実験室・LINEスタンプ工場【お試し版】🧪✨</title>
     <style>
-        /* --- クールな背景（ダークグラデーション） --- */
+        /* --- クリーンな背景（ライトモード） --- */
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #111827;
-            background-image: 
-                radial-gradient(at 10% 20%, rgba(31, 41, 58, 0.3) 0px, transparent 50%),
-                radial-gradient(at 80% 80%, rgba(17, 24, 39, 0.1) 0px, transparent 50%);
-            background-attachment: fixed;
-            color: #f3f4f6;
+            background-color: #f3f4f6;
+            color: #1f2937;
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             padding-bottom: 120px;
         }
 
-        h1 { text-align: center; color: #f9fafb; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .description { text-align: center; color: #9ca3af; margin-bottom: 20px; font-size: 14px; }
+        h1 { text-align: center; color: #111827; font-size: 24px; }
+        .description { text-align: center; color: #4b5563; margin-bottom: 20px; font-size: 14px; }
 
         /* --- プロンプトメーカーへのバナーリンク --- */
         .prompt-maker-banner {
@@ -32,66 +28,66 @@
             position: relative;
             margin-bottom: 25px;
             text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid #e5e7eb;
         }
         .prompt-maker-banner:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.2);
         }
         .prompt-maker-banner img { width: 100%; height: auto; display: block; }
 
-        /* --- セクションのデザイン --- */
+        /* --- セクションのデザイン（白ベース） --- */
         .config-section, .stamp-section {
-            background-color: #1f293a;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid #e5e7eb;
         }
 
         .flex-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
         .flex-item { flex: 1; min-width: 250px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #f9fafb; font-size: 14px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #374151; font-size: 14px; }
         
         textarea, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #374151;
+            border: 1px solid #d1d5db;
             border-radius: 6px;
             box-sizing: border-box;
             font-family: inherit;
             font-size: 14px;
-            background-color: #374151;
-            color: #f9fafb;
+            background-color: #ffffff;
+            color: #1f2937;
             transition: border-color 0.2s, background-color 0.2s;
         }
-        textarea:focus, select:focus { outline: none; border-color: #3498db; background-color: #1f293a; }
+        textarea:focus, select:focus { outline: none; border-color: #3498db; background-color: #f9fafb; }
         textarea { resize: vertical; }
 
         /* --- スタンプセクションのボタン --- */
         .category-container { margin-bottom: 10px; }
-        .category-title { font-size: 16px; font-weight: bold; color: #f9fafb; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
+        .category-title { font-size: 16px; font-weight: bold; color: #1f2937; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
         
         .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
         .stamp-button {
-            background-color: #374151;
-            border: 1px solid #4b5563;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
             border-radius: 6px;
             padding: 15px 5px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 13px;
-            color: #f3f4f6;
+            color: #374151;
             font-weight: bold;
         }
-        .stamp-button:hover { background-color: #4b5563; border-color: #6b7280; transform: translateY(-1px); }
-        .stamp-button.active { border-color: #3498db; color: white; background-color: #1d4ed8; box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); }
+        .stamp-button:hover { background-color: #f3f4f6; border-color: #9ca3af; transform: translateY(-1px); }
+        .stamp-button.active { border-color: #3498db; color: white; background-color: #3498db; box-shadow: 0 0 8px rgba(52, 152, 219, 0.4); }
         
-        /* --- 完全版への誘導バナー（Premium Lock） --- */
+        /* --- 完全版への誘導バナー（Premium Lock）※ここだけ目立たせるためにダークのまま！ --- */
         .premium-locked {
             background: linear-gradient(135deg, #2c3e50, #1a252f);
             border: 1px solid #f1c40f;
@@ -99,7 +95,7 @@
             padding: 20px;
             text-align: center;
             margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .premium-locked h3 { color: #f1c40f; margin-top: 0; margin-bottom: 10px; font-size: 16px; }
         .premium-locked p { color: #d1d5db; font-size: 13px; margin-bottom: 15px; line-height: 1.5; }
@@ -122,17 +118,17 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #111827;
+            background: #ffffff;
             padding: 15px 20px;
-            box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.1);
             display: none;
             align-items: center;
             justify-content: space-between;
             z-index: 100;
             gap: 12px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid #e5e7eb;
         }
-        .output-text { flex-grow: 1; border-radius: 4px; padding: 12px; border: 1px solid #374151; font-size: 13px; background-color: #374151; color: #f9fafb; }
+        .output-text { flex-grow: 1; border-radius: 4px; padding: 12px; border: 1px solid #d1d5db; font-size: 13px; background-color: #f9fafb; color: #1f2937; }
         .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
         .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 12px 25px; cursor: pointer; font-weight: bold; font-size: 14px; }
         #clear_selection_button { background-color: #6b7280; color: white; border: none; border-radius: 4px; padding: 12px 18px; cursor: pointer; font-size: 14px; }
@@ -177,7 +173,7 @@
         <div class="premium-locked">
             <h3>🔒 全40種類のフルセットは「完全版」で！</h3>
             <p>「日常アクション」「喜怒哀楽」「メッセージ」など、LINEスタンプ1セット分（40個）のプロンプトをワンクリックで量産できる【完全版ツール】と、審査を通すためのノウハウはnoteの有料記事にて公開中です。</p>
-            <a href="#" target="_blank" class="premium-btn">👉 【完全版】と稼ぐノウハウを手に入れる</a>
+            <a href="https://note.com/ai_labo_chan/n/n3d20394f78ba" target="_blank" class="premium-btn">👉 【完全版】と稼ぐノウハウを手に入れる</a>
         </div>
     </div>
 
