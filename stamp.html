@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIちゃん実験室・LINEスタンプ工場【お試し版】🧪✨</title>
+    <style>
+        /* --- クールな背景（ダークグラデーション） --- */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #111827;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(31, 41, 58, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(17, 24, 39, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 120px;
+        }
+
+        h1 { text-align: center; color: #f9fafb; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .description { text-align: center; color: #9ca3af; margin-bottom: 20px; font-size: 14px; }
+
+        /* --- プロンプトメーカーへのバナーリンク --- */
+        .prompt-maker-banner {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 25px;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .prompt-maker-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+        }
+        .prompt-maker-banner img { width: 100%; height: auto; display: block; }
+
+        /* --- セクションのデザイン --- */
+        .config-section, .stamp-section {
+            background-color: #1f293a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .flex-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flex-item { flex: 1; min-width: 250px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #f9fafb; font-size: 14px; }
+        
+        textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: #374151;
+            color: #f9fafb;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        textarea:focus, select:focus { outline: none; border-color: #3498db; background-color: #1f293a; }
+        textarea { resize: vertical; }
+
+        /* --- スタンプセクションのボタン --- */
+        .category-container { margin-bottom: 10px; }
+        .category-title { font-size: 16px; font-weight: bold; color: #f9fafb; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
+        
+        .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
+        .stamp-button {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            padding: 15px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            color: #f3f4f6;
+            font-weight: bold;
+        }
+        .stamp-button:hover { background-color: #4b5563; border-color: #6b7280; transform: translateY(-1px); }
+        .stamp-button.active { border-color: #3498db; color: white; background-color: #1d4ed8; box-shadow: 0 0 8px rgba(52, 152, 219, 0.6); }
+        
+        /* --- 完全版への誘導バナー（Premium Lock） --- */
+        .premium-locked {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            border: 1px solid #f1c40f;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.15);
+        }
+        .premium-locked h3 { color: #f1c40f; margin-top: 0; margin-bottom: 10px; font-size: 16px; }
+        .premium-locked p { color: #d1d5db; font-size: 13px; margin-bottom: 15px; line-height: 1.5; }
+        .premium-btn {
+            display: inline-block;
+            background-color: #f1c40f;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .premium-btn:hover { background-color: #f39c12; transform: scale(1.05); }
+
+        /* --- 出力バー --- */
+        .output-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111827;
+            padding: 15px 20px;
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            gap: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .output-text { flex-grow: 1; border-radius: 4px; padding: 12px; border: 1px solid #374151; font-size: 13px; background-color: #374151; color: #f9fafb; }
+        .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
+        .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 12px 25px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        #clear_selection_button { background-color: #6b7280; color: white; border: none; border-radius: 4px; padding: 12px 18px; cursor: pointer; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <a href="https://ai-lab87.github.io/gazou/" target="_blank" class="prompt-maker-banner">
+        <img src="https://cdn.midjourney.com/bac8cfe3-f43d-4603-8989-245bb6b95375/0_1.jpeg" alt="プロンプトメーカーはこちら">
+    </a>
+
+    <h1>LINEスタンプ工場【無料お試し版】🧪✨</h1>
+    <p class="description">V8の文字生成を活用したスタンプ錬成の魔法を、4種類だけ体験できます。</p>
+
+    <div class="config-section">
+        <label for="char_base">1. キャラクターの基本設定（日本語OK）</label>
+        <textarea id="char_base" rows="3" placeholder="例: 黒と白のツートンカラーの髪の女の子、青い目、黒いオーバーサイズのTシャツを着ている"></textarea>
+        
+        <div class="flex-row" style="margin-top: 15px;">
+            <div class="flex-item">
+                <label for="art_style">2. 画風（テイスト）</label>
+                <select id="art_style">
+                    <option value="anime style, flat color">アニメ調（フラット・基本）</option>
+                    <option value="watercolor style, soft lighting">水彩画風</option>
+                </select>
+            </div>
+            <div class="flex-item">
+                <label for="text_style">3. 文字のフォント感</label>
+                <select id="text_style">
+                    <option value="bold pop font">太字のポップ風</option>
+                    <option value="cute handwritten marker">可愛い手書きマーカー風</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="stamp-section">
+        <label>4. スタンプを選択（体験版：4種類）</label>
+        <div id="stamp_buttons_container">
+            </div>
+
+        <div class="premium-locked">
+            <h3>🔒 全40種類のフルセットは「完全版」で！</h3>
+            <p>「日常アクション」「喜怒哀楽」「メッセージ」など、LINEスタンプ1セット分（40個）のプロンプトをワンクリックで量産できる【完全版ツール】と、審査を通すためのノウハウはnoteの有料記事にて公開中です。</p>
+            <a href="#" target="_blank" class="premium-btn">👉 【完全版】と稼ぐノウハウを手に入れる</a>
+        </div>
+    </div>
+
+    <div class="output-section" id="output_section">
+        <textarea class="output-text" id="prompt_output" readonly rows="2"></textarea>
+        <div class="action-buttons">
+            <button class="copy-button" id="copy_button">コピー</button>
+            <button id="clear_selection_button">閉じる</button>
+        </div>
+    </div>
+
+    <script>
+        // --- スタンプデータ（お試し版専用：厳選4種） ---
+        const stampData = [
+            { name: '🟢 無料お試し（厳選4種）', stamps: [
+                { text: 'ありがとう', prompt: 'bowing, smiling' },
+                { text: 'おはよう', prompt: 'stretching, yawning' },
+                { text: 'いいね', prompt: 'giving a thumbs up, winking' },
+                { text: '泣く', prompt: 'crying, big tears' }
+            ]}
+        ];
+
+        const charBase = document.getElementById('char_base');
+        const artStyle = document.getElementById('art_style');
+        const textStyle = document.getElementById('text_style');
+        const stampContainer = document.getElementById('stamp_buttons_container');
+        const promptOutput = document.getElementById('prompt_output');
+        const outputSection = document.getElementById('output_section');
+        const copyButton = document.getElementById('copy_button');
+        const clearSelectionButton = document.getElementById('clear_selection_button');
+
+        const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
+
+        stampData.forEach(category => {
+            const catContainer = document.createElement('div');
+            catContainer.className = 'category-container';
+            const catTitle = document.createElement('div');
+            catTitle.className = 'category-title';
+            catTitle.textContent = category.name;
+            catContainer.appendChild(catTitle);
+            
+            const btnGrid = document.createElement('div');
+            btnGrid.className = 'button-grid';
+            category.stamps.forEach(stamp => {
+                const btn = document.createElement('div');
+                btn.className = 'stamp-button';
+                btn.setAttribute('data-text', stamp.text);
+                btn.setAttribute('data-prompt', stamp.prompt);
+                btn.textContent = stamp.text;
+                btnGrid.appendChild(btn);
+            });
+            catContainer.appendChild(btnGrid);
+            stampContainer.appendChild(catContainer);
+        });
+
+        stampContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('stamp-button')) {
+                document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const charSettings = charBase.value.trim();
+                const selectedArt = artStyle.value;
+                const selectedText = textStyle.value;
+                const stampText = e.target.getAttribute('data-text');
+                const stampAction = e.target.getAttribute('data-prompt');
+
+                if (!charSettings) {
+                    alert('まずは1の「キャラクターの基本設定」を入力してください！');
+                    e.target.classList.remove('active');
+                    return;
+                }
+
+                const finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, typography text "${stampText}" in ${selectedText}, ${stampAction} --v 8.0`;
+                promptOutput.value = finalPrompt;
+                outputSection.style.display = 'flex';
+                copyButton.textContent = 'コピー';
+            }
+        });
+
+        clearSelectionButton.addEventListener('click', () => {
+            document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
+            outputSection.style.display = 'none';
+            promptOutput.value = '';
+        });
+
+        copyButton.addEventListener('click', () => {
+            promptOutput.select();
+            document.execCommand('copy');
+            copyButton.textContent = 'コピー完了！';
+        });
+    </script>
+</body>
+</html>
