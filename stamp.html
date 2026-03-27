@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIちゃん実験室・V8専用 LINEスタンプ工場🧪✨</title>
     <style>
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; padding-bottom: 100px; /* 固定バーの被り防止 */ }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; padding-bottom: 120px; }
         h1 { text-align: center; color: #2c3e50; font-size: 24px; }
         .description { text-align: center; color: #7f8c8d; margin-bottom: 20px; font-size: 14px; }
-        .config-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .config-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; position: relative; }
         .flex-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
         .flex-item { flex: 1; min-width: 200px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; font-size: 14px; }
         textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 14px; }
         textarea { resize: vertical; }
+        
+        /* 全リセットボタン（絶対に被らない位置に配置） */
+        .reset-all-btn { background-color: #e74c3c; color: white; border: none; border-radius: 4px; padding: 8px 15px; cursor: pointer; font-size: 12px; font-weight: bold; margin-top: 10px; transition: background-color 0.2s; display: block; margin-left: auto; }
+        .reset-all-btn:hover { background-color: #c0392b; }
+
         .stamp-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 10px; }
         .stamp-button { background-color: #fff; border: 2px solid #ddd; border-radius: 8px; padding: 15px 5px; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #333; font-weight: bold; }
@@ -21,19 +26,19 @@
         .stamp-button:active { background-color: #e1e1e1; transform: translateY(0); }
         .stamp-button.active { border-color: #3498db; color: #3498db; background-color: #eaf2f8; }
         
-        /* 出力バーのデザイン調整 */
+        /* 出力バーのデザイン */
         .output-section { position: fixed; bottom: 0; left: 0; right: 0; background: #2c3e50; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2); display: none; align-items: center; justify-content: space-between; z-index: 100; gap: 10px; }
         .output-text { flex-grow: 1; border-radius: 4px; padding: 10px; border: none; font-size: 13px; color: #333; }
         .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
         .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
         .copy-button:hover { background-color: #2980b9; }
-        #clear_button { background-color: #95a5a6; color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; font-size: 13px; transition: background-color 0.2s; }
-        #clear_button:hover { background-color: #7f8c8d; }
+        #clear_selection_button { background-color: #95a5a6; color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; font-size: 13px; transition: background-color 0.2s; }
+        #clear_selection_button:hover { background-color: #7f8c8d; }
     </style>
 </head>
 <body>
 
-    <h1>AIちゃん実験室・LINEスタンプ工場 Ver1.1🧪✨</h1>
+    <h1>AIちゃん実験室・LINEスタンプ工場 Ver1.2🧪✨</h1>
     <p class="description">V8の文字生成を活用して、スタンプ用プロンプトを爆速で量産します。</p>
 
     <div class="config-section">
@@ -61,6 +66,7 @@
                 </select>
             </div>
         </div>
+        <button id="reset_all_button" class="reset-all-btn">🗑️ 入力・設定をすべてクリア</button>
     </div>
 
     <div class="stamp-section">
@@ -81,7 +87,7 @@
         <textarea class="output-text" id="prompt_output" readonly rows="2"></textarea>
         <div class="action-buttons">
             <button class="copy-button" id="copy_button">コピー</button>
-            <button id="clear_button">クリア</button>
+            <button id="clear_selection_button">閉じる</button>
         </div>
     </div>
 
@@ -93,10 +99,12 @@
         const promptOutput = document.getElementById('prompt_output');
         const outputSection = document.getElementById('output_section');
         const copyButton = document.getElementById('copy_button');
-        const clearButton = document.getElementById('clear_button');
+        const clearSelectionButton = document.getElementById('clear_selection_button');
+        const resetAllButton = document.getElementById('reset_all_button');
 
         const bgPowerPlay = 'isolated on pure solid white background, simple background';
 
+        // スタンプボタン押下時の処理
         stampButtons.addEventListener('click', (e) => {
             if (e.target.classList.contains('stamp-button')) {
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
@@ -114,7 +122,6 @@
                     return;
                 }
 
-                // プロンプトを合成
                 const finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, typography text "${stampText}" in ${selectedText}, ${stampAction} --v 8.0`;
                 
                 promptOutput.value = finalPrompt;
@@ -123,16 +130,30 @@
             }
         });
 
-        clearButton.addEventListener('click', () => {
+        // 出力バーを閉じる（選択のみ解除）
+        clearSelectionButton.addEventListener('click', () => {
             document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
             outputSection.style.display = 'none';
             promptOutput.value = '';
         });
 
+        // コピー機能
         copyButton.addEventListener('click', () => {
             promptOutput.select();
             document.execCommand('copy');
             copyButton.textContent = 'コピー完了！';
+        });
+
+        // 全リセット機能（設定をすべて初期化）
+        resetAllButton.addEventListener('click', () => {
+            if(confirm('入力したキャラクター設定や画風をすべて消去しますか？')) {
+                charBase.value = '';
+                artStyle.selectedIndex = 0;
+                textStyle.selectedIndex = 0;
+                document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
+                outputSection.style.display = 'none';
+                promptOutput.value = '';
+            }
         });
     </script>
 </body>
