@@ -3,42 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室・LINEスタンプ工場 Ver 2.0🧪✨</title>
+    <title>AIちゃん実験室・LINEスタンプ工場 Ver 2.1🧪✨</title>
     <style>
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px; padding-bottom: 120px; }
-        h1 { text-align: center; color: #2c3e50; font-size: 24px; }
-        .description { text-align: center; color: #7f8c8d; margin-bottom: 20px; font-size: 14px; }
-        .config-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        /* --- クールな背景（ダークグラデーション＆ワークショップ仕様） --- */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            /* 深夜のラボをイメージした、わずかに青みがかった黒のグラデーション */
+            background-color: #111827;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(31, 41, 58, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(17, 24, 39, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #f3f4f6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 120px; /* 固定バーの被り防止 */
+        }
+
+        h1 { text-align: center; color: #f9fafb; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .description { text-align: center; color: #9ca3af; margin-bottom: 20px; font-size: 14px; }
+
+        /* --- プロンプトメーカーへのバナーリンク --- */
+        .prompt-maker-banner {
+            display: block;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 25px;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .prompt-maker-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+        }
+        .prompt-maker-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .banner-text {
+            position: absolute;
+            bottom: 12px;
+            left: 18px;
+            color: white;
+            background-color: rgba(0,0,0,0.65);
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- セクションのデザイン（ダークモード仕様） --- */
+        .config-section, .stamp-section {
+            background-color: #1f293a; /* セクション背景は少し明るめの紺黒 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
         .flex-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
         .flex-item { flex: 1; min-width: 250px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; font-size: 14px; }
-        textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 14px; }
+        
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #f9fafb; font-size: 14px; }
+        
+        /* 入力フォーム（ダークモード仕様） */
+        textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #374151;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: #374151;
+            color: #f9fafb;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        textarea:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            background-color: #1f293a;
+        }
         textarea { resize: vertical; }
         
-        .reset-all-btn { background-color: #e74c3c; color: white; border: none; border-radius: 4px; padding: 8px 15px; cursor: pointer; font-size: 12px; font-weight: bold; margin-top: 10px; transition: background-color 0.2s; display: block; margin-left: auto; }
-        .reset-all-btn:hover { background-color: #c0392b; }
+        .reset-all-btn {
+            background-color: #ef4444; /* より鮮やかな赤 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.2s, transform 0.1s;
+            display: block;
+            margin-left: auto;
+        }
+        .reset-all-btn:hover { background-color: #dc2626; transform: translateY(-1px); }
+        .reset-all-btn:active { transform: translateY(0); }
 
-        .stamp-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        
-        /* カテゴリごとのスタイリング */
+        /* --- スタンプセクションのボタン（ダークモード仕様） --- */
         .category-container { margin-bottom: 20px; }
-        .category-title { font-size: 16px; font-weight: bold; color: #34495e; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
-        .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
-        .stamp-button { background-color: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px 5px; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 12px; color: #333; font-weight: bold; }
-        .stamp-button:hover { background-color: #f1f1f1; border-color: #3498db; }
-        .stamp-button.active { border-color: #3498db; color: #3498db; background-color: #eaf2f8; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
+        .category-title { font-size: 16px; font-weight: bold; color: #f9fafb; margin-bottom: 10px; border-left: 4px solid #3498db; padding-left: 10px; }
         
-        .output-section { position: fixed; bottom: 0; left: 0; right: 0; background: #2c3e50; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2); display: none; align-items: center; justify-content: space-between; z-index: 100; gap: 10px; }
-        .output-text { flex-grow: 1; border-radius: 4px; padding: 10px; border: none; font-size: 13px; color: #333; }
+        .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
+        .stamp-button {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            padding: 10px 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            color: #f3f4f6;
+            font-weight: bold;
+        }
+        .stamp-button:hover {
+            background-color: #4b5563;
+            border-color: #6b7280;
+            transform: translateY(-1px);
+        }
+        .stamp-button.active {
+            border-color: #3498db;
+            color: white;
+            background-color: #1d4ed8; /* より深みのある青 */
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
+        }
+        
+        /* --- 出力バー（さらにギア感を強化） --- */
+        .output-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111827; /* 漆黒に近い背景 */
+            padding: 15px 20px;
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            gap: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .output-text {
+            flex-grow: 1;
+            border-radius: 4px;
+            padding: 12px;
+            border: 1px solid #374151;
+            font-size: 13px;
+            background-color: #374151;
+            color: #f9fafb;
+        }
         .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
-        .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
-        .copy-button:hover { background-color: #2980b9; }
-        #clear_selection_button { background-color: #95a5a6; color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; font-size: 13px; transition: background-color 0.2s; }
+        
+        .copy-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .copy-button:hover { background-color: #2980b9; transform: translateY(-1px); }
+        .copy-button:active { transform: translateY(0); }
+        
+        #clear_selection_button {
+            background-color: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        #clear_selection_button:hover { background-color: #4b5563; }
     </style>
 </head>
 <body>
 
-    <h1>AIちゃん実験室・LINEスタンプ工場 Ver 2.0 完全版🧪✨</h1>
+    <a href="https://ai-lab87.github.io/gazou/" target="_blank" class="prompt-maker-banner">
+        <img src="https://cdn.midjourney.com/bcec217d-7669-4635-b13a-6dbb890342f9/0_0.jpeg" alt="プロンプトメーカーはこちら">
+        <div class="banner-text">← 元祖・神プロンプトメーカーはこちら🧪</div>
+    </a>
+
+    <h1>AIちゃん実験室・LINEスタンプ工場 Ver 2.1🧪✨</h1>
     <p class="description">V8の文字生成を活用して、40個分のスタンププロンプトを爆速で量産します。</p>
 
     <div class="config-section">
@@ -90,7 +254,7 @@
     <script>
         // --- スタンプデータ（全40個） ---
         const stampData = [
-            { category: '👋 挨拶', stamps: [
+            { name: '👋 挨拶', stamps: [
                 { text: 'ありがとう', prompt: 'bowing, smiling' },
                 { text: 'おはよう', prompt: 'stretching, yawning' },
                 { text: 'お疲れ様', prompt: 'relaxing, holding a coffee cup' },
@@ -100,7 +264,7 @@
                 { text: 'NG', prompt: 'crossing arms, X sign' },
                 { text: 'またね', prompt: 'walking away, waving' }
             ]},
-            { category: '😃 感情', stamps: [
+            { name: '😃 感情', stamps: [
                 { text: 'いいね', prompt: 'giving a thumbs up, winking' },
                 { text: 'すごい', prompt: 'clapping hands, starry eyes' },
                 { text: 'わーい', prompt: 'jumping with joy, throwing up hands' },
@@ -112,7 +276,7 @@
                 { text: '？？', prompt: 'confused, head tilted, question marks' },
                 { text: 'びっくり', prompt: 'wide eyed, hands on mouth' }
             ]},
-            { category: '🛠️ 日常アクション', stamps: [
+            { name: '🛠️ 日常アクション', stamps: [
                 { text: 'コーヒー', prompt: 'holding a mug, relaxing, steam rising' },
                 { text: '食事中', prompt: 'eating ramen with chopsticks' },
                 { text: '勉強中', prompt: 'reading a book with glasses' },
@@ -124,7 +288,7 @@
                 { text: 'ゲーム中', prompt: 'holding a controller, intense focus' },
                 { text: '読書中', prompt: 'sitting and reading an oversized book' }
             ]},
-            { category: '📩 メッセージ', stamps: [
+            { name: '📩 メッセージ', stamps: [
                 { text: '待って', prompt: 'holding up a hand, stop sign' },
                 { text: '行く', prompt: 'pointing forward, determined look' },
                 { text: 'OK', prompt: 'making an O with hands' },
@@ -136,13 +300,12 @@
                 { text: 'がんばれ', prompt: 'fist pumping, encouraging look' },
                 { text: 'おねがい', prompt: 'puppy dog eyes, hands clasped' }
             ]},
-            { category: '✨ その他', stamps: [
+            { name: '✨ その他', stamps: [
                 { text: 'LOVE', prompt: 'holding a big heart shape' },
                 { text: 'きらきら', prompt: 'sparkling effect around character' }
             ]}
         ];
 
-        // --- UI要素 ---
         const charBase = document.getElementById('char_base');
         const artStyle = document.getElementById('art_style');
         const textStyle = document.getElementById('text_style');
@@ -153,17 +316,16 @@
         const clearSelectionButton = document.getElementById('clear_selection_button');
         const resetAllButton = document.getElementById('reset_all_button');
 
-        // パワープレイ呪文（切り抜き精度向上版）
         const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
 
-        // --- ボタン自動生成ロジック ---
+        // カテゴリ名取得のバグ修正：catTitle.textContent = category.name; に変更
         stampData.forEach(category => {
             const catContainer = document.createElement('div');
             catContainer.className = 'category-container';
             
             const catTitle = document.createElement('div');
             catTitle.className = 'category-title';
-            catTitle.textContent = category.name;
+            catTitle.textContent = category.name; // category.name を使用
             catContainer.appendChild(catTitle);
             
             const btnGrid = document.createElement('div');
@@ -182,7 +344,6 @@
             stampContainer.appendChild(catContainer);
         });
 
-        // --- イベントリスナー ---
         stampContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('stamp-button')) {
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
