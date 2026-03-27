@@ -5,111 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIちゃん実験室・V8専用 LINEスタンプ工場🧪✨</title>
     <style>
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
-        h1 { text-align: center; color: #2c3e50; }
-        .description { text-align: center; color: #7f8c8d; margin-bottom: 20px; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f7f6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; padding-bottom: 100px; /* 固定バーの被り防止 */ }
+        h1 { text-align: center; color: #2c3e50; font-size: 24px; }
+        .description { text-align: center; color: #7f8c8d; margin-bottom: 20px; font-size: 14px; }
         .config-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #2c3e50; }
-        textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical; box-sizing: border-box; font-family: inherit; }
+        .flex-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .flex-item { flex: 1; min-width: 200px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; font-size: 14px; }
+        textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-family: inherit; font-size: 14px; }
+        textarea { resize: vertical; }
         .stamp-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .stamp-button { background-color: #fff; border: 2px solid #ddd; border-radius: 8px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #333; }
+        .button-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 10px; }
+        .stamp-button { background-color: #fff; border: 2px solid #ddd; border-radius: 8px; padding: 15px 5px; text-align: center; cursor: pointer; transition: all 0.2s; font-size: 14px; color: #333; font-weight: bold; }
         .stamp-button:hover { background-color: #f1f1f1; border-color: #3498db; transform: translateY(-2px); }
         .stamp-button:active { background-color: #e1e1e1; transform: translateY(0); }
-        .stamp-button.active { border-color: #3498db; color: #3498db; font-weight: bold; background-color: #eaf2f8; }
-        .output-section { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 15px 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: none; align-items: center; justify-content: space-between; z-index: 100; }
-        .output-text { flex-grow: 1; margin-right: 10px; border-radius: 4px; padding: 10px; }
-        .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background-color 0.2s; font-size: 14px; }
+        .stamp-button.active { border-color: #3498db; color: #3498db; background-color: #eaf2f8; }
+        
+        /* 出力バーのデザイン調整 */
+        .output-section { position: fixed; bottom: 0; left: 0; right: 0; background: #2c3e50; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.2); display: none; align-items: center; justify-content: space-between; z-index: 100; gap: 10px; }
+        .output-text { flex-grow: 1; border-radius: 4px; padding: 10px; border: none; font-size: 13px; color: #333; }
+        .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
+        .copy-button { background-color: #3498db; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
         .copy-button:hover { background-color: #2980b9; }
-        #clear_button { background-color: #e74c3c; color: white; border: none; border-radius: 4px; padding: 10px 20px; cursor: pointer; transition: background-color 0.2s; font-size: 14px; margin-top: 10px; display: none; }
-        #clear_button:hover { background-color: #c0392b; }
+        #clear_button { background-color: #95a5a6; color: white; border: none; border-radius: 4px; padding: 10px 15px; cursor: pointer; font-size: 13px; transition: background-color 0.2s; }
+        #clear_button:hover { background-color: #7f8c8d; }
     </style>
 </head>
 <body>
 
-    <h1>AIちゃん実験室・V8専用 LINEスタンプ工場🧪✨</h1>
-    <p class="description">キャラクター設定と背景透過呪文をV8の文字生成と組み合わせ、40個分のスタンププロンプトを爆速で量産します。</p>
+    <h1>AIちゃん実験室・LINEスタンプ工場 Ver1.1🧪✨</h1>
+    <p class="description">V8の文字生成を活用して、スタンプ用プロンプトを爆速で量産します。</p>
 
     <div class="config-section">
-        <label for="char_base">1. キャラクター基本設定 (※ crefs不可。詳細に入力)</label>
-        <textarea id="char_base" rows="4" placeholder="例: A chibi anime girl with split dye half black half white hair, big blue eyes, smiling, wearing a black oversized t-shirt..."></textarea>
+        <label for="char_base">1. キャラクターの基本設定（日本語OK）</label>
+        <textarea id="char_base" rows="3" placeholder="例: 黒と白のツートンカラーの髪の女の子、青い目、黒いオーバーサイズのTシャツを着ている"></textarea>
+        
+        <div class="flex-row" style="margin-top: 15px;">
+            <div class="flex-item">
+                <label for="art_style">2. 画風（テイスト）</label>
+                <select id="art_style">
+                    <option value="anime style, flat color">アニメ調（フラット・基本）</option>
+                    <option value="chibi anime style, kawaii">ちびキャラ風</option>
+                    <option value="watercolor style, soft lighting">水彩画風</option>
+                    <option value="pop art style, vibrant colors">ポップアート風</option>
+                    <option value="retro 90s anime style">90年代レトロアニメ風</option>
+                </select>
+            </div>
+            <div class="flex-item">
+                <label for="text_style">3. 文字のフォント感</label>
+                <select id="text_style">
+                    <option value="bold pop font">太字のポップ風</option>
+                    <option value="cute handwritten marker">可愛い手書きマーカー風</option>
+                    <option value="elegant calligraphy">筆文字・カリグラフィー風</option>
+                    <option value="simple bold sans-serif">シンプルなゴシック太字</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="stamp-section">
-        <label>2. スタンプの感情・アクションを選択</label>
+        <label>4. スタンプの感情・アクションを選択</label>
         <div class="button-grid" id="stamp_buttons">
             <div class="stamp-button" data-text="ありがとう" data-prompt="bowing, smiling">ありがとう</div>
             <div class="stamp-button" data-text="おはよう" data-prompt="stretching, yawning">おはよう</div>
             <div class="stamp-button" data-text="お疲れ様" data-prompt="relaxing, holding a coffee cup">お疲れ様</div>
+            <div class="stamp-button" data-text="いいね" data-prompt="giving a thumbs up, winking">いいね！</div>
+            <div class="stamp-button" data-text="ごめん" data-prompt="apologizing, hands pressed together, sad eyes">ごめん</div>
             <div class="stamp-button" data-text="泣く" data-prompt="crying, big tears">泣く</div>
-            <div class="stamp-button" data-text="怒る" data-prompt="angry face, steam coming from ears">怒る</div>
+            <div class="stamp-button" data-text="怒る" data-prompt="angry face, puffing cheeks">怒る</div>
             <div class="stamp-button" data-text="？？" data-prompt="confused, head tilted, question marks">？？</div>
         </div>
-        <button id="clear_button">選択をクリア</button>
     </div>
 
     <div class="output-section" id="output_section">
         <textarea class="output-text" id="prompt_output" readonly rows="2"></textarea>
-        <button class="copy-button" id="copy_button">コピー</button>
+        <div class="action-buttons">
+            <button class="copy-button" id="copy_button">コピー</button>
+            <button id="clear_button">クリア</button>
+        </div>
     </div>
 
     <script>
         const charBase = document.getElementById('char_base');
+        const artStyle = document.getElementById('art_style');
+        const textStyle = document.getElementById('text_style');
         const stampButtons = document.getElementById('stamp_buttons');
         const promptOutput = document.getElementById('prompt_output');
         const outputSection = document.getElementById('output_section');
         const copyButton = document.getElementById('copy_button');
         const clearButton = document.getElementById('clear_button');
 
-        // 背景を強制的に白くするパワープレイ呪文
         const bgPowerPlay = 'isolated on pure solid white background, simple background';
 
-        // 各ボタンの感情・アクションに対応するプロンプトを生成
         stampButtons.addEventListener('click', (e) => {
             if (e.target.classList.contains('stamp-button')) {
-                // 既存の選択をクリア
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
-                
-                // 新しいボタンをアクティブにする
                 e.target.classList.add('active');
                 
                 const charSettings = charBase.value.trim();
+                const selectedArt = artStyle.value;
+                const selectedText = textStyle.value;
                 const stampText = e.target.getAttribute('data-text');
                 const stampAction = e.target.getAttribute('data-prompt');
 
                 if (!charSettings) {
-                    alert('キャラクターの基本設定を入力してください！');
+                    alert('まずは1の「キャラクターの基本設定」を入力してください！');
                     e.target.classList.remove('active');
                     return;
                 }
 
                 // プロンプトを合成
-                // [キャラ設定] + isolated on pure solid white background, simple background + typography text "テキスト" + [アクション設定] --v 8.0
-                const finalPrompt = `${charSettings}, ${bgPowerPlay}, typography text "${stampText}", ${stampAction} --v 8.0`;
+                const finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, typography text "${stampText}" in ${selectedText}, ${stampAction} --v 8.0`;
                 
-                // 出力エリアを表示してテキストをセット
                 promptOutput.value = finalPrompt;
                 outputSection.style.display = 'flex';
-                clearButton.style.display = 'inline-block';
+                copyButton.textContent = 'コピー';
             }
         });
 
-        // 選択をクリア
         clearButton.addEventListener('click', () => {
             document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
             outputSection.style.display = 'none';
-            clearButton.style.display = 'none';
             promptOutput.value = '';
         });
 
-        // コピー機能
         copyButton.addEventListener('click', () => {
             promptOutput.select();
             document.execCommand('copy');
-            copyButton.textContent = 'コピーしました！';
-            setTimeout(() => {
-                copyButton.textContent = 'コピー';
-            }, 1500);
+            copyButton.textContent = 'コピー完了！';
         });
     </script>
 </body>
