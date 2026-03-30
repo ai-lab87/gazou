@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIちゃん実験室：神プロンプトメーカー V14.1</title>
+    <title>AIちゃん実験室：神プロンプトメーカー V15</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW3KE7HNR1"></script>
     <script>
@@ -68,12 +68,30 @@
         .real-option-label input[type="checkbox"] { accent-color: #d53f8c; }
         .banner-option-label { color: #c05621; }
         .banner-option-label input[type="checkbox"] { accent-color: #dd6b20; }
+
+        /* 新規追加：LINEスタンプバナー用スタイル */
+        .stamp-banner { background: #e6f7ff; border: 2px solid #91d5ff; border-radius: 8px; padding: 12px; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .stamp-btn { display: inline-block; margin-top: 8px; padding: 8px 16px; background: #1890ff; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9rem; transition: background 0.2s; }
+        .stamp-btn:hover { background: #096dd9; }
+
+        /* 新規追加：ガチャ結果ウィンドウ用スタイル */
+        #gacha-window { display: none; background: #fffbe6; border: 2px solid #ffe58f; border-radius: 8px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        #gacha-window h3 { margin-top: 0; color: #fa8c16; font-size: 1rem; border-bottom: 1px dashed #ffd591; padding-bottom: 5px; }
+        #gacha-list { margin: 0; padding-left: 0; list-style: none; font-size: 0.9rem; color: #874d00; line-height: 1.6; }
+        #gacha-list li { margin-bottom: 4px; border-bottom: 1px dotted #ffe58f; padding-bottom: 2px; }
+        .gacha-tag { display: inline-block; background: #fa8c16; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; margin-right: 8px; }
     </style>
 </head>
 <body>
 
     <h1>🧪 AIちゃん実験室</h1>
-    <p class="subtitle">神プロンプトメーカー V14.1（聖典＆語彙力爆発版）</p>
+    <p class="subtitle">神プロンプトメーカー V15（選択肢可視化＆魔法拡張版）</p>
+
+    <div class="stamp-banner">
+        <span style="font-size: 1.2rem; margin-right: 5px;">🎉</span>
+        <strong style="color: #0050b3;">AIちゃん実験室 オリジナルLINEスタンプ（無料お試し版）公開中！</strong><br>
+        <a href="https://ai-lab87.github.io/gazou/stamp.html" target="_blank" class="stamp-btn">👉 スタンプ工場をチェックする</a>
+    </div>
 
     <textarea id="prompt-output" placeholder="下の項目から好きな特徴を選んで「追加」をタップするか、おまかせガチャを回してください..."></textarea>
 
@@ -95,6 +113,11 @@
             <button class="btn-control btn-gacha-real" onclick="generateRandomPrompt('real')">🎲 リアルガチャ</button>
             <button class="btn-control btn-standing" onclick="applyPerfectStandingMode()">🧍‍♀️ 完璧な立ち絵</button>
         </div>
+    </div>
+
+    <div id="gacha-window">
+        <h3>🎲 ガチャ選択結果</h3>
+        <ul id="gacha-list"></ul>
     </div>
 
     <div class="category special banner-magic">
@@ -196,7 +219,6 @@
 
         <button class="btn-control banner-btn" onclick="generateBannerPrompt()">✨ V8 バナー錬成 (結合修正＆上書きなし)</button>
     </div>
-
     <div class="category special text-magic">
         <h2>🖊️ 特殊. テキスト追加（一般用）</h2>
         <div class="input-group">
@@ -244,11 +266,16 @@
             <button class="btn-control real-btn-male" onclick="applyRealSpells('male')">👨 リアル美男化</button>
         </div>
     </div>
+    
     <div class="category">
         <h2>👤 1. ベース（主役・国籍・体型）</h2>
         <div class="input-group">
             <select id="sel-subject">
                 <option value="">主役を選んでください...</option>
+                <optgroup label="実写・リアル系（新規追加）">
+                    <option value="A breathtakingly beautiful 20-year-old Japanese woman with natural dark wavy hair">✨ 20歳の黒髪ウェーブの日本人女性（実写ベース）</option>
+                    <option value="A breathtakingly beautiful, cute 20-year-old Japanese woman with a distinct but subtle gal-style appearance">✨ ナチュラルギャル風の若い日本人女性</option>
+                </optgroup>
                 <optgroup label="アニメ・2D系">
                     <option value="1girl">1人の女の子 (1girl)</option>
                     <option value="1boy">1人の男の子 (1boy)</option>
@@ -430,6 +457,7 @@
                     <option value="glancing sideways">横目でチラッと見る</option>
                 </optgroup>
                 <optgroup label="表情（実写・日常向け）">
+                    <option value="genuine, joyful smile showing teeth">✨ 心からの楽しそうな笑顔（歯を見せて）</option>
                     <option value="smiling gently">優しく微笑む</option>
                     <option value="expressionless">無表情</option>
                     <option value="natural relaxed expression">自然でリラックスした表情</option>
@@ -768,6 +796,11 @@
         <div class="input-group">
             <select id="sel-effect">
                 <option value="">エフェクト（特殊効果）...</option>
+                <optgroup label="実写探求vol.6：光と影の魔法（NEW!）">
+                    <option value="Natural, magical golden hour lighting, soft warm orange glow, and a gentle backlit rim light illuminating her hair">✨ ゴールデンアワー（夕暮れ・逆光のエモさ）</option>
+                    <option value="Moody, high-contrast nighttime neon lighting, vibrant reflections of pink, blue, and purple neon signs casting dynamic colors and shadows on her face">✨ 夜のネオン街（サイバーパンクの反射）</option>
+                    <option value="The only light source is the warm, flickering, orange light of a campfire, casting soft side illumination and deep, dramatic shadows across her face">✨ 夜の焚き火（アウトドアの親密な光）</option>
+                </optgroup>
                 <optgroup label="光・自然現象">
                     <option value="floating glowing particles">光る粒子が舞う</option>
                     <option value="cherry blossoms falling">桜が舞い散る</option>
@@ -803,12 +836,13 @@
             <button class="btn-add" onclick="addFromSelect('sel-effect')">追加</button>
         </div>
     </div>
-        <div class="category">
+    <div class="category">
         <h2>🎥 5. 配置・アクション・パラメータ・ネガティブ</h2>
         <div class="input-group">
             <select id="sel-action">
                 <option value="">カメラ・配置・アクション...</option>
                 <optgroup label="キャラクターの配置・カメラ">
+                    <option value="first-person view (FPV) smartphone camera selfie, captured directly from the smartphone camera lens">✨ スマホ自撮り視点 (FPV Selfie)</option>
                     <option value="centered composition">⏺️ キャラを中央に配置</option>
                     <option value="character on the left side">⬅️ キャラを左に（右に余白）</option>
                     <option value="character on the right side">➡️ キャラを右に（左に余白）</option>
@@ -909,6 +943,27 @@
     <script>
         const output = document.getElementById('prompt-output');
 
+        // ガチャ結果表示用の配列
+        let currentGachaResults = [];
+
+        function updateGachaWindow() {
+            const listEl = document.getElementById('gacha-list');
+            const windowEl = document.getElementById('gacha-window');
+            
+            listEl.innerHTML = '';
+            
+            if (currentGachaResults.length > 0) {
+                currentGachaResults.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="gacha-tag">${item.category}</span> ${item.text}`;
+                    listEl.appendChild(li);
+                });
+                windowEl.style.display = 'block';
+            } else {
+                windowEl.style.display = 'none';
+            }
+        }
+
         function addTextToPrompt(value) {
             if (!value) return;
             let currentText = output.value.trim();
@@ -946,6 +1001,14 @@
 
         function addFromSelect(selectId) {
             const select = document.getElementById(selectId);
+            
+            // 単発追加時もウィンドウに表示（必要に応じて）
+            if(select.value !== "") {
+               const optionText = select.options[select.selectedIndex].text;
+               currentGachaResults.push({ category: "追加", text: optionText.replace(/✨ |🚫 |👀 |↪️ |⬆️ |⬇️ |🔙 /g, '') });
+               updateGachaWindow();
+            }
+
             addTextToPrompt(select.value);
             const btn = select.nextElementSibling;
             btn.innerHTML = '✔';
@@ -978,6 +1041,10 @@
             const femaleSpecific = "gentle soft smile, young Japanese woman";
             const maleSpecific = "distinct jawline, young Japanese handsome man";
             let promptToAdd = gender === 'female' ? framingPrefix + femaleSpecific + ", " + baseReal : framingPrefix + maleSpecific + ", " + baseReal;
+            
+            currentGachaResults.push({ category: "魔法", text: gender === 'female' ? "リアル美女化セット" : "リアル美男化セット" });
+            updateGachaWindow();
+
             addTextToPrompt(promptToAdd);
             const btnClass = gender === 'female' ? '.real-btn-female' : '.real-btn-male';
             const btn = document.querySelector(btnClass);
@@ -999,6 +1066,11 @@
                 if (!output.value.includes('--v 8')) {
                     addTextToPrompt('--v 8.0');
                 }
+
+                let styleText = styleSelect.selectedIndex > 0 ? styleSelect.options[styleSelect.selectedIndex].text.replace('✨ ', '') : "指定なし";
+                currentGachaResults.push({ category: "文字", text: `「${rawContent}」 (${styleText})` });
+                updateGachaWindow();
+
                 contentInput.value = '';
                 styleSelect.selectedIndex = 0;
                 const btn = document.getElementById('btn-add-text');
@@ -1042,7 +1114,6 @@
                 subjectElement = isAnime ? "1girl" : "photorealistic Japanese young woman";
             }
 
-            // ダブルクォーテーション直後のカンマを確実に入れる（文字化け回避）
             let characterPart = "";
             if (subjectSelect.value === "none") {
                 characterPart = ""; 
@@ -1058,7 +1129,6 @@
             }
             let qualityTags = isAnime ? ", masterpiece, best quality, anime style illustration" : ", photorealistic, highly detailed";
             
-            // 通常プロンプトを文字列の途中に差し込む（上書きしない）
             let newPromptMain = textElement + characterPart;
 
             if (existingPromptMain !== "") {
@@ -1069,7 +1139,6 @@
 
             let negativeTags = isAnime ? "" : "--no anime, cartoon, illustration";
             
-            // 出力欄をリセットしてから構築し直す（パラメータをきれいに末尾につけるため）
             output.value = "";
             addTextToPrompt(newPromptMain.trim());
 
@@ -1083,11 +1152,19 @@
                  addTextToPrompt(negativeTags);
             }
 
+            // ウィンドウ更新
+            currentGachaResults = [
+                { category: "バナー", text: "専用モード錬成" },
+                { category: "文字", text: rawContent },
+                { category: "主役", text: subjectSelect.selectedIndex > 0 ? subjectSelect.options[subjectSelect.selectedIndex].text.replace('✨ ', '') : "自動" }
+            ];
+            updateGachaWindow();
+
             const btn = document.querySelector('.banner-btn');
             btn.innerHTML = '✔ バナー錬成準備完了';
             btn.style.backgroundColor = '#48bb78';
             setTimeout(() => { 
-                btn.innerHTML = '✨ V8 バナー錬成 (完全体システム)'; 
+                btn.innerHTML = '✨ V8 バナー錬成 (結合修正＆上書きなし)'; 
                 btn.style.backgroundColor = '#dd6b20'; 
             }, 1500);
 
@@ -1102,19 +1179,35 @@
         function generateRandomPrompt(type) {
             clearPrompt();
             
-            const animeCategories = ['sel-subject', 'sel-nationality', 'sel-hair-color', 'sel-hair-style', 'sel-expression', 'sel-tops', 'sel-bottoms', 'sel-shoes', 'sel-acc', 'sel-bg', 'sel-effect', 'sel-action'];
-            const realCategories = ['sel-hair-color', 'sel-hair-style', 'sel-tops', 'sel-bottoms', 'sel-shoes', 'sel-acc', 'sel-bg', 'sel-effect', 'sel-action'];
+            const animeCategories = [
+                {id: 'sel-subject', label: '主役'}, {id: 'sel-nationality', label: '瞳色'}, 
+                {id: 'sel-hair-color', label: '髪色'}, {id: 'sel-hair-style', label: '髪型'}, 
+                {id: 'sel-expression', label: '表情'}, {id: 'sel-tops', label: '服'}, 
+                {id: 'sel-bottoms', label: 'ボトムス'}, {id: 'sel-shoes', label: '靴'}, 
+                {id: 'sel-acc', label: '小物'}, {id: 'sel-bg', label: '背景'}, 
+                {id: 'sel-effect', label: 'エフェクト'}, {id: 'sel-action', label: 'アクション'}
+            ];
+            
+            const realCategories = [
+                {id: 'sel-hair-color', label: '髪色'}, {id: 'sel-hair-style', label: '髪型'}, 
+                {id: 'sel-tops', label: '服'}, {id: 'sel-bottoms', label: 'ボトムス'}, 
+                {id: 'sel-shoes', label: '靴'}, {id: 'sel-acc', label: '小物'}, 
+                {id: 'sel-bg', label: '背景'}, {id: 'sel-effect', label: 'エフェクト'}, 
+                {id: 'sel-action', label: 'アクション'}
+            ];
             
             let parts = [];
+            currentGachaResults = []; // リセット
             
             if (type === 'anime') {
-                animeCategories.forEach(id => {
-                    const select = document.getElementById(id);
+                animeCategories.forEach(cat => {
+                    const select = document.getElementById(cat.id);
                     if(!select) return;
                     const options = Array.from(select.options).filter(opt => opt.value !== '' && !opt.value.startsWith('--'));
                     if(options.length > 0) {
                         const randomOpt = options[Math.floor(Math.random() * options.length)];
                         parts.push(randomOpt.value);
+                        currentGachaResults.push({ category: cat.label, text: randomOpt.text.replace(/✨ |👀 |↪️ |⬆️ |⬇️ |🔙 /g, '') });
                     }
                 });
                 
@@ -1126,13 +1219,14 @@
                 setTimeout(() => { btn.innerHTML = originalText; }, 1000);
                 
             } else if (type === 'real') {
-                realCategories.forEach(id => {
-                    const select = document.getElementById(id);
+                realCategories.forEach(cat => {
+                    const select = document.getElementById(cat.id);
                     if(!select) return;
                     const options = Array.from(select.options).filter(opt => opt.value !== '' && !opt.value.startsWith('--'));
                     if(options.length > 0) {
                         const randomOpt = options[Math.floor(Math.random() * options.length)];
                         parts.push(randomOpt.value);
+                        currentGachaResults.push({ category: cat.label, text: randomOpt.text.replace(/✨ /g, '') });
                     }
                 });
 
@@ -1142,12 +1236,15 @@
                 let baseSubject = "";
                 if (isJpFix) {
                     baseSubject = isFemale ? "photorealistic Japanese young woman" : "photorealistic handsome Japanese young man";
+                    currentGachaResults.unshift({ category: "ベース", text: isFemale ? "日本人女性" : "日本人男性" });
                 } else {
                     baseSubject = isFemale ? "photorealistic young woman" : "photorealistic handsome young man";
+                    currentGachaResults.unshift({ category: "ベース", text: isFemale ? "女性(国籍ランダム)" : "男性(国籍ランダム)" });
                 }
 
                 const safeRealExpressions = ["gentle soft smile", "calm expression", "slight smile", "cool gaze", "natural relaxed expression"];
                 const safeExpression = safeRealExpressions[Math.floor(Math.random() * safeRealExpressions.length)];
+                currentGachaResults.splice(1, 0, { category: "基本表情", text: safeExpression });
                 
                 const realNegative = "--no anime, cartoon, illustration, painting, exaggerated expressions";
                 
@@ -1158,19 +1255,29 @@
                 btn.innerHTML = '✨ リアル錬成！';
                 setTimeout(() => { btn.innerHTML = originalText; }, 1000);
             }
+            
+            updateGachaWindow();
         }
 
         function applyPerfectStandingMode() {
             addTextToPrompt("full body shot, standing straight on two feet, centered composition, looking at viewer");
             addTextToPrompt("--no floor, shadow");
             
+            currentGachaResults.push({ category: "構図", text: "完璧な立ち絵モード" });
+            updateGachaWindow();
+
             const btn = document.querySelector('.btn-standing');
             const originalText = btn.innerHTML;
             btn.innerHTML = '✨ 追加完了！';
             setTimeout(() => { btn.innerHTML = originalText; }, 1000);
         }
 
-        function clearPrompt() { output.value = ''; }
+        function clearPrompt() { 
+            output.value = ''; 
+            currentGachaResults = [];
+            updateGachaWindow();
+        }
+
         function copyPrompt() {
             output.select(); document.execCommand('copy');
             const copyBtn = document.querySelector('.btn-copy');
@@ -1180,4 +1287,3 @@
     </script>
 </body>
 </html>
-
