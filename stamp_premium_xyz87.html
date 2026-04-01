@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINEスタンプ工場【完全版 Ver 3.0】🧪✨</title>
+    <title>LINEスタンプ工場【完全版 Ver 3.1】🧪✨</title>
     <style>
         /* --- クールな背景（ダークグラデーション） --- */
         body {
@@ -45,7 +45,6 @@
         textarea:focus, select:focus, input[type="text"]:focus { outline: none; border-color: #f1c40f; background-color: #1f293a; }
         textarea { resize: vertical; }
 
-        /* 文字モード選択ラジオボタンのスタイル */
         .radio-group { display: flex; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; background: #111827; padding: 10px 15px; border-radius: 6px; border: 1px solid #374151; }
         .radio-group label { margin-bottom: 0; font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 13px; }
         .radio-group input[type="radio"] { accent-color: #f1c40f; cursor: pointer; }
@@ -77,8 +76,8 @@
     </a>
 
     <h1>LINEスタンプ工場【完全版】👑</h1>
-    <p class="subtitle">Premium Edition Ver 3.0</p>
-    <p class="description">40種のフルセットに加え、自由テキスト入力・文字なし出力に完全対応。</p>
+    <p class="subtitle">Premium Edition Ver 3.1</p>
+    <p class="description">全50種のフルセットに加え、自由テキスト入力・文字なし出力に完全対応。</p>
 
     <div class="config-section">
         <label for="char_base">1. キャラクターの基本設定（日本語OK）</label>
@@ -95,6 +94,10 @@
                     <option value="retro 90s anime style">90年代レトロアニメ風</option>
                     <option value="3D render, cute Pixar style">3D・ピクサー風</option>
                     <option value="pixel art, cute dots">ドット絵風</option>
+                    <option value="pastel color, fluffy and dreamy style">✨ パステル・ゆめかわ風 (New)</option>
+                    <option value="thick oil painting style, impasto">✨ 厚塗り・油絵風 (New)</option>
+                    <option value="manga style, screentones, black and white">✨ 白黒マンガ風・トーン入り (New)</option>
+                    <option value="pencil sketch style, monochrome">✨ 鉛筆スケッチ風 (New)</option>
                 </select>
             </div>
             <div class="flex-item">
@@ -106,6 +109,10 @@
                     <option value="simple bold sans-serif">シンプルなゴシック太字</option>
                     <option value="neon light text, glowing">ネオンサイン風</option>
                     <option value="luxury gold text, shiny">ゴールド（金箔）風</option>
+                    <option value="8-bit retro gaming font">👾 8bit・レトロゲーム風 (New)</option>
+                    <option value="elegant serif font, magazine style">📖 上品な明朝体・雑誌風 (New)</option>
+                    <option value="creepy horror style font, dripping">👻 ホラー・おどろおどろしい風 (New)</option>
+                    <option value="cyberpunk glowing glitch text">⚡ サイバーパンク・グリッチ風 (New)</option>
                 </select>
             </div>
         </div>
@@ -122,9 +129,8 @@
     </div>
 
     <div class="stamp-section">
-        <label>5. スタンプを選択（全40種類）</label>
-        <div id="stamp_buttons_container">
-            </div>
+        <label>5. スタンプを選択（大増量！全50種類）</label>
+        <div id="stamp_buttons_container"></div>
     </div>
 
     <div class="output-section" id="output_section">
@@ -136,7 +142,7 @@
     </div>
 
     <script>
-        // --- スタンプデータ（完全版：全40個） ---
+        // --- スタンプデータ（全50個） ---
         const stampData = [
             { name: '👋 挨拶', stamps: [
                 { text: 'ありがとう', prompt: 'bowing, smiling' }, { text: 'おはよう', prompt: 'stretching, yawning' }, { text: 'お疲れ様', prompt: 'relaxing, holding a coffee cup' }, { text: 'こんにちは', prompt: 'waving hands, friendly smile' }, { text: 'おやすみ', prompt: 'sleeping in a blanket, moon and stars' }, { text: '了解', prompt: 'saluting, thumbs up' }, { text: 'NG', prompt: 'crossing arms, X sign' }, { text: 'またね', prompt: 'walking away, waving' }
@@ -150,8 +156,9 @@
             { name: '📩 メッセージ', stamps: [
                 { text: '待って', prompt: 'holding up a hand, stop sign' }, { text: '行く', prompt: 'pointing forward, determined look' }, { text: 'OK', prompt: 'making an O with hands' }, { text: 'キャンセル', prompt: 'making an X with hands' }, { text: 'おめでとう', prompt: 'throwing confetti, holding balloons' }, { text: 'よろしく', prompt: 'bowing deeply, sincere smile' }, { text: 'ごめん', prompt: 'apologizing, hands pressed together, sad eyes' }, { text: '秘密', prompt: 'finger on lips, "shh" pose' }, { text: 'がんばれ', prompt: 'fist pumping, encouraging look' }, { text: 'おねがい', prompt: 'puppy dog eyes, hands clasped' }
             ]},
-            { name: '✨ その他', stamps: [
-                { text: 'LOVE', prompt: 'holding a big heart shape' }, { text: 'きらきら', prompt: 'sparkling effect around character' }
+            { name: '🎭 ネタ・推し活 (New!)', stamps: [
+                { text: '草', prompt: 'laughing uncontrollably, pointing, meme face' }, { text: 'それな', prompt: 'nodding sagely, eyes closed, wise look' }, { text: '虚無', prompt: 'staring into the distance, empty eyes, soul leaving body' }, { text: '尊い', prompt: 'praying hands, shining eyes, overwhelmed by emotion' }, { text: '限界', prompt: 'melted on the floor, exhausted, puddle' },
+                { text: '神', prompt: 'worshipping, glowing aura' }, { text: '推ししか勝たん', prompt: 'holding a glowing penlight, cheering excitedly' }, { text: '優勝', prompt: 'holding a gold trophy, triumphant pose' }, { text: 'ぴえん', prompt: 'teary puppy eyes, pouting lips, trembling' }, { text: 'ミュート', prompt: 'zipping mouth shut' }
             ]}
         ];
 
@@ -169,7 +176,6 @@
 
         const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
 
-        // ラジオボタンの切り替え制御
         textModeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if(e.target.value === 'custom') {
@@ -181,7 +187,6 @@
             });
         });
 
-        // ボタン生成
         stampData.forEach(category => {
             const catContainer = document.createElement('div');
             catContainer.className = 'category-container';
@@ -205,7 +210,6 @@
             stampContainer.appendChild(catContainer);
         });
 
-        // スタンプ生成ロジック
         stampContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('stamp-button')) {
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
@@ -223,7 +227,6 @@
                     return;
                 }
 
-                // 文字モードの判定
                 let textPromptPart = '';
                 const selectedMode = document.querySelector('input[name="text_mode"]:checked').value;
 
@@ -238,7 +241,7 @@
                     }
                     textPromptPart = `typography text "${customVal}" in ${selectedText}, `;
                 } else if (selectedMode === 'none') {
-                    textPromptPart = ''; // 文字生成プロンプトを完全に消す
+                    textPromptPart = '';
                 }
 
                 const finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, ${textPromptPart}${stampAction} --v 8.0`;
