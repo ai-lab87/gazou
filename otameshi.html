@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINEスタンプ工場【完全版 Ver 3.2】🧪✨</title>
+    <title>LINEスタンプ工場【完全版 Ver 3.3】🧪✨</title>
     <style>
         /* --- クールな背景（ダークグラデーション） --- */
         body {
@@ -76,7 +76,7 @@
     </a>
 
     <h1>LINEスタンプ工場【完全版】👑</h1>
-    <p class="subtitle">Premium Edition Ver 3.2</p>
+    <p class="subtitle">Premium Edition Ver 3.3</p>
     <p class="description">【新機能】V7のオムニリファレンスを用いた「キャラ完全固定モード」を搭載！</p>
 
     <div class="config-section">
@@ -88,15 +88,15 @@
         
         <div id="v7_instruction" style="display: none; background: rgba(241, 196, 15, 0.1); border: 1px solid #f1c40f; padding: 15px; border-radius: 6px; margin-bottom: 20px; color: #fdf6e3; font-size: 13px; line-height: 1.5;">
             💡 <b>【V7キャラ固定モードの使い方】</b><br>
-            このモードでは文字の自動生成を行わず、<b>キャラクターの顔とデザインを完璧に維持したリアクション絵</b>のみを出力します。<br><br>
-            1. Midjourney（DiscordやWeb）上でベースにしたい親画像を選択・アップロードします。<br>
-            2. その画像を<b>「オムニリファレンス（Omni）」</b>にセットします。<br>
+            このモードでは、文字を生成せず<b>キャラクターの顔とデザインを完璧に維持した絵</b>のみを出力します。<br><br>
+            1. Midjourney上でベースにしたい親画像を選択し<b>「オムニリファレンス（Omni）」</b>にセット。<br>
+            2. 以下の「1. 補助テキスト」に髪色や服装など最低限の特徴を入れるとキャラ崩壊を防げます（任意）。<br>
             3. 下のボタンでスタンプを選び、表示されたプロンプトをコピーして生成！<br>
             <span style="color: #9ca3af;">※完成した画像に文字を入れる場合は、スマホの「LINEスタンプメーカー」などのアプリをご使用ください。</span>
         </div>
 
-        <label for="char_base">1. キャラクターの基本設定（日本語OK）</label>
-        <textarea id="char_base" rows="3" placeholder="例: 黒と白のツートンカラーの髪の女の子、青い目、黒いオーバーサイズのTシャツを着ている"></textarea>
+        <label id="char_base_label" for="char_base">1. キャラクターの基本設定（日本語OK・必須）</label>
+        <textarea id="char_base" rows="3" placeholder="例: 金髪ボブで目が隠れている、青いパーカーと白衣を着ている"></textarea>
         
         <div class="flex-row" style="margin-top: 15px;">
             <div class="flex-item" id="art_style_container">
@@ -109,10 +109,10 @@
                     <option value="retro 90s anime style">90年代レトロアニメ風</option>
                     <option value="3D render, cute Pixar style">3D・ピクサー風</option>
                     <option value="pixel art, cute dots">ドット絵風</option>
-                    <option value="pastel color, fluffy and dreamy style">✨ パステル・ゆめかわ風 (New)</option>
-                    <option value="thick oil painting style, impasto">✨ 厚塗り・油絵風 (New)</option>
-                    <option value="manga style, screentones, black and white">✨ 白黒マンガ風・トーン入り (New)</option>
-                    <option value="pencil sketch style, monochrome">✨ 鉛筆スケッチ風 (New)</option>
+                    <option value="pastel color, fluffy and dreamy style">✨ パステル・ゆめかわ風</option>
+                    <option value="thick oil painting style, impasto">✨ 厚塗り・油絵風</option>
+                    <option value="manga style, screentones, black and white">✨ 白黒マンガ風・トーン入り</option>
+                    <option value="pencil sketch style, monochrome">✨ 鉛筆スケッチ風</option>
                 </select>
             </div>
             
@@ -125,10 +125,10 @@
                     <option value="simple bold sans-serif">シンプルなゴシック太字</option>
                     <option value="neon light text, glowing">ネオンサイン風</option>
                     <option value="luxury gold text, shiny">ゴールド（金箔）風</option>
-                    <option value="8-bit retro gaming font">👾 8bit・レトロゲーム風 (New)</option>
-                    <option value="elegant serif font, magazine style">📖 上品な明朝体・雑誌風 (New)</option>
-                    <option value="creepy horror style font, dripping">👻 ホラー・おどろおどろしい風 (New)</option>
-                    <option value="cyberpunk glowing glitch text">⚡ サイバーパンク・グリッチ風 (New)</option>
+                    <option value="8-bit retro gaming font">👾 8bit・レトロゲーム風</option>
+                    <option value="elegant serif font, magazine style">📖 上品な明朝体・雑誌風</option>
+                    <option value="creepy horror style font, dripping">👻 ホラー・おどろおどろしい風</option>
+                    <option value="cyberpunk glowing glitch text">⚡ サイバーパンク・グリッチ風</option>
                 </select>
             </div>
         </div>
@@ -174,13 +174,14 @@
             { name: '📩 メッセージ', stamps: [
                 { text: '待って', prompt: 'holding up a hand, stop sign' }, { text: '行く', prompt: 'pointing forward, determined look' }, { text: 'OK', prompt: 'making an O with hands' }, { text: 'キャンセル', prompt: 'making an X with hands' }, { text: 'おめでとう', prompt: 'throwing confetti, holding balloons' }, { text: 'よろしく', prompt: 'bowing deeply, sincere smile' }, { text: 'ごめん', prompt: 'apologizing, hands pressed together, sad eyes' }, { text: '秘密', prompt: 'finger on lips, "shh" pose' }, { text: 'がんばれ', prompt: 'fist pumping, encouraging look' }, { text: 'おねがい', prompt: 'puppy dog eyes, hands clasped' }
             ]},
-            { name: '🎭 ネタ・推し活 (New!)', stamps: [
+            { name: '🎭 ネタ・推し活', stamps: [
                 { text: '草', prompt: 'laughing uncontrollably, pointing, meme face' }, { text: 'それな', prompt: 'nodding sagely, eyes closed, wise look' }, { text: '虚無', prompt: 'staring into the distance, empty eyes, soul leaving body' }, { text: '尊い', prompt: 'praying hands, shining eyes, overwhelmed by emotion' }, { text: '限界', prompt: 'melted on the floor, exhausted, puddle' },
                 { text: '神', prompt: 'worshipping, glowing aura' }, { text: '推ししか勝たん', prompt: 'holding a glowing penlight, cheering excitedly' }, { text: '優勝', prompt: 'holding a gold trophy, triumphant pose' }, { text: 'ぴえん', prompt: 'teary puppy eyes, pouting lips, trembling' }, { text: 'ミュート', prompt: 'zipping mouth shut' }
             ]}
         ];
 
         const charBase = document.getElementById('char_base');
+        const charBaseLabel = document.getElementById('char_base_label');
         const artStyle = document.getElementById('art_style');
         const textStyle = document.getElementById('text_style');
         const stampContainer = document.getElementById('stamp_buttons_container');
@@ -191,9 +192,9 @@
         const resetAllButton = document.getElementById('reset_all_button');
         const customTextInput = document.getElementById('custom_text_input');
         
-        // 新規追加分の要素取得
         const mainModeRadios = document.getElementsByName('main_mode');
         const textModeRadios = document.getElementsByName('text_mode');
+        const artStyleContainer = document.getElementById('art_style_container');
         const textStyleContainer = document.getElementById('text_style_container');
         const textModeContainer = document.getElementById('text_mode_container');
         const v7Instruction = document.getElementById('v7_instruction');
@@ -204,22 +205,24 @@
         mainModeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if(e.target.value === 'v7_oref') {
-                    // V7モード：文字設定を隠して案内を出す
+                    // V7モード：画風や文字設定を隠す、ラベルを変更
+                    artStyleContainer.style.display = 'none';
                     textStyleContainer.style.display = 'none';
                     textModeContainer.style.display = 'none';
                     customTextInput.style.display = 'none';
                     v7Instruction.style.display = 'block';
+                    charBaseLabel.innerHTML = '1. キャラの補助テキスト（※V7時の崩れ防止用 / 任意）';
                 } else {
-                    // 従来モード：文字設定を復活させる
+                    // 従来モード：全て復活
+                    artStyleContainer.style.display = 'block';
                     textStyleContainer.style.display = 'block';
                     textModeContainer.style.display = 'block';
                     v7Instruction.style.display = 'none';
-                    // カスタム入力が選ばれていたら入力欄も復活させる
+                    charBaseLabel.innerHTML = '1. キャラクターの基本設定（日本語OK・必須）';
                     if (document.querySelector('input[name="text_mode"]:checked').value === 'custom') {
                         customTextInput.style.display = 'block';
                     }
                 }
-                // ボタンの選択状態をクリア
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
                 outputSection.style.display = 'none';
             });
@@ -270,16 +273,16 @@
                 const buttonText = e.target.getAttribute('data-text');
                 const stampAction = e.target.getAttribute('data-prompt');
 
-                if (!charSettings) {
-                    alert('まずは1の「キャラクターの基本設定」を入力してください！');
-                    e.target.classList.remove('active');
-                    return;
-                }
-
                 let finalPrompt = '';
 
-                // ロジック分岐：従来モードかV7モードか
                 if (mainMode === 'classic') {
+                    // 従来モードはテキスト必須
+                    if (!charSettings) {
+                        alert('まずは1の「キャラクターの基本設定」を入力してください！');
+                        e.target.classList.remove('active');
+                        return;
+                    }
+                    
                     const selectedText = textStyle.value;
                     const selectedMode = document.querySelector('input[name="text_mode"]:checked').value;
                     let textPromptPart = '';
@@ -301,9 +304,9 @@
                     finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, ${textPromptPart}${stampAction} --v 8.0`;
 
                 } else {
-                    // V7 orefモード（文字なし・キャラ固定特化）
-                    // 崩れ防止のため「sticker design with a bold white border」を自動付与し、ow150とstylize0でねじ伏せる
-                    finalPrompt = `${charSettings}, ${selectedArt}, simple pure white background, no background, isolated, sticker design with a bold white border, ${stampAction} --ar 1:1 --ow 150 --stylize 0 --v 7`;
+                    // V7 orefモード（文字なし・画風なし・キャラテキストは任意）
+                    const v7CharPart = charSettings ? `${charSettings}, ` : '';
+                    finalPrompt = `${v7CharPart}simple pure white background, no background, isolated, sticker design with a bold white border, ${stampAction} --ar 1:1 --ow 150 --stylize 0 --v 7`;
                 }
                 
                 promptOutput.value = finalPrompt;
@@ -332,6 +335,8 @@
                 document.querySelector('input[value="classic"]').checked = true;
                 
                 // UI状態のリセット
+                charBaseLabel.innerHTML = '1. キャラクターの基本設定（日本語OK・必須）';
+                artStyleContainer.style.display = 'block';
                 textStyleContainer.style.display = 'block';
                 textModeContainer.style.display = 'block';
                 v7Instruction.style.display = 'none';
