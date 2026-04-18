@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINEスタンプ工場【完全版 Ver 3.3】🧪✨</title>
+    <title>LINEスタンプ工場【Ver 5.0】🧪✨</title>
     <style>
         /* --- クールな背景（ダークグラデーション） --- */
         body {
@@ -17,7 +17,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            padding-bottom: 120px;
+            padding-bottom: 150px; /* 下部の余白を多めに */
         }
 
         h1 { text-align: center; color: #f1c40f; font-size: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-bottom: 5px; }
@@ -39,10 +39,10 @@
         .flex-item { flex: 1; min-width: 250px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: #f9fafb; font-size: 14px; }
         
-        textarea, select, input[type="text"] {
+        textarea, select, input[type="text"], input[type="url"] {
             width: 100%; padding: 12px; border: 1px solid #374151; border-radius: 6px; box-sizing: border-box; font-family: inherit; font-size: 14px; background-color: #374151; color: #f9fafb; transition: all 0.2s;
         }
-        textarea:focus, select:focus, input[type="text"]:focus { outline: none; border-color: #f1c40f; background-color: #1f293a; }
+        textarea:focus, select:focus, input[type="text"]:focus, input[type="url"]:focus { outline: none; border-color: #f1c40f; background-color: #1f293a; }
         textarea { resize: vertical; }
 
         .radio-group { display: flex; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; background: #111827; padding: 10px 15px; border-radius: 6px; border: 1px solid #374151; }
@@ -60,8 +60,16 @@
         .stamp-button:hover { background-color: #4b5563; border-color: #9ca3af; transform: translateY(-1px); }
         .stamp-button.active { border-color: #f1c40f; color: #111827; background-color: #f1c40f; box-shadow: 0 0 10px rgba(241, 196, 15, 0.4); }
         
-        /* --- 出力バー --- */
-        .output-section { position: fixed; bottom: 0; left: 0; right: 0; background: #111827; padding: 15px 20px; box-shadow: 0 -6px 20px rgba(0,0,0,0.5); display: none; align-items: center; justify-content: space-between; z-index: 100; gap: 12px; border-top: 1px solid rgba(241, 196, 15, 0.3); }
+        /* --- 出力バー (iPhoneのセーフエリア対応) --- */
+        .output-section { 
+            position: fixed; 
+            bottom: 0; left: 0; right: 0; 
+            background: #111827; 
+            /* iPhoneのホームバーと被らないよう、safe-area-inset-bottom を計算に追加 */
+            padding: 15px 20px calc(15px + env(safe-area-inset-bottom, 10px)) 20px; 
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.5); 
+            display: none; align-items: center; justify-content: space-between; z-index: 100; gap: 12px; border-top: 1px solid rgba(241, 196, 15, 0.3); 
+        }
         .output-text { flex-grow: 1; border-radius: 4px; padding: 12px; border: 1px solid #374151; font-size: 13px; background-color: #374151; color: #f9fafb; }
         .action-buttons { display: flex; gap: 10px; flex-shrink: 0; }
         .copy-button { background-color: #f1c40f; color: #111827; border: none; border-radius: 4px; padding: 12px 25px; cursor: pointer; font-weight: bold; font-size: 14px; transition: 0.2s; }
@@ -75,60 +83,63 @@
         <img src="https://cdn.midjourney.com/bac8cfe3-f43d-4603-8989-245bb6b95375/0_1.jpeg" alt="プロンプトメーカーはこちら">
     </a>
 
-    <h1>LINEスタンプ工場【完全版】👑</h1>
-    <p class="subtitle">Premium Edition Ver 3.3</p>
-    <p class="description">【新機能】V7のオムニリファレンスを用いた「キャラ完全固定モード」を搭載！</p>
+    <h1>LINEスタンプ工場【Ver 5.0】👑</h1>
+    <p class="subtitle">Midjourney v8.1 Alpha 完全対応エディション</p>
+    <p class="description">限界突破！大増量70種＆iPhone完全対応！</p>
 
     <div class="config-section">
-        <label style="color: #f1c40f; font-size: 16px;">🌟 0. まず最初に「生成モード」を選択</label>
-        <div class="radio-group" style="border-color: #f1c40f; margin-bottom: 20px;">
-            <label><input type="radio" name="main_mode" value="classic" checked> 🎨 従来モード（文字＋絵を同時生成 / --v 8.0）</label>
-            <label><input type="radio" name="main_mode" value="v7_oref"> 👑 V7キャラ固定モード（絵のみ完全固定 / --v 7.0）</label>
-        </div>
         
-        <div id="v7_instruction" style="display: none; background: rgba(241, 196, 15, 0.1); border: 1px solid #f1c40f; padding: 15px; border-radius: 6px; margin-bottom: 20px; color: #fdf6e3; font-size: 13px; line-height: 1.5;">
-            💡 <b>【V7キャラ固定モードの使い方】</b><br>
-            このモードでは、文字を生成せず<b>キャラクターの顔とデザインを完璧に維持した絵</b>のみを出力します。<br><br>
-            1. Midjourney上でベースにしたい親画像を選択し<b>「オムニリファレンス（Omni）」</b>にセット。<br>
-            2. 以下の「1. 補助テキスト」に髪色や服装など最低限の特徴を入れるとキャラ崩壊を防げます（任意）。<br>
-            3. 下のボタンでスタンプを選び、表示されたプロンプトをコピーして生成！<br>
-            <span style="color: #9ca3af;">※完成した画像に文字を入れる場合は、スマホの「LINEスタンプメーカー」などのアプリをご使用ください。</span>
+        <div style="background: rgba(241, 196, 15, 0.1); border: 1px solid #f1c40f; padding: 15px; border-radius: 6px; margin-bottom: 20px; color: #fdf6e3; font-size: 13px; line-height: 1.5;">
+            <label style="color: #f1c40f; font-size: 14px; margin-bottom: 5px;">🔥 キャラ・画風の固定モード（v8.1機能）</label>
+            <div class="radio-group" style="border-color: #f1c40f; margin-bottom: 10px;">
+                <label><input type="radio" name="ref_mode" value="manual" checked> 🖱️ 手動選択モード（MJ画面上で直接画像をアップして選ぶ・推奨）</label>
+                <label><input type="radio" name="ref_mode" value="url"> 🔗 URL貼付けモード（Discord等でURLを使いたい方）</label>
+            </div>
+            <div id="url_input_container" style="display: none;">
+                <input type="url" id="ref_image_url" placeholder="例: https://cdn.midjourney.com/.../0_0.png" style="margin-top: 5px;">
+                <p style="font-size: 11px; color: #9ca3af; margin-top: 5px;">※入力したURLを元に、自動でImage Prompt(--iw)とStyle Reference(--sref)の呪文を組み込みます。</p>
+            </div>
         </div>
 
         <label id="char_base_label" for="char_base">1. キャラクターの基本設定（日本語OK・必須）</label>
-        <textarea id="char_base" rows="3" placeholder="例: 金髪ボブで目が隠れている、青いパーカーと白衣を着ている"></textarea>
+        <textarea id="char_base" rows="2" placeholder="例: 金髪ボブで目が隠れている、青いパーカーと白衣を着ている"></textarea>
         
         <div class="flex-row" style="margin-top: 15px;">
             <div class="flex-item" id="art_style_container">
-                <label for="art_style">2. 画風（テイスト）</label>
+                <label for="art_style">2. 画風（大増量！）</label>
                 <select id="art_style">
                     <option value="anime style, flat color">アニメ調（フラット・基本）</option>
                     <option value="chibi anime style, kawaii">ちびキャラ風</option>
+                    <option value="vector art, clean flat illustration">✨ ベクターイラスト風（超スッキリ）</option>
+                    <option value="anime screenshot style, 90s cel shading">✨ アニメスクショ風（セル画調）</option>
+                    <option value="kawaii pastel goth, dark but cute">✨ 病みかわ・地雷系風</option>
                     <option value="watercolor style, soft lighting">水彩画風</option>
                     <option value="pop art style, vibrant colors">ポップアート風</option>
                     <option value="retro 90s anime style">90年代レトロアニメ風</option>
                     <option value="3D render, cute Pixar style">3D・ピクサー風</option>
                     <option value="pixel art, cute dots">ドット絵風</option>
-                    <option value="pastel color, fluffy and dreamy style">✨ パステル・ゆめかわ風</option>
-                    <option value="thick oil painting style, impasto">✨ 厚塗り・油絵風</option>
-                    <option value="manga style, screentones, black and white">✨ 白黒マンガ風・トーン入り</option>
-                    <option value="pencil sketch style, monochrome">✨ 鉛筆スケッチ風</option>
+                    <option value="pastel color, fluffy and dreamy style">パステル・ゆめかわ風</option>
+                    <option value="thick oil painting style, impasto">厚塗り・油絵風</option>
+                    <option value="manga style, screentones, black and white">白黒マンガ風・トーン入り</option>
+                    <option value="dark fantasy style, rugged and moody">✨ ダークファンタジー風（無骨）</option>
                 </select>
             </div>
             
             <div class="flex-item" id="text_style_container">
-                <label for="text_style">3. 文字のフォント感</label>
+                <label for="text_style">3. フォント感（大増量！）</label>
                 <select id="text_style">
                     <option value="bold pop font">太字のポップ風</option>
                     <option value="cute handwritten marker">可愛い手書きマーカー風</option>
+                    <option value="thick comic book font, dynamic">✨ アメコミ風ダイナミック極太字</option>
                     <option value="elegant calligraphy">筆文字・カリグラフィー風</option>
+                    <option value="dynamic brush pen style, energetic">✨ 力強い筆ペン・躍動感</option>
                     <option value="simple bold sans-serif">シンプルなゴシック太字</option>
+                    <option value="Y2K style bubbly font, 3D text">✨ Y2K・ぷっくり3D文字</option>
+                    <option value="pixelated retro 8-bit font">✨ ピクセル・レトロゲーム風</option>
                     <option value="neon light text, glowing">ネオンサイン風</option>
                     <option value="luxury gold text, shiny">ゴールド（金箔）風</option>
-                    <option value="8-bit retro gaming font">👾 8bit・レトロゲーム風</option>
-                    <option value="elegant serif font, magazine style">📖 上品な明朝体・雑誌風</option>
-                    <option value="creepy horror style font, dripping">👻 ホラー・おどろおどろしい風</option>
-                    <option value="cyberpunk glowing glitch text">⚡ サイバーパンク・グリッチ風</option>
+                    <option value="elegant serif font, magazine style">上品な明朝体・雑誌風</option>
+                    <option value="creepy horror style font, dripping">ホラー・おどろおどろしい風</option>
                 </select>
             </div>
         </div>
@@ -147,7 +158,7 @@
     </div>
 
     <div class="stamp-section">
-        <label>5. スタンプを選択（大増量！全50種類）</label>
+        <label>5. スタンプを選択（大増量！全70種類）</label>
         <div id="stamp_buttons_container"></div>
     </div>
 
@@ -160,73 +171,22 @@
     </div>
 
     <script>
-        // --- スタンプデータ（全50個） ---
-        const stampData = [
-            { name: '👋 挨拶', stamps: [
-                { text: 'ありがとう', prompt: 'bowing, smiling' }, { text: 'おはよう', prompt: 'stretching, yawning' }, { text: 'お疲れ様', prompt: 'relaxing, holding a coffee cup' }, { text: 'こんにちは', prompt: 'waving hands, friendly smile' }, { text: 'おやすみ', prompt: 'sleeping in a blanket, moon and stars' }, { text: '了解', prompt: 'saluting, thumbs up' }, { text: 'NG', prompt: 'crossing arms, X sign' }, { text: 'またね', prompt: 'walking away, waving' }
-            ]},
-            { name: '😃 感情', stamps: [
-                { text: 'いいね', prompt: 'giving a thumbs up, winking' }, { text: 'すごい', prompt: 'clapping hands, starry eyes' }, { text: 'わーい', prompt: 'jumping with joy, throwing up hands' }, { text: '泣く', prompt: 'crying, big tears' }, { text: '怒る', prompt: 'angry face, puffing cheeks, steam from ears' }, { text: '焦る', prompt: 'sweating, panicked face' }, { text: '照れる', prompt: 'blushing, covering face with hands' }, { text: 'ショック', prompt: 'shocked face, pale, with a dark cloud' }, { text: '？？', prompt: 'confused, head tilted, question marks' }, { text: 'びっくり', prompt: 'wide eyed, hands on mouth' }
-            ]},
-            { name: '🛠️ 日常アクション', stamps: [
-                { text: 'コーヒー', prompt: 'holding a mug, relaxing, steam rising' }, { text: '食事中', prompt: 'eating ramen with chopsticks' }, { text: '勉強中', prompt: 'reading a book with glasses' }, { text: '仕事中', prompt: 'typing on a laptop, busy look' }, { text: '睡眠中', prompt: 'snoring, zzz marks' }, { text: '電話中', prompt: 'holding a phone to ear' }, { text: '散歩中', prompt: 'walking, listening to music with headphones' }, { text: '運動中', prompt: 'running, sweating' }, { text: 'ゲーム中', prompt: 'holding a controller, intense focus' }, { text: '読書中', prompt: 'sitting and reading an oversized book' }
-            ]},
-            { name: '📩 メッセージ', stamps: [
-                { text: '待って', prompt: 'holding up a hand, stop sign' }, { text: '行く', prompt: 'pointing forward, determined look' }, { text: 'OK', prompt: 'making an O with hands' }, { text: 'キャンセル', prompt: 'making an X with hands' }, { text: 'おめでとう', prompt: 'throwing confetti, holding balloons' }, { text: 'よろしく', prompt: 'bowing deeply, sincere smile' }, { text: 'ごめん', prompt: 'apologizing, hands pressed together, sad eyes' }, { text: '秘密', prompt: 'finger on lips, "shh" pose' }, { text: 'がんばれ', prompt: 'fist pumping, encouraging look' }, { text: 'おねがい', prompt: 'puppy dog eyes, hands clasped' }
-            ]},
-            { name: '🎭 ネタ・推し活', stamps: [
-                { text: '草', prompt: 'laughing uncontrollably, pointing, meme face' }, { text: 'それな', prompt: 'nodding sagely, eyes closed, wise look' }, { text: '虚無', prompt: 'staring into the distance, empty eyes, soul leaving body' }, { text: '尊い', prompt: 'praying hands, shining eyes, overwhelmed by emotion' }, { text: '限界', prompt: 'melted on the floor, exhausted, puddle' },
-                { text: '神', prompt: 'worshipping, glowing aura' }, { text: '推ししか勝たん', prompt: 'holding a glowing penlight, cheering excitedly' }, { text: '優勝', prompt: 'holding a gold trophy, triumphant pose' }, { text: 'ぴえん', prompt: 'teary puppy eyes, pouting lips, trembling' }, { text: 'ミュート', prompt: 'zipping mouth shut' }
-            ]}
-        ];
-
-        const charBase = document.getElementById('char_base');
-        const charBaseLabel = document.getElementById('char_base_label');
-        const artStyle = document.getElementById('art_style');
-        const textStyle = document.getElementById('text_style');
-        const stampContainer = document.getElementById('stamp_buttons_container');
-        const promptOutput = document.getElementById('prompt_output');
-        const outputSection = document.getElementById('output_section');
-        const copyButton = document.getElementById('copy_button');
-        const clearSelectionButton = document.getElementById('clear_selection_button');
-        const resetAllButton = document.getElementById('reset_all_button');
-        const customTextInput = document.getElementById('custom_text_input');
+        // --- モード切替の制御 ---
+        const refModeRadios = document.getElementsByName('ref_mode');
+        const urlInputContainer = document.getElementById('url_input_container');
         
-        const mainModeRadios = document.getElementsByName('main_mode');
-        const textModeRadios = document.getElementsByName('text_mode');
-        const artStyleContainer = document.getElementById('art_style_container');
-        const textStyleContainer = document.getElementById('text_style_container');
-        const textModeContainer = document.getElementById('text_mode_container');
-        const v7Instruction = document.getElementById('v7_instruction');
-
-        const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
-
-        // 生成モード切替時のUI制御
-        mainModeRadios.forEach(radio => {
+        refModeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
-                if(e.target.value === 'v7_oref') {
-                    // V7モード：画風や文字設定を隠す、ラベルを変更
-                    artStyleContainer.style.display = 'none';
-                    textStyleContainer.style.display = 'none';
-                    textModeContainer.style.display = 'none';
-                    customTextInput.style.display = 'none';
-                    v7Instruction.style.display = 'block';
-                    charBaseLabel.innerHTML = '1. キャラの補助テキスト（※V7時の崩れ防止用 / 任意）';
+                if(e.target.value === 'url') {
+                    urlInputContainer.style.display = 'block';
                 } else {
-                    // 従来モード：全て復活
-                    artStyleContainer.style.display = 'block';
-                    textStyleContainer.style.display = 'block';
-                    textModeContainer.style.display = 'block';
-                    v7Instruction.style.display = 'none';
-                    charBaseLabel.innerHTML = '1. キャラクターの基本設定（日本語OK・必須）';
-                    if (document.querySelector('input[name="text_mode"]:checked').value === 'custom') {
-                        customTextInput.style.display = 'block';
-                    }
+                    urlInputContainer.style.display = 'none';
                 }
-                document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
-                outputSection.style.display = 'none';
             });
         });
+
+        const textModeRadios = document.getElementsByName('text_mode');
+        const customTextInput = document.getElementById('custom_text_input');
 
         textModeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
@@ -239,6 +199,45 @@
             });
         });
 
+        // --- スタンプデータ（全70個へ拡張） ---
+        const stampData = [
+            { name: '👋 挨拶・基本', stamps: [
+                { text: 'ありがとう', prompt: 'bowing, smiling' }, { text: 'おはよう', prompt: 'stretching, yawning' }, { text: 'お疲れ様', prompt: 'relaxing, holding a coffee cup' }, { text: 'こんにちは', prompt: 'waving hands, friendly smile' }, { text: 'おやすみ', prompt: 'sleeping in a blanket, moon and stars' }, { text: '了解', prompt: 'saluting, thumbs up' }, { text: 'NG', prompt: 'crossing arms, X sign' }, { text: 'またね', prompt: 'walking away, waving' }
+            ]},
+            { name: '💼 ビジネス・敬語 [NEW]', stamps: [
+                { text: '承知いたしました', prompt: 'bowing deeply, professional look' }, { text: 'お願いします', prompt: 'praying hands, polite smile' }, { text: 'ありがとうございます', prompt: 'smiling warmly, formal posture' }, { text: '確認しました', prompt: 'holding a clipboard, checking with a pen' }, { text: '申し訳ございません', prompt: 'deep bow of apology, looking down' }, { text: '少々お待ちください', prompt: 'holding up one hand gently, polite pause' }, { text: '完璧です', prompt: 'sparkling eyes, thumbs up, polite expression' }, { text: 'お疲れ様です', prompt: 'handing over a warm tea cup, professional' }
+            ]},
+            { name: '😃 感情', stamps: [
+                { text: 'いいね', prompt: 'giving a thumbs up, winking' }, { text: 'すごい', prompt: 'clapping hands, starry eyes' }, { text: 'わーい', prompt: 'jumping with joy, throwing up hands' }, { text: '泣く', prompt: 'crying, big tears' }, { text: '怒る', prompt: 'angry face, puffing cheeks, steam from ears' }, { text: '焦る', prompt: 'sweating, panicked face' }, { text: '照れる', prompt: 'blushing, covering face with hands' }, { text: 'ショック', prompt: 'shocked face, pale, with a dark cloud' }, { text: '？？', prompt: 'confused, head tilted, question marks' }, { text: 'びっくり', prompt: 'wide eyed, hands on mouth' }
+            ]},
+            { name: '🛠️ 日常アクション', stamps: [
+                { text: 'コーヒー', prompt: 'holding a mug, relaxing, steam rising' }, { text: '食事中', prompt: 'eating ramen with chopsticks' }, { text: '勉強中', prompt: 'reading a book with glasses' }, { text: '仕事中', prompt: 'typing on a laptop, busy look' }, { text: '睡眠中', prompt: 'snoring, zzz marks' }, { text: '電話中', prompt: 'holding a phone to ear' }, { text: '散歩中', prompt: 'walking, listening to music with headphones' }, { text: '運動中', prompt: 'running, sweating' }, { text: 'ゲーム中', prompt: 'holding a controller, intense focus' }, { text: '読書中', prompt: 'sitting and reading an oversized book' }
+            ]},
+            { name: '📩 メッセージ', stamps: [
+                { text: '待って', prompt: 'holding up a hand, stop sign' }, { text: '行く', prompt: 'pointing forward, determined look' }, { text: 'OK', prompt: 'making an O with hands' }, { text: 'キャンセル', prompt: 'making an X with hands' }, { text: 'おめでとう', prompt: 'throwing confetti, holding balloons' }, { text: 'よろしく', prompt: 'bowing deeply, sincere smile' }, { text: 'ごめん', prompt: 'apologizing, hands pressed together, sad eyes' }, { text: '秘密', prompt: 'finger on lips, "shh" pose' }, { text: 'がんばれ', prompt: 'fist pumping, encouraging look' }, { text: 'おねがい', prompt: 'puppy dog eyes, hands clasped' }
+            ]},
+            { name: '🏕️ オタク・趣味 [NEW]', stamps: [
+                { text: '草', prompt: 'laughing uncontrollably, pointing, meme face' }, { text: 'それな', prompt: 'nodding sagely, eyes closed, wise look' }, { text: '沼', prompt: 'sinking slowly into a dark swamp, glowing eyes' }, { text: 'ポチった', prompt: 'clicking a glowing red button aggressively' }, { text: 'ガチャ', prompt: 'pulling a lever, rainbow glowing light bursting out' }, { text: '圧倒的感謝', prompt: 'dogeza, bowing on the floor with a glowing golden aura' }
+            ]},
+            { name: '🎭 ネタ・推し活', stamps: [
+                { text: '虚無', prompt: 'staring into the distance, empty eyes, soul leaving body' }, { text: '尊い', prompt: 'praying hands, shining eyes, overwhelmed by emotion' }, { text: '限界', prompt: 'melted on the floor, exhausted, puddle' }, { text: '神', prompt: 'worshipping, glowing aura' }, { text: '推ししか勝たん', prompt: 'holding a glowing penlight, cheering excitedly' }, { text: '優勝', prompt: 'holding a gold trophy, triumphant pose' }, { text: 'ぴえん', prompt: 'teary puppy eyes, pouting lips, trembling' }, { text: 'ミュート', prompt: 'zipping mouth shut' }
+            ]}
+        ];
+
+        const charBase = document.getElementById('char_base');
+        const refImageUrl = document.getElementById('ref_image_url');
+        const artStyle = document.getElementById('art_style');
+        const textStyle = document.getElementById('text_style');
+        const stampContainer = document.getElementById('stamp_buttons_container');
+        const promptOutput = document.getElementById('prompt_output');
+        const outputSection = document.getElementById('output_section');
+        const copyButton = document.getElementById('copy_button');
+        const clearSelectionButton = document.getElementById('clear_selection_button');
+        const resetAllButton = document.getElementById('reset_all_button');
+
+        const bgPowerPlay = 'isolated on pure solid white background, simple background, no shadows';
+
+        // スタンプボタンの生成
         stampData.forEach(category => {
             const catContainer = document.createElement('div');
             catContainer.className = 'category-container';
@@ -262,52 +261,55 @@
             stampContainer.appendChild(catContainer);
         });
 
+        // ボタンクリック時の処理
         stampContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('stamp-button')) {
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
                 
-                const mainMode = document.querySelector('input[name="main_mode"]:checked').value;
                 const charSettings = charBase.value.trim();
+                const selectedRefMode = document.querySelector('input[name="ref_mode"]:checked').value;
+                const imageUrl = refImageUrl.value.trim();
                 const selectedArt = artStyle.value;
                 const buttonText = e.target.getAttribute('data-text');
                 const stampAction = e.target.getAttribute('data-prompt');
 
-                let finalPrompt = '';
+                if (!charSettings) {
+                    alert('キャラクターの基本設定を入力してください！');
+                    e.target.classList.remove('active');
+                    return;
+                }
+                
+                const selectedText = textStyle.value;
+                const selectedMode = document.querySelector('input[name="text_mode"]:checked').value;
+                let textPromptPart = '';
 
-                if (mainMode === 'classic') {
-                    // 従来モードはテキスト必須
-                    if (!charSettings) {
-                        alert('まずは1の「キャラクターの基本設定」を入力してください！');
+                if (selectedMode === 'auto') {
+                    textPromptPart = `typography text "${buttonText}" in ${selectedText}, `;
+                } else if (selectedMode === 'custom') {
+                    const customVal = customTextInput.value.trim();
+                    if (!customVal) {
+                        alert('手打ちモードが選択されていますが、文字が入力されていません！');
                         e.target.classList.remove('active');
                         return;
                     }
-                    
-                    const selectedText = textStyle.value;
-                    const selectedMode = document.querySelector('input[name="text_mode"]:checked').value;
-                    let textPromptPart = '';
-
-                    if (selectedMode === 'auto') {
-                        textPromptPart = `typography text "${buttonText}" in ${selectedText}, `;
-                    } else if (selectedMode === 'custom') {
-                        const customVal = customTextInput.value.trim();
-                        if (!customVal) {
-                            alert('手打ちモードが選択されていますが、文字が入力されていません！');
-                            e.target.classList.remove('active');
-                            return;
-                        }
-                        textPromptPart = `typography text "${customVal}" in ${selectedText}, `;
-                    } else if (selectedMode === 'none') {
-                        textPromptPart = '';
-                    }
-                    
-                    finalPrompt = `${charSettings}, ${selectedArt}, ${bgPowerPlay}, ${textPromptPart}${stampAction} --v 8.0`;
-
-                } else {
-                    // V7 orefモード（文字なし・画風なし・キャラテキストは任意）
-                    const v7CharPart = charSettings ? `${charSettings}, ` : '';
-                    finalPrompt = `${v7CharPart}simple pure white background, no background, isolated, sticker design with a bold white border, ${stampAction} --ar 1:1 --ow 150 --stylize 0 --v 7`;
+                    textPromptPart = `typography text "${customVal}" in ${selectedText}, `;
+                } else if (selectedMode === 'none') {
+                    textPromptPart = '';
                 }
+
+                // プロンプト構築
+                let finalPrompt = '';
+                let urlPrefix = '';
+                let urlSuffix = '';
+                
+                // URLモードが選択されていて、かつURLが入力されている場合のみ呪文に追加
+                if (selectedRefMode === 'url' && imageUrl) {
+                    urlPrefix = `${imageUrl} `;
+                    urlSuffix = ` --sref ${imageUrl} --iw 1.5`;
+                }
+                
+                finalPrompt = `${urlPrefix}${charSettings}, ${selectedArt}, ${bgPowerPlay}, ${textPromptPart}${stampAction} --v 8.1${urlSuffix}`;
                 
                 promptOutput.value = finalPrompt;
                 outputSection.style.display = 'flex';
@@ -330,20 +332,17 @@
         resetAllButton.addEventListener('click', () => {
             if(confirm('設定をすべて初期化しますか？')) {
                 charBase.value = '';
+                refImageUrl.value = '';
                 artStyle.selectedIndex = 0;
                 textStyle.selectedIndex = 0;
-                document.querySelector('input[value="classic"]').checked = true;
                 
-                // UI状態のリセット
-                charBaseLabel.innerHTML = '1. キャラクターの基本設定（日本語OK・必須）';
-                artStyleContainer.style.display = 'block';
-                textStyleContainer.style.display = 'block';
-                textModeContainer.style.display = 'block';
-                v7Instruction.style.display = 'none';
+                document.querySelector('input[value="manual"]').checked = true;
+                urlInputContainer.style.display = 'none';
                 
                 document.querySelector('input[value="auto"]').checked = true;
                 customTextInput.style.display = 'none';
                 customTextInput.value = '';
+                
                 document.querySelectorAll('.stamp-button').forEach(btn => btn.classList.remove('active'));
                 outputSection.style.display = 'none';
                 promptOutput.value = '';
